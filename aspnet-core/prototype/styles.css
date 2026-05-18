@@ -540,8 +540,27 @@ input, select {
   padding: 0 10px;
 }
 
+.readonly-field {
+  color: var(--muted);
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.readonly-field strong {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 36px;
+  min-height: 36px;
+}
+
 .cell-input {
   max-width: 84px;
+}
+
+.stock-cell {
+  max-width: 96px;
 }
 
 .status-timeline {
@@ -940,6 +959,30 @@ input, select {
   max-width: 1320px;
 }
 
+#trial-modal {
+  padding: 8px;
+}
+
+#trial-modal .trial-modal-card {
+  max-height: calc(100vh - 16px);
+  max-width: 1560px;
+  width: calc(100vw - 16px);
+}
+
+#trial-modal .modal-body {
+  padding: 12px;
+}
+
+#trial-modal .split-grid.two {
+  grid-template-columns: 1fr;
+}
+
+#trial-modal th,
+#trial-modal td {
+  font-size: 13px;
+  padding: 9px 10px;
+}
+
 .modal-head,
 .modal-foot {
   align-items: center;
@@ -984,6 +1027,26 @@ input, select {
 .modal-card .icon-btn {
   font-size: 22px;
   line-height: 1;
+}
+
+#split-modal {
+  padding: 8px;
+}
+
+#split-modal .modal-card {
+  max-height: calc(100vh - 16px);
+  max-width: 1560px;
+  width: calc(100vw - 16px);
+}
+
+#split-modal .modal-body {
+  padding: 12px;
+}
+
+#split-modal th,
+#split-modal td {
+  font-size: 13px;
+  padding: 9px 10px;
 }
 
 @media (max-width: 1180px) {
