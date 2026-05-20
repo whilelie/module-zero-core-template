@@ -833,6 +833,10 @@ input, select {
   grid-template-columns: minmax(180px, 240px) 1fr;
 }
 
+.operation-cost-query {
+  grid-template-columns: minmax(180px, 280px) minmax(180px, 280px) 1fr auto;
+}
+
 .query-actions {
   display: flex;
   gap: 8px;
@@ -998,6 +1002,14 @@ input, select {
   color: var(--red);
 }
 
+#operation-cost .link-btn.danger {
+  color: var(--primary);
+}
+
+#operation-cost .link-btn.danger:hover {
+  color: var(--primary-dark);
+}
+
 .split-grid {
   padding: 18px;
 }
@@ -1138,25 +1150,32 @@ input, select {
   max-width: 560px;
 }
 
+.operation-cost-modal-card {
+  max-width: 680px;
+}
+
 .task-rank-modal-body {
   padding: 28px 44px;
 }
 
 .skill-rank-modal-body,
-.skill-metric-rank-modal-body {
+.skill-metric-rank-modal-body,
+.operation-cost-modal-body {
   padding: 28px 44px 44px;
 }
 
 .task-rank-form,
 .skill-rank-form,
-.skill-metric-rank-form {
+.skill-metric-rank-form,
+.operation-cost-form {
   display: grid;
   gap: 16px;
 }
 
 .task-rank-form .form-item,
 .skill-rank-form .form-item,
-.skill-metric-rank-form .form-item {
+.skill-metric-rank-form .form-item,
+.operation-cost-form .form-item {
   grid-template-columns: 96px 1fr;
 }
 
