@@ -8,6 +8,7 @@ const taskRankModal = document.querySelector("#task-rank-modal");
 const skillRankModal = document.querySelector("#skill-rank-modal");
 const skillMetricRankModal = document.querySelector("#skill-metric-rank-modal");
 const operationCostModal = document.querySelector("#operation-cost-modal");
+const sourceResultModal = document.querySelector("#source-result-modal");
 const currentTabTitle = document.querySelector("#current-tab-title");
 const toast = document.querySelector("#toast");
 const shiftSelect = document.querySelector("[data-shift-select]");
@@ -15,6 +16,8 @@ const businessSlots = document.querySelectorAll("[data-business-slot]");
 const costMaterialInput = document.querySelector("[data-cost-material]");
 const costDescriptionInput = document.querySelector("[data-cost-description]");
 const costUnitInput = document.querySelector("[data-cost-unit]");
+
+window.prototypeAppVersion = "20260522-source-result-modal-v3";
 
 const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],
@@ -130,6 +133,10 @@ document.querySelectorAll("[data-open-operation-cost]").forEach((button) => {
     }
     openModal(operationCostModal);
   });
+});
+
+document.querySelectorAll("[data-open-source-result]").forEach((button) => {
+  button.addEventListener("click", () => openModal(sourceResultModal));
 });
 
 if (shiftSelect) {

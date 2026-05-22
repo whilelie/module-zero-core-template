@@ -541,9 +541,11 @@ input, select {
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 6px;
+  box-sizing: border-box;
   color: var(--text);
   min-height: 36px;
   padding: 0 10px;
+  width: 100%;
 }
 
 .readonly-field {
@@ -567,6 +569,10 @@ input, select {
 
 .stock-cell {
   max-width: 96px;
+}
+
+.reason-input {
+  min-width: 240px;
 }
 
 .status-timeline {
@@ -829,6 +835,14 @@ input, select {
   grid-template-columns: repeat(3, minmax(180px, 1fr)) auto;
 }
 
+.material-order-query {
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+}
+
+.demand-trial-query {
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+}
+
 .task-ranking-query {
   grid-template-columns: minmax(180px, 240px) 1fr;
 }
@@ -1021,6 +1035,14 @@ input, select {
   padding-top: 0;
 }
 
+.split-common-fields {
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  padding: 14px;
+}
+
 .date-cell {
   min-width: 112px;
 }
@@ -1152,6 +1174,10 @@ input, select {
 
 .operation-cost-modal-card {
   max-width: 680px;
+}
+
+.source-result-modal-card {
+  max-width: 1120px;
 }
 
 .task-rank-modal-body {
@@ -1369,7 +1395,8 @@ input, select {
   }
 
   .query-grid,
-  .modal-query {
+  .modal-query,
+  .split-common-fields {
     grid-template-columns: repeat(2, minmax(180px, 1fr));
   }
 
@@ -1380,7 +1407,8 @@ input, select {
 
 @media (max-width: 720px) {
   .query-grid,
-  .modal-query {
+  .modal-query,
+  .split-common-fields {
     grid-template-columns: 1fr;
   }
 

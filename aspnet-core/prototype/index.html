@@ -121,14 +121,20 @@
         <section class="panel">
           <div class="panel-head">
             <div>
-              <h2>领料单查询</h2>
+              <h2>领料配送需求查询</h2>
             </div>
           </div>
-          <div class="query-grid">
-            <label>领料申请单号<input value="1000000137"></label>
+          <div class="query-grid material-order-query">
             <label>领料工厂<input value="2000"></label>
+            <label>领料申请单号<input value="1000000137"></label>
+            <label>物料<input value="1100000021"></label>
+            <label>描述<input value="LNG天然气 热值≥9200Kcal/NM3"></label>
             <label>申请人员工号<input value="50000068"></label>
             <label>创建日期<input placeholder="请选择日期"></label>
+            <label>是否配送<select><option>请选择</option><option>是</option><option>否</option></select></label>
+            <label>配送方式<select><option>请选择</option><option>单次配送</option><option>多次配送</option><option>自行领料</option></select></label>
+            <label>拆解状态<select><option>请选择</option><option>未拆解</option><option>部分拆解</option><option>已全部确认</option><option>不处理</option></select></label>
+            <label>货源确认状态<select><option>请选择</option><option>未确认货源</option><option>部分已确认货源</option><option>已确认货源</option><option>不处理</option></select></label>
             <div class="query-actions">
               <button class="btn ghost">重置</button>
               <button class="btn primary">查询</button>
@@ -139,7 +145,7 @@
         <section class="panel">
           <div class="panel-head">
             <div>
-              <h2>领料单列表</h2>
+              <h2>领料配送需求列表</h2>
             </div>
           </div>
           <div class="table-wrap">
@@ -164,7 +170,10 @@
                   <th>申请人员工号</th>
                   <th>申请人电话</th>
                   <th>备注</th>
+                  <th>特殊库存</th>
                   <th>配送方式</th>
+                  <th>拆解状态</th>
+                  <th>货源确认状态</th>
                   <th>操作</th>
                 </tr>
               </thead>
@@ -188,7 +197,10 @@
                   <td>50000068</td>
                   <td>13612345678</td>
                   <td></td>
-                  <td><span class="badge blue">多次配送</span></td>
+                  <td></td>
+                  <td class="rowspan-action" rowspan="3"><span class="badge blue">多次配送</span></td>
+                  <td class="rowspan-action" rowspan="3">部分拆解</td>
+                  <td class="rowspan-action" rowspan="3">部分已确认货源</td>
                   <td class="rowspan-action" rowspan="3"><button class="link-btn" data-open-split>拆解配送需求</button></td>
                 </tr>
                 <tr>
@@ -210,7 +222,7 @@
                   <td>50000068</td>
                   <td>13612345678</td>
                   <td></td>
-                  <td><span class="badge blue">多次配送</span></td>
+                  <td></td>
                 </tr>
                 <tr>
                   <td>2000</td>
@@ -231,7 +243,7 @@
                   <td>50000068</td>
                   <td>13612345678</td>
                   <td></td>
-                  <td><span class="badge blue">多次配送</span></td>
+                  <td></td>
                 </tr>
                 <tr>
                   <td>2000</td>
@@ -252,8 +264,11 @@
                   <td>50000067</td>
                   <td>13612345679</td>
                   <td></td>
+                  <td></td>
                   <td><span class="badge green">单次配送</span></td>
-                  <td><button class="link-btn" data-switch-trial>查看配送需求</button></td>
+                  <td>已全部确认</td>
+                  <td>未确认货源</td>
+                  <td></td>
                 </tr>
                 <tr>
                   <td>2000</td>
@@ -274,14 +289,42 @@
                   <td>50000067</td>
                   <td>13612345679</td>
                   <td></td>
-                  <td><span class="badge gray">自行领料</span></td>
                   <td></td>
+                  <td><span class="badge gray">自行领料</span></td>
+                  <td>不处理</td>
+                  <td>不处理</td>
+                  <td></td>
+                </tr>
+                 <tr>
+                  <td>2000</td>
+                  <td>2601</td>
+                  <td>1000000134</td>
+                  <td>1</td>
+                  <td>1100000022</td>
+                  <td>BOG蒸发气 热值≥8800Kcal/NM3</td>
+                  <td>20</td>
+                  <td>NM3</td>
+                  <td></td>
+                  <td></td>
+                  <td>3108</td>
+                  <td>2026.05.06</td>
+                  <td>是</td>
+                  <td>2026.05.07</td>
+                  <td>上午</td>
+                  <td>50000067</td>
+                  <td>13612345679</td>
+                  <td></td>
+                  <td></td>
+                  <td><span class="badge green">单次配送</span></td>
+                  <td>已全部确认</td>
+                  <td>已确认货源</td>
+                  <td><button class="link-btn" data-open-source-result>查看货源结果</button></td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="pagination-bar">
-            <div class="pagination-summary">共 5 条，每页 10 条</div>
+            <div class="pagination-summary">共 6 条，每页 10 条</div>
             <div class="pagination-actions" aria-label="领料单列表分页">
               <button class="page-btn" disabled>上一页</button>
               <button class="page-btn active">1</button>
@@ -298,10 +341,13 @@
               <h2>配送需求查询</h2>
             </div>
           </div>
-          <div class="query-grid">
-            <label>领料申请单号<input value="1000000137"></label>
+          <div class="query-grid demand-trial-query">
             <label>领料工厂<input value="2000"></label>
+            <label>领料申请单号<input value="1000000137"></label>
+            <label>物料<input value="1100000021"></label>
+            <label>描述<input value="LNG天然气 热值≥9200Kcal/NM3"></label>
             <label>收货库存地点<input value="50000068"></label>
+            <label>货源确认状态<select><option>请选择</option><option>未确认</option><option>已确认</option></select></label>
             <div class="query-actions">
               <button class="btn ghost">重置</button>
               <button class="btn primary">查询</button>
@@ -320,7 +366,7 @@
             <table>
               <thead>
                 <tr>
-                  <th class="select-col"><input type="checkbox" checked aria-label="全选配送需求"></th>
+                  <th class="select-col"><input type="checkbox" aria-label="全选配送需求"></th>
                   <th>领料申请单号</th>
                   <th>行项目</th>
                   <th>领料工厂</th>
@@ -340,6 +386,8 @@
                   <th>申请人电话</th>
                   <th>备注</th>
                   <th>配送方式</th>
+                  <th>货源确认状态</th>
+                  <th>操作</th>
                 </tr>
               </thead>
               <tbody>
@@ -363,7 +411,9 @@
                   <td>50000068</td>
                   <td>13612345678</td>
                   <td></td>
-                  <td>多次配送</td>
+                  <td rowspan="3">多次配送</td>
+                  <td rowspan="3">未确认</td>
+                  <td rowspan="3"><button class="link-btn" data-scroll-trial>执行试算</button></td>
                 </tr>
                 <tr>
                   <td class="select-col"><input type="checkbox" checked aria-label="选择配送需求 2"></td>
@@ -385,7 +435,6 @@
                   <td>50000068</td>
                   <td>13612345678</td>
                   <td></td>
-                  <td>多次配送</td>
                 </tr>
                 <tr>
                   <td class="select-col"><input type="checkbox" checked aria-label="选择配送需求 3"></td>
@@ -407,10 +456,9 @@
                   <td>50000068</td>
                   <td>13612345678</td>
                   <td></td>
-                  <td>多次配送</td>
                 </tr>
                 <tr>
-                  <td class="select-col"><input type="checkbox" checked aria-label="选择配送需求 4"></td>
+                  <td class="select-col"><input type="checkbox" aria-label="选择配送需求 4"></td>
                   <td>1000000136</td>
                   <td>1</td>
                   <td>2000</td>
@@ -430,12 +478,14 @@
                   <td>13612345679</td>
                   <td></td>
                   <td>单次配送</td>
+                  <td>已确认</td>
+                  <td><button class="link-btn" data-open-source-result>查看货源结果</button></td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="pagination-bar">
-            <div class="pagination-summary">已选择 4 条，共 4 条，每页 10 条</div>
+            <div class="pagination-summary">已选择 3 条，共 4 条，每页 10 条</div>
             <div class="pagination-actions" aria-label="配送需求列表分页">
               <button class="page-btn" disabled>上一页</button>
               <button class="page-btn active">1</button>
@@ -462,12 +512,12 @@
               <div class="table-wrap">
                 <table>
                   <thead>
-                    <tr><th>配送需求单号</th><th>领料申请单号</th><th>行项目</th><th>领料工厂</th><th>物料</th><th>描述</th><th>数量</th><th>基本单位</th><th>批次</th><th>认证种类</th></tr>
+                    <tr><th>配送需求单号</th><th>领料申请单号</th><th>行项目</th><th>领料工厂</th><th>物料</th><th>描述</th><th>数量</th><th>基本单位</th><th>批次</th><th>认证种类</th><th>收货库存地点</th><th>配送日期</th><th>配送时段</th><th>最后配送日期</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>DELREQ-20260507-002</td><td>1000000137</td><td>1</td><td>2000</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>20</td><td>TO</td><td></td><td></td></tr>
-                    <tr><td>DELREQ-20260507-002</td><td>1000000137</td><td>2</td><td>2000</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>20</td><td>TO</td><td></td><td></td></tr>
-                    <tr><td>DELREQ-20260507-002</td><td>1000000137</td><td>3</td><td>2000</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>20</td><td>TO</td><td></td><td></td></tr>
+                    <tr><td>DELREQ-20260507-002</td><td>1000000137</td><td>1</td><td>2000</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>20</td><td>TO</td><td></td><td></td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td></tr>
+                    <tr><td>DELREQ-20260507-002</td><td>1000000137</td><td>2</td><td>2000</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>20</td><td>TO</td><td></td><td></td><td>3104</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td></tr>
+                    <tr><td>DELREQ-20260507-002</td><td>1000000137</td><td>3</td><td>2000</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>20</td><td>TO</td><td></td><td></td><td>3104</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -480,12 +530,12 @@
               <div class="table-wrap">
                 <table>
                   <thead>
-                    <tr><th>发料工厂</th><th>物料</th><th>批次</th><th>认证种类</th><th>库存地点</th><th>仓储类型</th><th>货源类型</th><th>库存类型</th><th>可供量</th><th>单位</th><th>仓库号</th><th>收货日期</th><th>内向交货单</th><th>码头免堆日期</th><th>逾期滞留费</th><th>转栈日期</th><th>是否免检</th><th>检验日期</th><th>延滞成本</th><th>逾期滞留费</th><th>作业成本</th></tr>
+                    <tr><th>发料工厂</th><th>物料</th><th>批次</th><th>预约送货单号</th><th>认证种类</th><th>库存地点</th><th>仓储类型</th><th>仓位</th><th>货源标识</th><th>货源类型</th><th>库存类型</th><th>可供量</th><th>单位</th><th>仓库号</th><th>收货日期</th><th>内向交货单</th><th>码头免堆日期</th><th>逾期滞留费</th><th>转栈日期</th><th>特殊库存标识</th><th>特殊库存编号</th><th>是否免检</th><th>检验日期</th><th>延滞成本</th><th>逾期滞留费</th><th>作业成本</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>200A</td><td>1100000021</td><td></td><td></td><td>1106</td><td>A01</td><td><span class="badge blue">厂内资材库</span></td><td>Q</td><td>30</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>是</td><td>2026.5.10</td><td></td><td></td><td>10</td></tr>
-                    <tr><td>200A</td><td>20000002</td><td></td><td></td><td></td><td></td><td><span class="badge green">供应商送货</span></td><td></td><td>40</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>8</td></tr>
-                    <tr><td>200A</td><td>20000003</td><td></td><td></td><td>1112</td><td>Z01</td><td><span class="badge amber">码头仓库</span></td><td></td><td>50</td><td></td><td></td><td></td><td></td><td>2026.5.1</td><td>4</td><td>2026.5.18</td><td></td><td></td><td>12</td><td>34</td><td>5</td></tr>
+                    <tr><td>200A</td><td>1100000021</td><td></td><td></td><td></td><td>1106</td><td>A01</td><td></td><td>SUP-20260508-001</td><td><span class="badge blue">厂内资材库</span></td><td>Q</td><td>30</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>否</td><td>2026.5.10</td><td></td><td></td><td>10</td></tr>
+                    <tr><td>200A</td><td>20000002</td><td></td><td>800000349B</td><td></td><td></td><td></td><td></td><td>SUP-20260508-002</td><td><span class="badge green">供应商送货</span></td><td></td><td>40</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>是</td><td></td><td></td><td></td><td>8</td></tr>
+                    <tr><td>200A</td><td>20000003</td><td></td><td></td><td></td><td>1112</td><td>Z01</td><td></td><td>SUP-20260508-003</td><td><span class="badge amber">码头仓库</span></td><td></td><td>50</td><td></td><td></td><td></td><td></td><td>2026.5.1</td><td>4</td><td>2026.5.18</td><td></td><td></td><td>是</td><td></td><td>12</td><td>34</td><td>5</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -496,12 +546,12 @@
               <div class="table-wrap">
                 <table>
                   <thead>
-                    <tr><th>物料</th><th>货源类型</th><th>系统建议</th><th>确认数量</th><th>总成本</th><th>校验</th></tr>
+                    <tr><th>配送需求单号</th><th>领料申请单号</th><th>行项目</th><th>物料</th><th>货源标识</th><th>货源类型</th><th>系统建议</th><th>人工确认数量</th><th>单位</th><th>延滞成本</th><th>逾期滞留费</th><th>作业成本</th><th>分配总成本</th><th>校验结果</th><th>不选/调整原因</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>1100000021</td><td><span class="badge blue">厂内资材库</span></td><td>20</td><td><input class="cell-input" value="20"></td><td>10</td><td><span class="badge green">满足</span></td></tr>
-                    <tr><td>20000002</td><td><span class="badge green">供应商送货</span></td><td>20</td><td><input class="cell-input" value="20"></td><td>8</td><td><span class="badge green">满足</span></td></tr>
-                    <tr><td>20000003</td><td><span class="badge amber">码头仓库</span></td><td>20</td><td><input class="cell-input" value="0"></td><td>51</td><td><span class="badge gray">未选</span></td></tr>
+                    <tr><td>DELREQ-20260507-002</td><td>1000000137</td><td>1</td><td>1100000021</td><td>SUP-20260508-001</td><td><span class="badge blue">厂内资材库</span></td><td>20</td><td><input class="cell-input" value="20"></td><td>TO</td><td></td><td></td><td>10</td><td>10</td><td><span class="badge green">满足</span></td><td><input class="reason-input" value=""></td></tr>
+                    <tr><td>DELREQ-20260507-002</td><td>1000000137</td><td>2</td><td>20000002</td><td>SUP-20260508-002</td><td><span class="badge green">供应商送货</span></td><td>20</td><td><input class="cell-input" value="20"></td><td>TO</td><td></td><td></td><td>8</td><td>8</td><td><span class="badge green">满足</span></td><td><input class="reason-input" value=""></td></tr>
+                    <tr><td>DELREQ-20260507-002</td><td>1000000137</td><td>3</td><td>20000003</td><td>SUP-20260508-003</td><td><span class="badge amber">码头仓库</span></td><td>20</td><td><input class="cell-input" value="0"></td><td>TO</td><td>12</td><td>34</td><td>5</td><td>51</td><td><span class="badge gray">未选</span></td><td><input class="reason-input" value="人工改为0，改用厂内库存补足"></td></tr>
                   </tbody>
                 </table>
               </div>
@@ -778,15 +828,21 @@
 
         <section class="modal-section">
           <h3>本次拆解填写</h3>
+          <div class="split-common-fields">
+            <label>收货库存地点<input class="stock-cell" value="3108"></label>
+            <label>配送时段<select><option>上午</option><option>下午</option><option>全天</option></select></label>
+            <label>配送日期<input class="date-cell" value="2026.05.08"></label>
+            <label>最后配送日期<input class="date-cell" value="2026.05.09"></label>
+          </div>
           <div class="table-wrap">
             <table>
               <thead>
-                <tr><th>行项目</th><th>物料</th><th>描述</th><th>申请数量</th><th>待拆数量</th><th>本次数量</th><th>收货库存地点</th><th>配送时段</th><th>配送日期</th><th>最后配送日期</th><th>配送需求单号</th></tr>
+                <tr><th>行项目</th><th>物料</th><th>描述</th><th>申请数量</th><th>待拆数量</th><th>本次数量</th><th>配送需求单号</th></tr>
               </thead>
               <tbody>
-                <tr><td>1</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>100</td><td>80</td><td><input class="cell-input" value="20"></td><td><input class="stock-cell" value="3108"></td><td><select><option>上午</option><option>下午</option><option>全天</option></select></td><td><input class="date-cell" value="2026.05.08"></td><td><input class="date-cell" value="2026.05.09"></td><td>系统生成</td></tr>
-                <tr><td>2</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>45</td><td>25</td><td><input class="cell-input" value="20"></td><td><input class="stock-cell" value="3104"></td><td><select><option>上午</option><option>下午</option><option>全天</option></select></td><td><input class="date-cell" value="2026.05.08"></td><td><input class="date-cell" value="2026.05.09"></td><td>系统生成</td></tr>
-                <tr><td>3</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>23</td><td>3</td><td><input class="cell-input" value="3"></td><td><input class="stock-cell" value="3104"></td><td><select><option>上午</option><option>下午</option><option>全天</option></select></td><td><input class="date-cell" value="2026.05.08"></td><td><input class="date-cell" value="2026.05.09"></td><td>系统生成</td></tr>
+                <tr><td>1</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>100</td><td>80</td><td><input class="cell-input" value="20"></td><td>系统生成</td></tr>
+                <tr><td>2</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>45</td><td>25</td><td><input class="cell-input" value="20"></td><td>系统生成</td></tr>
+                <tr><td>3</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>23</td><td>3</td><td><input class="cell-input" value="3"></td><td>系统生成</td></tr>
               </tbody>
             </table>
           </div>
@@ -965,7 +1021,35 @@
     </section>
   </div>
 
+  <div class="modal-backdrop" id="source-result-modal" aria-hidden="true">
+    <section class="modal-card source-result-modal-card" role="dialog" aria-modal="true" aria-labelledby="source-result-title">
+      <header class="modal-head">
+        <div>
+          <h2 id="source-result-title">货源分配结果</h2>
+        </div>
+        <button class="icon-btn" title="关闭" data-close-modal>×</button>
+      </header>
+
+      <div class="modal-body">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>配送需求单号</th><th>领料申请单号</th><th>行项目</th><th>物料</th><th>货源类型</th><th>确认数量</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>DELREQ-20260506-001</td><td>1000000134</td><td>1</td><td>1100000021</td><td>厂内资材库</td><td>20</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <footer class="modal-foot">
+        <button class="btn primary" data-close-modal>关闭</button>
+      </footer>
+    </section>
+  </div>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=20260520-operation-cost"></script>
+  <script src="./app.js?v=20260522-source-result-modal-v3"></script>
 </body>
 </html>
