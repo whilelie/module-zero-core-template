@@ -16,8 +16,9 @@ const businessSlots = document.querySelectorAll("[data-business-slot]");
 const costMaterialInput = document.querySelector("[data-cost-material]");
 const costDescriptionInput = document.querySelector("[data-cost-description]");
 const costUnitInput = document.querySelector("[data-cost-unit]");
+const trialBatchAction = document.querySelector("[data-trial-batch-action]");
 
-window.prototypeAppVersion = "20260522-source-result-modal-v3";
+window.prototypeAppVersion = "20260524-split-positive-qty-v1";
 
 const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],
@@ -92,6 +93,72 @@ function updateMaterialInfo() {
   costUnitInput.value = info?.unit || "";
 }
 
+function parseAmount(value) {
+  const parsed = Number(String(value || "").replace(/,/g, "").trim());
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function updateAllocationRowStatus() {
+  const demandRows = document.querySelectorAll("#trial-modal .trial-demand-table tbody tr");
+  const allocationRows = document.querySelectorAll("#trial-modal .trial-allocation-table tbody tr");
+  if (!demandRows.length || !allocationRows.length) return;
+
+  const demandByLine = new Map();
+
+  demandRows.forEach((row) => {
+    const cells = row.children;
+    const lineNo = cells[4]?.textContent.trim();
+    const qty = parseAmount(cells[7]?.textContent);
+    demandByLine.set(lineNo, qty);
+  });
+
+  allocationRows.forEach((row) => {
+    const cells = row.children;
+    const lineNo = cells[3]?.textContent.trim();
+    const input = cells[9]?.querySelector("input");
+    const confirmed = parseAmount(input?.value);
+    const demand = demandByLine.get(lineNo) || 0;
+    const satisfied = demand > 0 && confirmed >= demand;
+    row.classList.toggle("allocation-satisfied", satisfied);
+    row.classList.toggle("allocation-unsatisfied", !satisfied);
+  });
+}
+
+function updateSplitRowStatus() {
+  const splitRows = document.querySelectorAll("#split-modal .split-current-table tbody tr");
+  splitRows.forEach((row) => {
+    const cells = row.children;
+    const input = cells[5]?.querySelector("input");
+    const satisfied = parseAmount(input?.value) > 0;
+    row.classList.toggle("split-satisfied", satisfied);
+    row.classList.toggle("split-unsatisfied", !satisfied);
+  });
+}
+
+function getTrialRowCheckboxes() {
+  return Array.from(document.querySelectorAll("#demand-trial .summary-row .select-col input[type='checkbox']"));
+}
+
+function updateTrialBatchActionLabel() {
+  if (!trialBatchAction) return;
+  const selectedCount = getTrialRowCheckboxes().filter((checkbox) => checkbox.checked).length;
+  trialBatchAction.textContent = selectedCount > 0 ? `执行试算+${selectedCount}` : "执行试算";
+}
+
+function updateTrialSelectAllState() {
+  const selectAll = document.querySelector("#demand-trial thead .select-col input[type='checkbox']");
+  const rowCheckboxes = getTrialRowCheckboxes();
+  if (!selectAll || !rowCheckboxes.length) return;
+  const selectedCount = rowCheckboxes.filter((checkbox) => checkbox.checked).length;
+  selectAll.checked = selectedCount === rowCheckboxes.length;
+  selectAll.indeterminate = selectedCount > 0 && selectedCount < rowCheckboxes.length;
+}
+
+function updateTrialSelectionUi() {
+  updateTrialBatchActionLabel();
+  updateTrialSelectAllState();
+}
+
 navItems.forEach((item) => {
   item.addEventListener("click", () => showPage(item.dataset.page));
 });
@@ -100,8 +167,43 @@ document.querySelectorAll("[data-switch-trial]").forEach((button) => {
   button.addEventListener("click", () => showPage("demand-trial"));
 });
 
+document.querySelectorAll("[data-expand-row]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const summaryRow = button.closest("tr");
+    const detailRow = summaryRow?.nextElementSibling;
+    if (!detailRow || !detailRow.classList.contains("detail-row")) return;
+    const expanded = !detailRow.hidden;
+    detailRow.hidden = expanded;
+    summaryRow.classList.toggle("expanded", !expanded);
+    button.textContent = expanded ? "＋" : "－";
+  });
+});
+
+function setAllDetailRows(expanded) {
+  document.querySelectorAll(".summary-row").forEach((summaryRow) => {
+    const detailRow = summaryRow.nextElementSibling;
+    const button = summaryRow.querySelector("[data-expand-row]");
+    if (!detailRow || !detailRow.classList.contains("detail-row") || !button) return;
+    detailRow.hidden = !expanded;
+    summaryRow.classList.toggle("expanded", expanded);
+    button.textContent = expanded ? "－" : "＋";
+  });
+}
+
+document.querySelectorAll("[data-toggle-all-expanded]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const expandAll = button.textContent.trim() === "＋";
+    setAllDetailRows(expandAll);
+    button.textContent = expandAll ? "－" : "＋";
+    button.setAttribute("aria-label", expandAll ? "全部收起" : "全部展开");
+  });
+});
+
 document.querySelectorAll("[data-open-split]").forEach((button) => {
-  button.addEventListener("click", () => openModal(splitModal));
+  button.addEventListener("click", () => {
+    openModal(splitModal);
+    updateSplitRowStatus();
+  });
 });
 
 document.querySelectorAll("[data-open-employee]").forEach((button) => {
@@ -171,10 +273,36 @@ document.addEventListener("keydown", (event) => {
 document.querySelectorAll("[data-scroll-trial]").forEach((button) => {
   button.addEventListener("click", () => {
     openModal(trialModal);
+    updateAllocationRowStatus();
     showToast("已执行试算，货源分配结果已更新");
   });
+});
+
+document.querySelectorAll("#demand-trial .summary-row .select-col input[type='checkbox']").forEach((checkbox) => {
+  checkbox.addEventListener("change", updateTrialSelectionUi);
+});
+
+document.querySelectorAll("#demand-trial thead .select-col input[type='checkbox']").forEach((checkbox) => {
+  checkbox.addEventListener("change", () => {
+    getTrialRowCheckboxes().forEach((rowCheckbox) => {
+      rowCheckbox.checked = checkbox.checked;
+    });
+    updateTrialSelectionUi();
+  });
+});
+
+document.querySelectorAll("#trial-modal .trial-allocation-table input").forEach((input) => {
+  input.addEventListener("input", updateAllocationRowStatus);
+});
+
+document.querySelectorAll("#split-modal .split-current-table input").forEach((input) => {
+  input.addEventListener("input", updateSplitRowStatus);
 });
 
 toastButtons.forEach((button) => {
   button.addEventListener("click", () => showToast(button.dataset.toast));
 });
+
+updateAllocationRowStatus();
+updateTrialSelectionUi();
+updateSplitRowStatus();

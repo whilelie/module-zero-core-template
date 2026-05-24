@@ -429,6 +429,38 @@ tr.recommend td {
   background: #ecfdf5;
 }
 
+.trial-allocation-table tr.allocation-satisfied td {
+  background: #f0fdf4;
+}
+
+.trial-allocation-table tr.allocation-unsatisfied td {
+  background: #fef2f2;
+}
+
+.trial-allocation-table tr.allocation-satisfied td:first-child {
+  box-shadow: inset 4px 0 0 #22c55e;
+}
+
+.trial-allocation-table tr.allocation-unsatisfied td:first-child {
+  box-shadow: inset 4px 0 0 #ef4444;
+}
+
+.split-current-table tr.split-satisfied td {
+  background: #f0fdf4;
+}
+
+.split-current-table tr.split-unsatisfied td {
+  background: #fef2f2;
+}
+
+.split-current-table tr.split-satisfied td:first-child {
+  box-shadow: inset 4px 0 0 #22c55e;
+}
+
+.split-current-table tr.split-unsatisfied td:first-child {
+  box-shadow: inset 4px 0 0 #ef4444;
+}
+
 .badge {
   border-radius: 999px;
   display: inline-block;
@@ -565,10 +597,6 @@ input, select {
 
 .cell-input {
   max-width: 84px;
-}
-
-.stock-cell {
-  max-width: 96px;
 }
 
 .reason-input {
@@ -997,6 +1025,55 @@ input, select {
   vertical-align: middle;
 }
 
+.expand-col {
+  text-align: center;
+  width: 64px;
+}
+
+.expand-btn {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--primary);
+  cursor: pointer;
+  font-weight: 700;
+  height: 26px;
+  line-height: 1;
+  width: 26px;
+}
+
+.summary-row.expanded td {
+  background: #eef5ff;
+}
+
+.detail-row > td {
+  background: #fbfdff;
+  padding: 12px 16px;
+}
+
+.detail-card {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.detail-actions {
+  background: #f7f9fc;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 10px;
+}
+
+.detail-table th {
+  background: #f7f9fc;
+  font-size: 13px;
+}
+
+.detail-table td {
+  background: #fff;
+}
+
 .link-btn {
   background: transparent;
   border: 0;
@@ -1039,12 +1116,13 @@ input, select {
   border-bottom: 1px solid var(--line);
   display: grid;
   gap: 14px;
-  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   padding: 14px;
 }
 
-.date-cell {
-  min-width: 112px;
+.split-common-fields input,
+.split-common-fields select {
+  width: 100%;
 }
 
 .modal-open {
