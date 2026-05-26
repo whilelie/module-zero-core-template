@@ -246,11 +246,30 @@ p {
 }
 
 .btn {
+  align-items: center;
   border: 1px solid var(--line);
   border-radius: 6px;
   cursor: pointer;
+  display: inline-flex;
+  gap: 7px;
+  justify-content: center;
   min-height: 38px;
   padding: 0 14px;
+  white-space: nowrap;
+}
+
+.btn-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 16px;
+  width: 16px;
+}
+
+.btn-icon svg {
+  display: block;
+  height: 16px;
+  stroke: currentColor;
+  width: 16px;
 }
 
 .btn.primary {
@@ -879,6 +898,10 @@ input, select {
   grid-template-columns: minmax(180px, 280px) minmax(180px, 280px) 1fr auto;
 }
 
+.loading-limit-query {
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+}
+
 .query-actions {
   display: flex;
   gap: 8px;
@@ -1101,6 +1124,14 @@ input, select {
   color: var(--primary-dark);
 }
 
+#loading-limit .link-btn.danger {
+  color: var(--primary);
+}
+
+#loading-limit .link-btn.danger:hover {
+  color: var(--primary-dark);
+}
+
 .split-grid {
   padding: 18px;
 }
@@ -1254,8 +1285,29 @@ input, select {
   max-width: 680px;
 }
 
+.loading-limit-modal-card {
+  max-width: 760px;
+}
+
+.operation-cost-import-modal-card {
+  max-width: 960px;
+}
+
+.loading-limit-import-modal-card {
+  max-width: 1180px;
+}
+
 .source-result-modal-card {
   max-width: 1120px;
+}
+
+.import-error-row td {
+  background: #fee2e2;
+}
+
+.badge.red {
+  background: #fee2e2;
+  color: var(--red);
 }
 
 .task-rank-modal-body {
@@ -1264,14 +1316,16 @@ input, select {
 
 .skill-rank-modal-body,
 .skill-metric-rank-modal-body,
-.operation-cost-modal-body {
+.operation-cost-modal-body,
+.loading-limit-modal-body {
   padding: 28px 44px 44px;
 }
 
 .task-rank-form,
 .skill-rank-form,
 .skill-metric-rank-form,
-.operation-cost-form {
+.operation-cost-form,
+.loading-limit-form {
   display: grid;
   gap: 16px;
 }
@@ -1279,7 +1333,8 @@ input, select {
 .task-rank-form .form-item,
 .skill-rank-form .form-item,
 .skill-metric-rank-form .form-item,
-.operation-cost-form .form-item {
+.operation-cost-form .form-item,
+.loading-limit-form .form-item {
   grid-template-columns: 96px 1fr;
 }
 

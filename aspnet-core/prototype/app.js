@@ -8,7 +8,12 @@ const taskRankModal = document.querySelector("#task-rank-modal");
 const skillRankModal = document.querySelector("#skill-rank-modal");
 const skillMetricRankModal = document.querySelector("#skill-metric-rank-modal");
 const operationCostModal = document.querySelector("#operation-cost-modal");
+const operationCostImportModal = document.querySelector("#operation-cost-import-modal");
+const loadingLimitModal = document.querySelector("#loading-limit-modal");
+const loadingLimitImportModal = document.querySelector("#loading-limit-import-modal");
 const sourceResultModal = document.querySelector("#source-result-modal");
+const operationCostTitle = document.querySelector("#operation-cost-title");
+const loadingLimitTitle = document.querySelector("#loading-limit-title");
 const currentTabTitle = document.querySelector("#current-tab-title");
 const toast = document.querySelector("#toast");
 const shiftSelect = document.querySelector("[data-shift-select]");
@@ -16,9 +21,12 @@ const businessSlots = document.querySelectorAll("[data-business-slot]");
 const costMaterialInput = document.querySelector("[data-cost-material]");
 const costDescriptionInput = document.querySelector("[data-cost-description]");
 const costUnitInput = document.querySelector("[data-cost-unit]");
+const limitMaterialInput = document.querySelector("[data-limit-material]");
+const limitDescriptionInput = document.querySelector("[data-limit-description]");
+const limitUnitInput = document.querySelector("[data-limit-unit]");
 const trialBatchAction = document.querySelector("[data-trial-batch-action]");
 
-window.prototypeAppVersion = "20260524-split-positive-qty-v1";
+window.prototypeAppVersion = "20260526-modal-title-v1";
 
 const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],
@@ -38,6 +46,18 @@ const materialInfo = {
   "20000003": {
     description: "木片 桉木 中国 海南",
     unit: "TO"
+  },
+  "1000000067": {
+    description: "阴离子聚丙烯酰胺（工业用）",
+    unit: "KG"
+  },
+  "1000000023": {
+    description: "聚合氯化铝PAC AL2O3含量≥10% 工业级",
+    unit: "KG"
+  },
+  "1200000001": {
+    description: "化学浆用生石灰 CAO含量≥90% 二氧化硅含量≤1.2%",
+    unit: "KG"
   }
 };
 
@@ -93,6 +113,50 @@ function updateMaterialInfo() {
   costUnitInput.value = info?.unit || "";
 }
 
+function updateLimitMaterialInfo() {
+  if (!limitMaterialInput || !limitDescriptionInput || !limitUnitInput) return;
+  const info = materialInfo[limitMaterialInput.value.trim()];
+  limitDescriptionInput.value = info?.description || "";
+  limitUnitInput.value = info?.unit || "";
+}
+
+const buttonIcons = {
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>',
+  plus: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>',
+  download: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>',
+  upload: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"></path><path d="m7 8 5-5 5 5"></path><path d="M5 21h14"></path></svg>',
+  reset: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v7h7"></path></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 6-11 11-5-5"></path></svg>',
+  close: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>',
+  save: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path><path d="M17 21v-8H7v8"></path><path d="M7 3v5h8"></path></svg>',
+  play: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7Z"></path></svg>'
+};
+
+function getButtonIconName(text) {
+  if (text.includes("查询")) return "search";
+  if (text.includes("新增")) return "plus";
+  if (text.includes("下载")) return "download";
+  if (text.includes("导入")) return "upload";
+  if (text.includes("重置") || text.includes("重新")) return "reset";
+  if (text.includes("保存")) return "save";
+  if (text.includes("取消") || text.includes("关闭")) return "close";
+  if (text.includes("执行")) return "play";
+  if (text.includes("确认") || text.includes("确定")) return "check";
+  return "";
+}
+
+function decorateButtonIcons() {
+  document.querySelectorAll(".btn").forEach((button) => {
+    if (button.querySelector(".btn-icon")) return;
+    const iconName = getButtonIconName(button.textContent.trim());
+    if (!iconName) return;
+    const icon = document.createElement("span");
+    icon.className = "btn-icon";
+    icon.innerHTML = buttonIcons[iconName];
+    button.prepend(icon);
+  });
+}
+
 function parseAmount(value) {
   const parsed = Number(String(value || "").replace(/,/g, "").trim());
   return Number.isFinite(parsed) ? parsed : 0;
@@ -142,7 +206,12 @@ function getTrialRowCheckboxes() {
 function updateTrialBatchActionLabel() {
   if (!trialBatchAction) return;
   const selectedCount = getTrialRowCheckboxes().filter((checkbox) => checkbox.checked).length;
-  trialBatchAction.textContent = selectedCount > 0 ? `执行试算+${selectedCount}` : "执行试算";
+  const label = selectedCount > 0 ? `执行试算+${selectedCount}` : "执行试算";
+  const icon = trialBatchAction.querySelector(".btn-icon");
+  trialBatchAction.textContent = label;
+  if (icon) {
+    trialBatchAction.prepend(icon);
+  }
 }
 
 function updateTrialSelectAllState() {
@@ -229,12 +298,38 @@ document.querySelectorAll("[data-open-operation-cost]").forEach((button) => {
   button.addEventListener("click", () => {
     const row = button.closest("tr");
     const cells = row ? Array.from(row.children) : [];
-    if (cells.length && costMaterialInput) {
-      costMaterialInput.value = cells[0].textContent.trim();
+    if (operationCostTitle) {
+      operationCostTitle.textContent = cells.length ? "修改作业成本" : "新增作业成本";
+    }
+    if (costMaterialInput) {
+      costMaterialInput.value = cells.length ? cells[0].textContent.trim() : "";
       updateMaterialInfo();
     }
     openModal(operationCostModal);
   });
+});
+
+document.querySelectorAll("[data-open-loading-limit]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const row = button.closest("tr");
+    const cells = row ? Array.from(row.children) : [];
+    if (loadingLimitTitle) {
+      loadingLimitTitle.textContent = cells.length ? "修改装载限制" : "新增装载限制";
+    }
+    if (limitMaterialInput) {
+      limitMaterialInput.value = cells.length ? cells[0].textContent.trim() : "";
+      updateLimitMaterialInfo();
+    }
+    openModal(loadingLimitModal);
+  });
+});
+
+document.querySelectorAll("[data-open-operation-cost-import]").forEach((button) => {
+  button.addEventListener("click", () => openModal(operationCostImportModal));
+});
+
+document.querySelectorAll("[data-open-loading-limit-import]").forEach((button) => {
+  button.addEventListener("click", () => openModal(loadingLimitImportModal));
 });
 
 document.querySelectorAll("[data-open-source-result]").forEach((button) => {
@@ -251,6 +346,14 @@ if (costMaterialInput) {
   costMaterialInput.addEventListener("change", updateMaterialInfo);
   updateMaterialInfo();
 }
+
+if (limitMaterialInput) {
+  limitMaterialInput.addEventListener("input", updateLimitMaterialInfo);
+  limitMaterialInput.addEventListener("change", updateLimitMaterialInfo);
+  updateLimitMaterialInfo();
+}
+
+decorateButtonIcons();
 
 document.querySelectorAll("[data-close-modal]").forEach((button) => {
   button.addEventListener("click", () => closeModal(button.closest(".modal-backdrop")));
