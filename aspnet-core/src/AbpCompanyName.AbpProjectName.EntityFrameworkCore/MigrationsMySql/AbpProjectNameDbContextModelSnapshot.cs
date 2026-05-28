@@ -183,6 +183,282 @@ namespace AbpCompanyName.AbpProjectName.MigrationsMySql
                     b.ToTable("AbpAuditLogs");
                 });
 
+            modelBuilder.Entity("AbpCompanyName.AbpProjectName.MaterialRequisitions.DeliveryDemand", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DeliveryTimeSlot")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("DemandNo")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("LastDeliveryDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long>("MaterialRequisitionHeaderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ReceiptStorageLocation")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<string>("RequisitionNo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DemandNo")
+                        .IsUnique();
+
+                    b.HasIndex("MaterialRequisitionHeaderId");
+
+                    b.HasIndex("RequisitionNo");
+
+                    b.ToTable("DeliveryDemands");
+                });
+
+            modelBuilder.Entity("AbpCompanyName.AbpProjectName.MaterialRequisitions.DeliveryDemandLine", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("DemandQuantity")
+                        .HasColumnType("decimal(18,3)");
+
+                    b.Property<long>("DeliveryDemandId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LineNo")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<long>("MaterialRequisitionLineId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("RequisitionNo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeliveryDemandId");
+
+                    b.HasIndex("MaterialRequisitionLineId");
+
+                    b.HasIndex("RequisitionNo", "LineNo");
+
+                    b.ToTable("DeliveryDemandLines");
+                });
+
+            modelBuilder.Entity("AbpCompanyName.AbpProjectName.MaterialRequisitions.MaterialRequisitionHeader", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("ApplicantNo")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("ApplicantPhone")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("DeliveryMethod")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("IssueFactory")
+                        .HasMaxLength(4)
+                        .HasColumnType("varchar(4)");
+
+                    b.Property<bool>("IsDeliveryRequired")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("RequisitionDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("RequisitionFactory")
+                        .IsRequired()
+                        .HasMaxLength(4)
+                        .HasColumnType("varchar(4)");
+
+                    b.Property<string>("RequisitionNo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("SapMessageId")
+                        .HasMaxLength(64)
+                        .HasColumnType("varchar(64)");
+
+                    b.Property<string>("SourceConfirmStatus")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("SpecialStock")
+                        .HasMaxLength(1)
+                        .HasColumnType("varchar(1)");
+
+                    b.Property<string>("SplitStatus")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequisitionNo")
+                        .IsUnique();
+
+                    b.ToTable("MaterialRequisitionHeaders");
+                });
+
+            modelBuilder.Entity("AbpCompanyName.AbpProjectName.MaterialRequisitions.MaterialRequisitionLine", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Batch")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("CertificationType")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("LineNo")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<string>("MaterialNo")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar(40)");
+
+                    b.Property<long>("MaterialRequisitionHeaderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18,3)");
+
+                    b.Property<string>("ReceiptStorageLocation")
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
+
+                    b.Property<string>("Remark")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<DateTime?>("RequiredDeliveryDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("RequiredDeliveryTimeSlot")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("RequisitionNo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("SpecialStock")
+                        .HasMaxLength(1)
+                        .HasColumnType("varchar(1)");
+
+                    b.Property<string>("Unit")
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MaterialRequisitionHeaderId");
+
+                    b.HasIndex("RequisitionNo", "LineNo")
+                        .IsUnique();
+
+                    b.ToTable("MaterialRequisitionLines");
+                });
+
             modelBuilder.Entity("Abp.Authorization.PermissionSetting", b =>
                 {
                     b.Property<long>("Id")
@@ -1862,6 +2138,47 @@ namespace AbpCompanyName.AbpProjectName.MigrationsMySql
                     b.Navigation("LastModifierUser");
                 });
 
+            modelBuilder.Entity("AbpCompanyName.AbpProjectName.MaterialRequisitions.DeliveryDemand", b =>
+                {
+                    b.HasOne("AbpCompanyName.AbpProjectName.MaterialRequisitions.MaterialRequisitionHeader", "Header")
+                        .WithMany("DeliveryDemands")
+                        .HasForeignKey("MaterialRequisitionHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Header");
+                });
+
+            modelBuilder.Entity("AbpCompanyName.AbpProjectName.MaterialRequisitions.DeliveryDemandLine", b =>
+                {
+                    b.HasOne("AbpCompanyName.AbpProjectName.MaterialRequisitions.DeliveryDemand", "DeliveryDemand")
+                        .WithMany("Lines")
+                        .HasForeignKey("DeliveryDemandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AbpCompanyName.AbpProjectName.MaterialRequisitions.MaterialRequisitionLine", "MaterialRequisitionLine")
+                        .WithMany("DeliveryDemandLines")
+                        .HasForeignKey("MaterialRequisitionLineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DeliveryDemand");
+
+                    b.Navigation("MaterialRequisitionLine");
+                });
+
+            modelBuilder.Entity("AbpCompanyName.AbpProjectName.MaterialRequisitions.MaterialRequisitionLine", b =>
+                {
+                    b.HasOne("AbpCompanyName.AbpProjectName.MaterialRequisitions.MaterialRequisitionHeader", "Header")
+                        .WithMany("Lines")
+                        .HasForeignKey("MaterialRequisitionHeaderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Header");
+                });
+
             modelBuilder.Entity("AbpCompanyName.AbpProjectName.MultiTenancy.Tenant", b =>
                 {
                     b.HasOne("AbpCompanyName.AbpProjectName.Authorization.Users.User", "CreatorUser")
@@ -1958,6 +2275,23 @@ namespace AbpCompanyName.AbpProjectName.MigrationsMySql
                     b.Navigation("Settings");
 
                     b.Navigation("Tokens");
+                });
+
+            modelBuilder.Entity("AbpCompanyName.AbpProjectName.MaterialRequisitions.DeliveryDemand", b =>
+                {
+                    b.Navigation("Lines");
+                });
+
+            modelBuilder.Entity("AbpCompanyName.AbpProjectName.MaterialRequisitions.MaterialRequisitionHeader", b =>
+                {
+                    b.Navigation("DeliveryDemands");
+
+                    b.Navigation("Lines");
+                });
+
+            modelBuilder.Entity("AbpCompanyName.AbpProjectName.MaterialRequisitions.MaterialRequisitionLine", b =>
+                {
+                    b.Navigation("DeliveryDemandLines");
                 });
 #pragma warning restore 612, 618
         }

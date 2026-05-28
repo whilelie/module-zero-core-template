@@ -55,6 +55,21 @@ export const appRouters: Array<Router> = [{
         { path: 'role', permission: 'Pages.Roles', meta: { title: 'Roles' }, name: 'role', component: () => import('../views/setting/role/role.vue') },
         { path: 'tenant', permission: 'Pages.Tenants', meta: { title: 'Tenants' }, name: 'tenant', component: () => import('../views/setting/tenant/tenant.vue') }
     ]
+}, {
+    path: '/material-requisition',
+    name: 'materialRequisition',
+    permission: '',
+    meta: { title: '领用配送' },
+    icon: '&#xe6b9;',
+    component: main,
+    children: [
+        {
+            path: 'create',
+            meta: { title: '创建领料配送需求' },
+            name: 'materialRequisitionCreate',
+            component: () => import('../views/material-requisition/create.vue')
+        }
+    ]
 }]
 export const routers = [
     loginRouter,
