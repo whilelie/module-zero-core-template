@@ -103,7 +103,7 @@
         </Card>
 
         <Modal v-model="splitModalVisible" title="拆解配送需求" width="1280" :mask-closable="false">
-            <div v-if="splitInfo && splitInfo.header">
+            <div v-if="splitInfo && splitInfo.header" class="split-modal-body">
                 <Card dis-hover>
                     <p slot="title">领料单信息</p>
                     <Row :gutter="16">
@@ -115,7 +115,67 @@
 
                 <Card dis-hover class="margin-top-10">
                     <p slot="title">已有拆解记录明细</p>
-                    <Table :columns="existingDemandColumns" :data="existingDemandRows" border size="small" />
+                    <div class="split-table-wrap">
+                        <table class="split-data-table existing-demand-table">
+                        <colgroup>
+                            <col style="width:230px" />
+                            <col style="width:80px" />
+                            <col style="width:130px" />
+                            <col style="width:90px" />
+                            <col style="width:70px" />
+                            <col style="width:120px" />
+                            <col style="width:120px" />
+                            <col style="width:90px" />
+                            <col style="width:130px" />
+                            <col style="width:100px" />
+                            <col style="width:180px" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>配送需求单号</th>
+                                <th>行项目</th>
+                                <th>物料</th>
+                                <th>本次数量</th>
+                                <th>单位</th>
+                                <th>收货库存地点</th>
+                                <th>配送日期</th>
+                                <th>配送时段</th>
+                                <th>最后配送日期</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-if="existingDemandRows.length === 0">
+                                <td colspan="11" class="empty-cell">暂无数据</td>
+                            </tr>
+                            <tr v-for="row in existingDemandRows" :key="row.deliveryDemandLineId || row.deliveryDemandId">
+                                <td>{{ row.demandNo }}</td>
+                                <td>{{ row.lineNo }}</td>
+                                <td>{{ row.materialNo }}</td>
+                                <td>{{ row.demandQuantity }}</td>
+                                <td>{{ row.unit }}</td>
+                                <td>{{ row.receiptStorageLocation }}</td>
+                                <td>{{ row.deliveryDate }}</td>
+                                <td>{{ row.deliveryTimeSlot }}</td>
+                                <td>{{ row.lastDeliveryDate }}</td>
+                                <td v-if="row.isDemandFirstRow" :rowspan="row.demandRowspan">
+                                    <Tag :color="row.status === '草稿' ? 'warning' : row.status === '已确认' ? 'success' : 'default'">
+                                        {{ row.status || '-' }}
+                                    </Tag>
+                                </td>
+                                <td v-if="row.isDemandFirstRow" :rowspan="row.demandRowspan">
+                                    <template v-if="row.status === '草稿'">
+                                        <Button type="primary" size="small" @click="editDraft(row.deliveryDemandId)">修改</Button>
+                                        <Button type="success" size="small" class="row-action-btn" @click="confirmDraft(row.deliveryDemandId)">确认</Button>
+                                        <Button type="error" size="small" class="row-action-btn" @click="cancelDraft(row.deliveryDemandId)">撤销</Button>
+                                    </template>
+                                    <span v-else>-</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
                 </Card>
 
                 <Card dis-hover class="margin-top-10">
@@ -148,7 +208,49 @@
                             </Col>
                         </Row>
                     </Form>
-                    <Table class="split-lines-table" :columns="splitLineColumns" :data="splitLines" border size="small" />
+                    <div class="split-table-wrap">
+                        <table class="split-data-table split-lines-table">
+                        <colgroup>
+                            <col style="width:90px" />
+                            <col style="width:140px" />
+                            <col style="width:100px" />
+                            <col style="width:100px" />
+                            <col style="width:90px" />
+                            <col style="width:140px" />
+                            <col style="width:130px" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>行项目</th>
+                                <th>物料</th>
+                                <th>申请数量</th>
+                                <th>待拆数量</th>
+                                <th>基本单位</th>
+                                <th>本次数量</th>
+                                <th>配送需求单号</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="line in splitLines" :key="line.id">
+                                <td>{{ line.lineNo }}</td>
+                                <td>{{ line.materialNo }}</td>
+                                <td>{{ line.quantity }}</td>
+                                <td>{{ line.remainingQuantity }}</td>
+                                <td>{{ line.unit }}</td>
+                                <td>
+                                    <input
+                                        v-model.number="line.demandQuantity"
+                                        class="ivu-input split-quantity-input"
+                                        type="number"
+                                        min="0"
+                                        :max="line.remainingQuantity"
+                                        step="0.001" />
+                                </td>
+                                <td>系统生成</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
                 </Card>
             </div>
             <div slot="footer">
@@ -218,10 +320,12 @@ export default class MaterialRequisitionCreate extends AbpBase {
 
         let rows: Array<any> = [];
         this.splitInfo.existingDemands.forEach((demand: any) => {
-            demand.lines.forEach((line: any) => {
+            demand.lines.forEach((line: any, index: number) => {
                 rows.push({
                     deliveryDemandId: demand.id,
                     deliveryDemandLineId: line.id,
+                    isDemandFirstRow: index === 0,
+                    demandRowspan: demand.lines.length,
                     demandNo: demand.demandNo,
                     lineNo: line.lineNo,
                     materialNo: line.materialNo,
@@ -307,96 +411,6 @@ export default class MaterialRequisitionCreate extends AbpBase {
                 }, '拆解配送需求');
             }
         }
-    ];
-
-    existingDemandColumns: Array<any> = [
-        { title: '配送需求单号', key: 'demandNo', width: 160 },
-        { title: '行项目', key: 'lineNo', width: 80 },
-        { title: '物料', key: 'materialNo', width: 120 },
-        { title: '本次数量', key: 'demandQuantity', width: 100 },
-        { title: '单位', key: 'unit', width: 70 },
-        { title: '收货库存地点', key: 'receiptStorageLocation', width: 120 },
-        { title: '配送日期', key: 'deliveryDate', width: 120 },
-        { title: '配送时段', key: 'deliveryTimeSlot', width: 90 },
-        { title: '最后配送日期', key: 'lastDeliveryDate', width: 120 },
-        {
-            title: '状态',
-            key: 'status',
-            width: 100,
-            fixed: 'right',
-            render: (h: any, params: any) => {
-                const color = params.row.status === '草稿' ? 'warning' : params.row.status === '已确认' ? 'success' : 'default';
-                return h('Tag', { props: { color: color } }, params.row.status || '-');
-            }
-        },
-        {
-            title: '操作',
-            key: 'actions',
-            width: 180,
-            fixed: 'right',
-            render: (h: any, params: any) => {
-                if (params.row.status !== '草稿') {
-                    return h('span', '-');
-                }
-                return h('div', [
-                    h('Button', {
-                        props: { type: 'primary', size: 'small' },
-                        on: { click: () => this.editDraft(params.row.deliveryDemandId) }
-                    }, '修改'),
-                    h('Button', {
-                        props: { type: 'success', size: 'small' },
-                        style: { marginLeft: '4px' },
-                        on: { click: () => this.confirmDraft(params.row.deliveryDemandId) }
-                    }, '确认'),
-                    h('Button', {
-                        props: { type: 'error', size: 'small' },
-                        style: { marginLeft: '4px' },
-                        on: { click: () => this.cancelDraftLine(params.row.deliveryDemandLineId) }
-                    }, '撤销')
-                ]);
-            }
-        }
-    ];
-
-    splitLineColumns: Array<any> = [
-        { title: '行项目', key: 'lineNo', width: 90 },
-        { title: '物料', key: 'materialNo', width: 130 },
-        { title: '申请数量', key: 'quantity', width: 100 },
-        { title: '待拆数量', key: 'remainingQuantity', width: 100 },
-        { title: '基本单位', key: 'unit', width: 90 },
-        {
-            title: '本次数量',
-            key: 'demandQuantity',
-            width: 150,
-            render: (h: any, params: any) => {
-                const updateQuantity = (value: any) => {
-                    const quantity = value === '' || value === null || isNaN(Number(value)) ? 0 : Number(value);
-                    params.row.demandQuantity = quantity;
-                    const line = this.splitLines.find((x: any) => x.id === params.row.id);
-                    if (line) {
-                        line.demandQuantity = quantity;
-                    }
-                };
-                return h('input', {
-                    class: 'ivu-input split-quantity-input',
-                    attrs: {
-                        type: 'number',
-                        min: 0,
-                        max: params.row.remainingQuantity,
-                        step: '0.001'
-                    },
-                    domProps: {
-                        value: params.row.demandQuantity
-                    },
-                    on: {
-                        input: (event: any) => updateQuantity(event.target.value),
-                        change: (event: any) => updateQuantity(event.target.value),
-                        blur: (event: any) => updateQuantity(event.target.value)
-                    }
-                });
-            }
-        },
-        { title: '配送需求单号', key: 'demandNo', render: (h: any) => h('span', '系统生成') }
     ];
 
     async created() {
@@ -514,7 +528,6 @@ export default class MaterialRequisitionCreate extends AbpBase {
     }
 
     async submitSplit(action: string, message: string) {
-        this.syncVisibleDemandQuantities();
         if (!this.validateSplit()) {
             return;
         }
@@ -561,7 +574,6 @@ export default class MaterialRequisitionCreate extends AbpBase {
     }
 
     buildSplitInput() {
-        this.syncVisibleDemandQuantities();
         return {
             deliveryDemandId: this.editingDeliveryDemandId,
             materialRequisitionHeaderId: this.splitInfo.header.id,
@@ -578,19 +590,6 @@ export default class MaterialRequisitionCreate extends AbpBase {
                     };
                 })
         };
-    }
-
-    syncVisibleDemandQuantities() {
-        const inputs = this.$el.querySelectorAll('.split-lines-table input');
-        inputs.forEach((input: Element, index: number) => {
-            if (!this.splitLines[index]) {
-                return;
-            }
-            const value = Number((input as HTMLInputElement).value);
-            if (!isNaN(value)) {
-                this.splitLines[index].demandQuantity = value;
-            }
-        });
     }
 
     findExistingDemand(deliveryDemandId: number) {
@@ -655,7 +654,87 @@ export default class MaterialRequisitionCreate extends AbpBase {
     margin-top: 10px;
 }
 
-.material-requisition-page .split-quantity-input {
+.material-requisition-page .split-modal-body {
+    max-height: 68vh;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.material-requisition-page .split-table-wrap {
     width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.material-requisition-page .split-data-table {
+    width: 100%;
+    min-width: 1100px;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background: #fff;
+}
+
+.material-requisition-page .split-data-table th,
+.material-requisition-page .split-data-table td {
+    border: 1px solid #e8eaec;
+    min-height: 40px;
+    padding: 8px;
+    text-align: left;
+    vertical-align: middle;
+    color: #515a6e;
+    line-height: 1.4;
+    word-break: normal;
+}
+
+.material-requisition-page .split-data-table th {
+    background: #f8f8f9;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.material-requisition-page .existing-demand-table {
+    min-width: 1320px;
+}
+
+.material-requisition-page .existing-demand-table th,
+.material-requisition-page .existing-demand-table td {
+    height: 44px;
+    white-space: nowrap;
+    overflow-wrap: normal;
+}
+
+.material-requisition-page .existing-demand-table th:first-child,
+.material-requisition-page .existing-demand-table td:first-child {
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+    overflow-wrap: normal !important;
+}
+
+.material-requisition-page .existing-demand-table th:last-child,
+.material-requisition-page .existing-demand-table td:last-child {
+    white-space: nowrap;
+    text-align: center;
+}
+
+.material-requisition-page .existing-demand-table td[rowspan] {
+    vertical-align: middle;
+}
+
+.material-requisition-page .existing-demand-table td[rowspan]:last-child {
+    min-width: 180px;
+}
+
+.material-requisition-page .existing-demand-table .empty-cell {
+    color: #808695;
+    text-align: center;
+}
+
+.material-requisition-page .existing-demand-table .row-action-btn {
+    margin-left: 4px;
+}
+
+.material-requisition-page .split-lines-table .split-quantity-input {
+    width: 100%;
+    min-width: 90px;
 }
 </style>
