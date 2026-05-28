@@ -1,0 +1,32 @@
+{
+	"IS_BASEINFO": {
+		"MSGID": "051ca1c313a976a579f34761847s4e1e",
+		"LANGUAGE": 1,
+		"S_SYSTEM_CODE": "WCT",
+		"S_SYSTEM_NAME": "WCT",
+		"SERVICENAME": "SI_LM_WCTBookingInfo_OUT_Syn",
+		"SENDTIME": 20260204095750,
+		"T_SYSTEMLIST": {
+			"T_SYSTEM_CODE": "ERP",
+			"T_SYSTEM_NAME": "ERP"
+		}
+	},
+    "IS_MESSAGE": {
+      "IT_WERKS": [
+        {
+          "WERKS": "X"
+        },
+        {
+          "WERKS": "X"
+        }
+      ],
+      "IT_MATNR": [
+        {
+          "MATNR": "X"
+        },
+        {
+          "MATNR": "X"
+        }
+      ]
+    }
+}

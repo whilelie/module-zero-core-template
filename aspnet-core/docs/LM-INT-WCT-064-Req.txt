@@ -1,0 +1,60 @@
+{
+	"IS_BASEINFO": {
+		"MSGID": "051ca1c313a976a579f34761847s4e1e",
+		"LANGUAGE": 1,
+		"S_SYSTEM_CODE": "ERP",
+		"S_SYSTEM_NAME": "ERP",
+		"SERVICENAME": "SI_LM_MaterialRequisition_OUT_Syn",
+		"SENDTIME": 20260204095750,
+		"T_SYSTEMLIST": {
+			"T_SYSTEM_CODE": "WCT",
+			"T_SYSTEM_NAME": "WCT"
+		}
+	},
+    "IS_MESSAGE": {
+      "IT_DATA": [
+        {
+          "WERKS1": "X",
+          "WERKS2": "X",
+          "LLSQD": "X",
+          "LLPOS": "X",
+          "MATNR": "X",
+          "MENGE": "X",
+          "MEINS": "X",
+          "CHARG": "X",
+          "RZZL": "X",
+          "UMLGO": "X",
+          "LLSQRQ": "X",
+          "SFPS": "X",
+          "ZPSFS": "X",
+          "PSRQ": "X",
+          "ZPSSJD": "X",
+          "PERNR": "X",
+          "TELNR": "X",
+          "BEIZHU": "X",
+          "SOBKZ": "X"
+        },
+        {
+          "WERKS1": "X",
+          "WERKS2": "X",
+          "LLSQD": "X",
+          "LLPOS": "X",
+          "MATNR": "X",
+          "MENGE": "X",
+          "MEINS": "X",
+          "CHARG": "X",
+          "RZZL": "X",
+          "UMLGO": "X",
+          "LLSQRQ": "X",
+          "SFPS": "X",
+          "ZPSFS": "X",
+          "PSRQ": "X",
+          "ZPSSJD": "X",
+          "PERNR": "X",
+          "TELNR": "X",
+          "BEIZHU": "X",
+          "SOBKZ": "X"
+        }
+      ]
+    }
+}

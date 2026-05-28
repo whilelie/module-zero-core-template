@@ -1,0 +1,15 @@
+{
+	"ES_BASEINFO": {
+		"MSGID": "321a7c12e57as834d3a816f4890pa96c",
+		"LANGUAGE": 1,
+		"T_SYSTEM": "ERP",
+		"SERVICENAME": "SI_WCT_MaterialRequisition_IN_Syn",
+		"SENDTIME": 20260204095750,
+		"STATE": "S",
+		"SHIORTLOG": "成功"
+	},
+	"ES_MESSAGE": {
+		"TYPE": "X",
+		"MESSAGE": "X"
+	}
+}

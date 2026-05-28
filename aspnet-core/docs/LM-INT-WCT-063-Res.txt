@@ -1,0 +1,57 @@
+{
+	"ES_BASEINFO": {
+		"MSGID": "321a7c12e57as834d3a816f4890pa96c",
+		"LANGUAGE": 1,
+		"T_SYSTEM": "WCT",
+		"SERVICENAME": "SI_ERP_GetWCTStockInfo_IN_Syn",
+		"SENDTIME": 20260204095750,
+		"STATE": "S",
+		"SHIORTLOG": "成功"
+	},
+	"ES_MESSAGE": {
+      "ES_DATA": [
+        {
+          "WERKS": "X",
+          "MATNR": "X",
+          "LGORT": "X",
+          "CHARG": "X",
+          "BESTQ": "X",
+          "GESME": "X",
+          "MEINS": "X",
+          "LGNUM": "X",
+          "LGTYP": "X",
+          "SOBKZ": "X",
+          "SONUM": "X",
+          "RZZL": "X",
+          "LWEDT": "X",
+          "VBELN": "X",
+          "MTMD_DQR": "X",
+          "YQYZ_FEE": "X",
+          "ZZDATE": "X",
+          "ZNOCHK": "X",
+          "JYSJ": "X"
+        },
+        {
+          "WERKS": "X",
+          "MATNR": "X",
+          "LGORT": "X",
+          "CHARG": "X",
+          "BESTQ": "X",
+          "GESME": "X",
+          "MEINS": "X",
+          "LGNUM": "X",
+          "LGTYP": "X",
+          "SOBKZ": "X",
+          "SONUM": "X",
+          "RZZL": "X",
+          "LWEDT": "X",
+          "VBELN": "X",
+          "MTMD_DQR": "X",
+          "YQYZ_FEE": "X",
+          "ZZDATE": "X",
+          "ZNOCHK": "X",
+          "JYSJ": "X"
+        }
+      ]
+    }
+}
