@@ -4,12 +4,24 @@ CREATE TABLE `material_requisition` (
   `C_REQUISITION_NO` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '领料单号',
   `C_REQUISITION_FACTORY` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '领料工厂',
   `C_ISSUE_FACTORY` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '发货工厂',
+  `C_MES_LGPLA` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'MES仓位',
   `D_REQUISITION_DATE` datetime DEFAULT NULL COMMENT '领料单创建日期',
   `N_IS_DELIVERY_REQUIRED` tinyint(1) NOT NULL COMMENT '是否需要配送',
   `C_DELIVERY_METHOD` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '配送方式（A：单次配送，B：多次配送）',
   `C_APPLICANT_NO` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '申请人编号',
   `C_APPLICANT_PHONE` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '申请人电话',
   `C_SPECIAL_STOCK` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '特殊库存标识',
+  `C_LINE_NO` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '行号',
+  `C_MATERIAL_NO` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '物料号',
+  `N_QUANTITY` decimal(18,3) NOT NULL COMMENT '领用数量',
+  `C_UNIT` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '计量单位',
+  `C_BATCH` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '批次',
+  `C_CERTIFICATION_TYPE` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '认证种类',
+  `C_REMARK` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  `C_RECEIPT_STORAGE_LOCATION` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '收货库存地点',
+  `D_DELIVERY_DATE` datetime DEFAULT NULL COMMENT '配送日期',
+  `C_DELIVERY_TIME_SLOT` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '配送时间段',
+  `D_LAST_DELIVERY_DATE` datetime DEFAULT NULL COMMENT '最后配送日期',
   `C_SPLIT_STATUS` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '拆分状态（0：未拆解 1：部分拆解 2：已全部拆解 -1：不处理）',
   `C_SOURCE_CONFIRM_STATUS` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '货源确认状态（0：未确认 1：部分已确认 2：全部已确认 -1：不处理）',
   `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
@@ -17,7 +29,7 @@ CREATE TABLE `material_requisition` (
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
   `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`C_ID`),
-  UNIQUE KEY `UK_C_REQUISITION_NO` (`C_REQUISITION_NO`)
+  UNIQUE KEY `UK_C_REQUISITION_NO` (`C_REQUISITION_NO`,`C_LINE_NO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='领料单';
 
 
@@ -46,10 +58,12 @@ CREATE TABLE `delivery_demand` (
   `C_REQUISITION_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '领料单主键',
   `C_DEMAND_NO` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '需求单号',
   `C_REQUISITION_NO` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '领料单号',
-  `C_RECEIPT_STORAGE_LOCATION` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '收货库存地点',
-  `D_DELIVERY_DATE` datetime NOT NULL COMMENT '配送日期',
-  `C_DELIVERY_TIME_SLOT` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '配送时间段',
-  `D_LAST_DELIVERY_DATE` datetime NOT NULL COMMENT '最后配送日期',
+  `C_RECEIPT_STORAGE_LOCATION` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '收货库存地点',
+  `D_DELIVERY_DATE` datetime DEFAULT NULL COMMENT '配送日期',
+  `C_DELIVERY_TIME_SLOT` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '配送时间段',
+  `D_LAST_DELIVERY_DATE` datetime DEFAULT NULL COMMENT '最后配送日期',
+  `N_DEMAND_QUANTITY` decimal(18,3) NOT NULL COMMENT '配送需求数量',
+  `C_STATUS` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '单据状态（0：草稿 1：已确认 2：已取消）',
   `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
   `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
@@ -65,7 +79,6 @@ CREATE TABLE `delivery_demand_detail` (
   `C_REQUISITION_DETAIL_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '领料单行项目ID',
   `C_REQUISITION_NO` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '领料单号',
   `C_LINE_NO` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '行号',
-  `C_STATUS` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '单据状态（0：草稿 1：已确认 2：已取消）',
   `N_DEMAND_QUANTITY` decimal(18,3) NOT NULL COMMENT '配送需求数量',
   `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
   `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
@@ -113,6 +126,7 @@ CREATE TABLE `source_trial_inventory_source` (
   `C_TRIAL_BATCH_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '试算批次ID',
   `C_SOURCE_TYPE` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '货源类型（1：厂内资材库 2：码头仓库）',
   `C_SOURCE_NO` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '货源标识',
+  `D_USABLE_TIME` datetime DEFAULT NULL COMMENT '库存可使用时间',
   `N_AVAILABLE_QUANTITY` decimal(18,3) NOT NULL COMMENT '可供量',
   `N_DELAY_COST` decimal(18,2) DEFAULT NULL COMMENT '延滞成本',
   `N_OPERATION_COST` decimal(18,2) DEFAULT NULL COMMENT '作业成本',
@@ -151,6 +165,7 @@ CREATE TABLE `source_trial_supplier_source` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
   `C_TRIAL_BATCH_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '试算批次ID',
   `C_SOURCE_NO` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '货源标识',
+  `D_USABLE_TIME` datetime DEFAULT NULL COMMENT '库存可使用时间',
   `N_AVAILABLE_QUANTITY` decimal(18,3) NOT NULL COMMENT '可供量',
   `N_OPERATION_COST` decimal(18,2) DEFAULT NULL COMMENT '作业成本',
   `C_YYSHD` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '预约送货单号',
@@ -218,7 +233,6 @@ CREATE TABLE `source_trial_allocation_result` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
   `C_TRIAL_BATCH_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '试算批次ID',
   `C_DELIVERY_DEMAND_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '配送需求ID',
-  `C_DELIVERY_DEMAND_DETAIL_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '配送需求行ID',
   `C_SOURCE_TYPE` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '货源类型（1：厂内资材库 2：码头仓库 3：供应商送货）',
   `C_SOURCE_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '货源快照ID',
   `N_SUGGEST_QUANTITY` decimal(18,3) NOT NULL COMMENT '系统建议数量',
@@ -233,8 +247,7 @@ CREATE TABLE `source_trial_allocation_result` (
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
   `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`C_ID`),
-  KEY `IX_RESULT_BATCH` (`C_TRIAL_BATCH_ID`),
-  KEY `IX_RESULT_DEMAND_DETAIL` (`C_DELIVERY_DEMAND_DETAIL_ID`)
+  KEY `IX_RESULT_BATCH` (`C_TRIAL_BATCH_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='货源试算分配结果';
 
 
