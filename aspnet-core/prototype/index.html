@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>领用配送页面原型</title>
-  <link rel="stylesheet" href="./styles.css?v=20260526-modal-title-v1">
+  <link rel="stylesheet" href="./styles.css?v=20260605-split-layout-v1">
 </head>
 <body>
   <header class="app-topbar">
@@ -218,19 +218,28 @@
             </div>
           </div>
           <div class="table-wrap">
-            <table class="expand-table">
+            <table>
               <thead>
                 <tr>
-                  <th class="expand-col">
-                    <button class="expand-btn" data-toggle-all-expanded aria-label="全部展开">＋</button>
-                  </th>
                   <th>领料工厂</th>
                   <th>发料工厂</th>
                   <th>领料申请单号</th>
                   <th>领料申请日期</th>
                   <th>是否配送</th>
                   <th>配送方式</th>
-           
+                  <th>行项目</th>
+                  <th>物料</th>
+                  <th>描述</th>
+                  <th>申请数量</th>
+                  <th>基本单位</th>
+                  <th>批次</th>
+                  <th>认证种类</th>
+                  <th>备注</th>
+                  <th>收货库存地点</th>
+                  <th>MES仓位</th>
+                  <th>配送日期</th>
+                  <th>配送时段</th>
+                  <th>最后配送日期</th>
                   <th>申请人员工号</th>
                   <th>申请人电话</th>
                   <th>特殊库存</th>
@@ -240,15 +249,26 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="summary-row">
-                  <td class="expand-col"><button class="expand-btn" data-expand-row aria-label="展开 1000000137">＋</button></td>
+                <tr>
                   <td>2000</td>
                   <td>2601</td>
                   <td>1000000137</td>
                   <td>2026.05.07</td>
                   <td>是</td>
                   <td><span class="badge blue">多次配送</span></td>
-        
+                  <td>1</td>
+                  <td>1100000021</td>
+                  <td>LNG天然气 热值≥9200Kcal/NM3</td>
+                  <td>100</td>
+                  <td>TO</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>3108</td>
+                  <td>31081</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
                   <td>50000068</td>
                   <td>13612345678</td>
                   <td>Q</td>
@@ -256,45 +276,80 @@
                   <td>部分已确认</td>
                   <td><button class="link-btn" data-open-split>拆解配送需求</button></td>
                 </tr>
-                <tr class="detail-row" hidden>
-                  <td></td>
-                  <td colspan="11">
-                    <div class="detail-card">
-                      <table class="detail-table">
-                        <thead>
-                          <tr>
-                            <th>行项目</th>
-                            <th>物料</th>
-                            <th>描述</th>
-                            <th>申请数量</th>
-                            <th>基本单位</th>
-                            <th>批次</th>
-                            <th>认证种类</th>
-                            <th>备注</th>
-                            <th>收货库存地点</th>
-                            <th>配送日期</th>
-                            <th>配送时段</th>
-                            <th>最后配送日期</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr><td>1</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>100</td><td>TO</td><td>-</td><td>-</td><td>-</td><td>3108</td><td>-</td><td>-</td><td>-</td></tr>
-                          <tr><td>2</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>45</td><td>TO</td><td>-</td><td>-</td><td>-</td><td>3108</td><td>-</td><td>-</td><td>-</td></tr>
-                          <tr><td>3</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>23</td><td>TO</td><td>-</td><td>-</td><td>-</td><td>3108</td><td>-</td><td>-</td><td>-</td></tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </td>
+                <tr>
+                  <td>2000</td>
+                  <td>2601</td>
+                  <td>1000000137</td>
+                  <td>2026.05.07</td>
+                  <td>是</td>
+                  <td><span class="badge blue">多次配送</span></td>
+                  <td>2</td>
+                  <td>20000002</td>
+                  <td>木片 桉木 中国 广西</td>
+                  <td>45</td>
+                  <td>TO</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>3108</td>
+                  <td>31081</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>50000068</td>
+                  <td>13612345678</td>
+                  <td>Q</td>
+                  <td>部分拆解</td>
+                  <td>部分已确认</td>
+                  <td><button class="link-btn" data-open-split>拆解配送需求</button></td>
                 </tr>
-                <tr class="summary-row">
-                  <td class="expand-col"><button class="expand-btn" data-expand-row aria-label="展开 1000000136">＋</button></td>
+                <tr>
+                  <td>2000</td>
+                  <td>2601</td>
+                  <td>1000000137</td>
+                  <td>2026.05.07</td>
+                  <td>是</td>
+                  <td><span class="badge blue">多次配送</span></td>
+                  <td>3</td>
+                  <td>20000003</td>
+                  <td>木片 桉木 中国 海南</td>
+                  <td>23</td>
+                  <td>TO</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>3108</td>
+                  <td>31081</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>50000068</td>
+                  <td>13612345678</td>
+                  <td>Q</td>
+                  <td>部分拆解</td>
+                  <td>部分已确认</td>
+                  <td><button class="link-btn" data-open-split>拆解配送需求</button></td>
+                </tr>
+                <tr>
                   <td>2000</td>
                   <td>2601</td>
                   <td>1000000136</td>
                   <td>2026.05.08</td>
                   <td>是</td>
                   <td><span class="badge green">单次配送</span></td>
-           
+                  <td>1</td>
+                  <td>1100000022</td>
+                  <td>BOG蒸发气 热值≥8800Kcal/NM3</td>
+                  <td>20</td>
+                  <td>NM3</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>3108</td>
+                  <td>31081</td>
+                  <td>2026.05.09</td>
+                  <td>上午</td>
+                  <td>2026.05.10</td>
                   <td>50000067</td>
                   <td>13612345679</td>
                   <td>Q</td>
@@ -302,32 +357,26 @@
                   <td>未确认</td>
                   <td>-</td>
                 </tr>
-                <tr class="detail-row" hidden>
-                  <td></td>
-                  <td colspan="11">
-                    <div class="detail-card">
-                      <table class="detail-table">
-                        <thead>
-                          <tr>
-                            <th>行项目</th><th>物料</th><th>描述</th><th>申请数量</th><th>基本单位</th><th>批次</th><th>认证种类</th><th>备注</th><th>收货库存地点</th><th>配送日期</th><th>配送时段</th><th>最后配送日期</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr><td>1</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>20</td><td>NM3</td><td>-</td><td>-</td><td>-</td><td>3108</td><td>2026.05.09</td><td>上午</td><td>2026.05.10</td></tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="summary-row">
-                  <td class="expand-col"><button class="expand-btn" data-expand-row aria-label="展开 1000000135">＋</button></td>
+                <tr>
                   <td>2000</td>
                   <td>2601</td>
                   <td>1000000135</td>
                   <td>2026.05.09</td>
                   <td>否</td>
                   <td><span class="badge gray">自行领料</span></td>
-    
+                  <td>1</td>
+                  <td>1100000022</td>
+                  <td>BOG蒸发气 热值≥8800Kcal/NM3</td>
+                  <td>19.2</td>
+                  <td>NM3</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>3108</td>
+                  <td>31081</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
                   <td>50000067</td>
                   <td>13612345679</td>
                   <td>Q</td>
@@ -335,32 +384,26 @@
                   <td>不处理</td>
                   <td>-</td>
                 </tr>
-                <tr class="detail-row" hidden>
-                  <td></td>
-                  <td colspan="11">
-                    <div class="detail-card">
-                      <table class="detail-table">
-                        <thead>
-                          <tr>
-                            <th>行项目</th><th>物料</th><th>描述</th><th>申请数量</th><th>基本单位</th><th>批次</th><th>认证种类</th><th>备注</th><th>收货库存地点</th><th>配送日期</th><th>配送时段</th><th>最后配送日期</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr><td>1</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>19.2</td><td>NM3</td><td>-</td><td>-</td><td>-</td><td>3108</td><td>-</td><td>-</td><td>-</td></tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </td>
-                </tr>
-                <tr class="summary-row">
-                  <td class="expand-col"><button class="expand-btn" data-expand-row aria-label="展开 1000000134">＋</button></td>
+                <tr>
                   <td>2000</td>
                   <td>2601</td>
                   <td>1000000134</td>
                   <td>2026.05.06</td>
                   <td>是</td>
                   <td><span class="badge green">单次配送</span></td>
-       
+                  <td>1</td>
+                  <td>1100000022</td>
+                  <td>BOG蒸发气 热值≥8800Kcal/NM3</td>
+                  <td>20</td>
+                  <td>NM3</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>3108</td>
+                  <td>31081</td>
+                  <td>2026.05.07</td>
+                  <td>上午</td>
+                  <td>2026.05.08</td>
                   <td>50000067</td>
                   <td>13612345679</td>
                   <td>Q</td>
@@ -368,28 +411,11 @@
                   <td>全部已确认</td>
                   <td><button class="link-btn" data-open-source-result>查看货源结果</button></td>
                 </tr>
-                <tr class="detail-row" hidden>
-                  <td></td>
-                  <td colspan="11">
-                    <div class="detail-card">
-                      <table class="detail-table">
-                        <thead>
-                          <tr>
-                            <th>行项目</th><th>物料</th><th>描述</th><th>申请数量</th><th>基本单位</th><th>批次</th><th>认证种类</th><th>备注</th><th>收货库存地点</th><th>配送日期</th><th>配送时段</th><th>最后配送日期</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr><td>1</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>20</td><td>NM3</td><td>-</td><td>-</td><td>-</td><td>3108</td><td>2026.05.07</td><td>上午</td><td>2026.05.08</td></tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </td>
-                </tr>
               </tbody>
             </table>
           </div>
           <div class="pagination-bar">
-            <div class="pagination-summary">共 4 条，每页 10 条</div>
+            <div class="pagination-summary">共 6 条，每页 10 条</div>
             <div class="pagination-actions" aria-label="领料单列表分页">
               <button class="page-btn" disabled>上一页</button>
               <button class="page-btn active">1</button>
@@ -428,17 +454,22 @@
             <button class="btn primary" data-scroll-trial data-trial-batch-action>执行试算</button>
           </div>
           <div class="table-wrap">
-            <table class="expand-table">
+            <table>
               <thead>
                 <tr>
-                  <th class="expand-col">
-                    <button class="expand-btn" data-toggle-all-expanded aria-label="全部展开">＋</button>
-                  </th>
                   <th class="select-col"><input type="checkbox" aria-label="全选配送需求"></th>
                   <th>领料工厂</th>
                   <th>发料工厂</th>
                   <th>领料申请单号</th>
                   <th>领料申请日期</th>
+                  <th>行项目</th>
+                  <th>物料</th>
+                  <th>描述</th>
+                  <th>数量</th>
+                  <th>基本单位</th>
+                  <th>批次</th>
+                  <th>认证种类</th>
+                  <th>备注</th>
                   <th>配送需求单号</th>
                   <th>收货库存地点</th>
                   <th>配送日期</th>
@@ -449,133 +480,46 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="summary-row">
-                  <td class="expand-col"><button class="expand-btn" data-expand-row aria-label="展开 DELREQ-20260507-002">＋</button></td>
-                  <td class="select-col"><input type="checkbox" checked aria-label="选择配送需求 DELREQ-20260507-002"></td>
-                  <td>2000</td>
-                  <td>2601</td>
-                  <td>1000000137</td>
-                  <td>2026.05.07</td>
-                  <td>DELREQ-20260507-002</td>
-                  <td>3108</td>
-                  <td>2026.05.08</td>
-                  <td>上午</td>
-                  <td>2026.05.09</td>
-                  <td>未确认</td>
+                <tr>
+                  <td class="select-col"><input type="checkbox" checked aria-label="选择配送需求 DELREQ-20260507-002 行项目 1"></td>
+                  <td>2000</td><td>2601</td><td>1000000137</td><td>2026.05.07</td>
+                  <td>1</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>20</td><td>TO</td><td>-</td><td>-</td><td>-</td>
+                  <td>DELREQ-20260507-002</td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td><td>未确认</td>
                   <td><button class="link-btn" data-scroll-trial>执行试算</button></td>
                 </tr>
-                <tr class="detail-row" hidden>
-                  <td></td>
-                  <td></td>
-                  <td colspan="11">
-                    <div class="detail-card">
-                      <table class="detail-table">
-                        <thead>
-                          <tr>
-                            <th>行项目</th>
-                            <th>物料</th>
-                            <th>描述</th>
-                            <th>数量</th>
-                            <th>基本单位</th>
-                            <th>批次</th>
-                            <th>认证种类</th>
-                            <th>备注</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr><td>1</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>20</td><td>TO</td><td>-</td><td>-</td><td>-</td></tr>
-                          <tr><td>2</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>20</td><td>TO</td><td>-</td><td>-</td><td>-</td></tr>
-                          <tr><td>3</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>20</td><td>TO</td><td>-</td><td>-</td><td>-</td></tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </td>
+                <tr>
+                  <td class="select-col"><input type="checkbox" checked aria-label="选择配送需求 DELREQ-20260507-002 行项目 2"></td>
+                  <td>2000</td><td>2601</td><td>1000000137</td><td>2026.05.07</td>
+                  <td>2</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>20</td><td>TO</td><td>-</td><td>-</td><td>-</td>
+                  <td>DELREQ-20260507-003</td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td><td>未确认</td>
+                  <td><button class="link-btn" data-scroll-trial>执行试算</button></td>
                 </tr>
-                <tr class="summary-row">
-                  <td class="expand-col"><button class="expand-btn" data-expand-row aria-label="展开 DELREQ-20260507-004">＋</button></td>
-                  <td class="select-col"><input type="checkbox" aria-label="选择配送需求 DELREQ-20260507-004"></td>
-                  <td>2000</td>
-                  <td>2601</td>
-                  <td>1000000136</td>
-                  <td>2026.05.08</td>
-                  <td>DELREQ-20260507-004</td>
-                  <td>3108</td>
-                  <td>2026.05.09</td>
-                  <td>上午</td>
-                  <td>2026.05.10</td>
-                  <td>未确认</td>
+                <tr>
+                  <td class="select-col"><input type="checkbox" checked aria-label="选择配送需求 DELREQ-20260507-002 行项目 3"></td>
+                  <td>2000</td><td>2601</td><td>1000000137</td><td>2026.05.07</td>
+                  <td>3</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>20</td><td>TO</td><td>-</td><td>-</td><td>-</td>
+                  <td>DELREQ-20260507-004</td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td><td>未确认</td>
+                  <td><button class="link-btn" data-scroll-trial>执行试算</button></td>
+                </tr>
+                <tr>
+                  <td class="select-col"><input type="checkbox" aria-label="选择配送需求 DELREQ-20260507-004 行项目 1"></td>
+                  <td>2000</td><td>2601</td><td>1000000136</td><td>2026.05.08</td>
+                  <td>1</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>20</td><td>NM3</td><td>-</td><td>-</td><td>-</td>
+                  <td>DELREQ-20260507-005</td><td>3108</td><td>2026.05.09</td><td>上午</td><td>2026.05.10</td><td>未确认</td>
                   <td><button class="link-btn">执行试算</button></td>
                 </tr>
-                <tr class="detail-row" hidden>
-                  <td></td>
-                  <td></td>
-                  <td colspan="11">
-                    <div class="detail-card">
-                      <table class="detail-table">
-                        <thead>
-                          <tr>
-                            <th>行项目</th>
-                            <th>物料</th>
-                            <th>描述</th>
-                            <th>数量</th>
-                            <th>基本单位</th>
-                            <th>批次</th>
-                            <th>认证种类</th>
-                            <th>备注</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr><td>1</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>20</td><td>NM3</td><td>-</td><td>-</td><td>-</td></tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </td>
-                </tr>
-                 <tr class="summary-row">
-                  <td class="expand-col"><button class="expand-btn" data-expand-row aria-label="展开 DELREQ-20260507-005">＋</button></td>
+                <tr>
                   <td class="select-col"></td>
-                  <td>2000</td>
-                  <td>2601</td>
-                  <td>1000000134</td>
-                  <td>2026.05.06</td>
-                  <td>DELREQ-20260507-005</td>
-                  <td>3108</td>
-                  <td>2026.05.07</td>
-                  <td>上午</td>
-                  <td>2026.05.08</td>
-                  <td>已确认</td>
+                  <td>2000</td><td>2601</td><td>1000000134</td><td>2026.05.06</td>
+                  <td>1</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>20</td><td>NM3</td><td>-</td><td>-</td><td>-</td>
+                  <td>DELREQ-20260507-006</td><td>3108</td><td>2026.05.07</td><td>上午</td><td>2026.05.08</td><td>已确认</td>
                   <td><button class="link-btn" data-open-source-result>查看货源结果</button></td>
-                </tr>
-                <tr class="detail-row" hidden>
-                  <td></td>
-                  <td></td>
-                  <td colspan="11">
-                    <div class="detail-card">
-                      <table class="detail-table">
-                        <thead>
-                          <tr>
-                            <th>行项目</th>
-                            <th>物料</th>
-                            <th>描述</th>
-                            <th>数量</th>
-                            <th>基本单位</th>
-                            <th>批次</th>
-                            <th>认证种类</th>
-                            <th>备注</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr><td>1</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>20</td><td>NM3</td><td>-</td><td>-</td><td>-</td></tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <div class="pagination-bar">
-            <div class="pagination-summary">已选择 1 条，共 3 条，每页 10 条</div>
+            <div class="pagination-summary">已选择 3 条，共 5 条，每页 10 条</div>
             <div class="pagination-actions" aria-label="配送需求列表分页">
               <button class="page-btn" disabled>上一页</button>
               <button class="page-btn active">1</button>
@@ -606,8 +550,8 @@
                   </thead>
                   <tbody>
                     <tr><td>DELREQ-20260507-002</td><td>2000</td><td>2601</td><td>1000000137</td><td>1</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>20</td><td>TO</td><td></td><td></td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td></tr>
-                    <tr><td>DELREQ-20260507-002</td><td>2000</td><td>2601</td><td>1000000137</td><td>2</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>20</td><td>TO</td><td></td><td></td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td></tr>
-                    <tr><td>DELREQ-20260507-002</td><td>2000</td><td>2601</td><td>1000000137</td><td>3</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>20</td><td>TO</td><td></td><td></td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td></tr>
+                    <tr><td>DELREQ-20260507-003</td><td>2000</td><td>2601</td><td>1000000137</td><td>2</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>20</td><td>TO</td><td></td><td></td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td></tr>
+                    <tr><td>DELREQ-20260507-004</td><td>2000</td><td>2601</td><td>1000000137</td><td>3</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>20</td><td>TO</td><td></td><td></td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -640,8 +584,8 @@
                   </thead>
                   <tbody>
                     <tr><td>DELREQ-20260507-002</td><td>2601</td><td>1000000137</td><td>1</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td><td>20</td><td><input class="cell-input" value="20"></td><td>TO</td><td></td><td></td><td>10</td><td>10</td><td><span class="badge green">满足</span></td><td><input class="reason-input" value=""></td></tr>
-                    <tr><td>DELREQ-20260507-002</td><td>2601</td><td>1000000137</td><td>2</td><td>20000002</td><td>木片 桉木 中国 广西</td><td><span class="badge green">供应商送货</span></td><td>SUP-20260508-002</td><td>20</td><td><input class="cell-input" value="20"></td><td>TO</td><td></td><td></td><td>8</td><td>8</td><td><span class="badge green">满足</span></td><td><input class="reason-input" value=""></td></tr>
-                    <tr><td>DELREQ-20260507-002</td><td>2601</td><td>1000000137</td><td>3</td><td>20000003</td><td>木片 桉木 中国 海南</td><td><span class="badge amber">码头仓库</span></td><td>SUP-20260508-003</td><td>20</td><td><input class="cell-input" value="0"></td><td>TO</td><td>2026.5.18</td><td>12</td><td>5</td><td>17</td><td><span class="badge gray">未选</span></td><td><input class="reason-input" value="人工改为0，改用厂内库存补足"></td></tr>
+                    <tr><td>DELREQ-20260507-003</td><td>2601</td><td>1000000137</td><td>2</td><td>20000002</td><td>木片 桉木 中国 广西</td><td><span class="badge green">供应商送货</span></td><td>SUP-20260508-002</td><td>20</td><td><input class="cell-input" value="20"></td><td>TO</td><td></td><td></td><td>8</td><td>8</td><td><span class="badge green">满足</span></td><td><input class="reason-input" value=""></td></tr>
+                    <tr><td>DELREQ-20260507-004</td><td>2601</td><td>1000000137</td><td>3</td><td>20000003</td><td>木片 桉木 中国 海南</td><td><span class="badge amber">码头仓库</span></td><td>SUP-20260508-003</td><td>20</td><td><input class="cell-input" value="0"></td><td>TO</td><td>2026.5.18</td><td>12</td><td>5</td><td>17</td><td><span class="badge gray">未选</span></td><td><input class="reason-input" value="人工改为0，改用厂内库存补足"></td></tr>
                   </tbody>
                 </table>
               </div>
@@ -901,36 +845,33 @@
                 <tr><th>配送需求单号</th><th>行项目</th><th>物料</th><th>描述</th><th>本次数量</th><th>收货库存地点</th><th>配送日期</th><th>配送时段</th><th>最后配送日期</th><th>状态</th><th>操作</th></tr>
               </thead>
               <tbody>
-                <tr><td>DELREQ-20260507-001</td><td>1</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>30</td><td>3108</td><td>2026.05.07</td><td>下午</td><td>2026.05.08</td><td><span class="badge gray">草稿</span></td><td rowspan="2"><button class="link-btn">修改</button><button class="link-btn">确认</button><button class="link-btn danger">撤销</button></td></tr>
-                <tr><td>DELREQ-20260507-001</td><td>2</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>20</td><td>3108</td><td>2026.05.07</td><td>下午</td><td>2026.05.08</td><td><span class="badge gray">草稿</span></td></tr>
-                <tr><td>DELREQ-20260507-002</td><td>1</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>20</td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td><td><span class="badge green">已确认</span></td><td rowspan="3"></td></tr>
-                <tr><td>DELREQ-20260507-002</td><td>2</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>20</td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td><td><span class="badge green">已确认</span></td></tr>
-                <tr><td>DELREQ-20260507-002</td><td>3</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>20</td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td><td><span class="badge green">已确认</span></td></tr>
-                <tr><td>DELREQ-20260507-003</td><td>3</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>10</td><td>3104</td><td>2026.05.07</td><td>全天</td><td>2026.05.08</td><td><span class="badge amber">已取消</span></td><td></td></tr>
+                <tr><td>DELREQ-20260507-001</td><td>1</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>30</td><td>3108</td><td>2026.05.07</td><td>下午</td><td>2026.05.08</td><td><span class="badge gray">草稿</span></td><td><button class="link-btn">修改</button><button class="link-btn">确认</button><button class="link-btn danger">撤销</button></td></tr>
+                <tr><td>DELREQ-20260507-002</td><td>1</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>20</td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td><td><span class="badge green">已确认</span></td><td></td></tr>
               </tbody>
             </table>
           </div>
         </section>
 
-        <section class="modal-section">
+        <section class="modal-section split-entry-section">
           <h3>本次拆解填写</h3>
-          <div class="split-common-fields">
-            <label>收货库存地点<input class="stock-cell" value="3108"></label>
-            <label>配送日期<input class="date-cell" value="2026.05.08"></label>
-            <label>配送时段<select><option>上午</option><option>下午</option><option>全天</option></select></label>
-            <label>最后配送日期<input class="date-cell" value="2026.05.09"></label>
-          </div>
-          <div class="table-wrap">
-            <table class="split-current-table">
-              <thead>
-                <tr><th>行项目</th><th>物料</th><th>描述</th><th>申请数量</th><th>待拆数量</th><th>本次数量</th><th>配送需求单号</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>1</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>100</td><td>80</td><td><input class="cell-input" value="20"></td><td>系统生成</td></tr>
-                <tr><td>2</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>45</td><td>25</td><td><input class="cell-input" value="20"></td><td>系统生成</td></tr>
-                <tr><td>3</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>23</td><td>3</td><td><input class="cell-input" value="3"></td><td>系统生成</td></tr>
-              </tbody>
-            </table>
+          <div class="split-entry-layout">
+            <div class="split-material-card">
+              <div class="split-material-label">当前物料</div>
+              <strong>1100000021</strong>
+              <span>LNG天然气 热值≥9200Kcal/NM3</span>
+              <div class="split-qty-grid">
+                <div><span>申请数量</span><strong>100</strong></div>
+                <div><span>待拆数量</span><strong>80</strong></div>
+                <label>本次数量<input class="cell-input" value="20"></label>
+              </div>
+            </div>
+            <div class="split-entry-form">
+              <label>收货库存地点<input class="stock-cell" value="3108"></label>
+              <label>配送日期<input class="date-cell" value="2026.05.08"></label>
+              <label>配送时段<select><option>上午</option><option>下午</option><option>全天</option></select></label>
+              <label>最后配送日期<input class="date-cell" value="2026.05.09"></label>
+              <label class="full">配送需求单号<input value="系统生成" readonly></label>
+            </div>
           </div>
         </section>
       </div>

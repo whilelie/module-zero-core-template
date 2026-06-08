@@ -200,7 +200,7 @@ function updateSplitRowStatus() {
 }
 
 function getTrialRowCheckboxes() {
-  return Array.from(document.querySelectorAll("#demand-trial .summary-row .select-col input[type='checkbox']"));
+  return Array.from(document.querySelectorAll("#demand-trial tbody .select-col input[type='checkbox']"));
 }
 
 function updateTrialBatchActionLabel() {
@@ -381,7 +381,7 @@ document.querySelectorAll("[data-scroll-trial]").forEach((button) => {
   });
 });
 
-document.querySelectorAll("#demand-trial .summary-row .select-col input[type='checkbox']").forEach((checkbox) => {
+document.querySelectorAll("#demand-trial tbody .select-col input[type='checkbox']").forEach((checkbox) => {
   checkbox.addEventListener("change", updateTrialSelectionUi);
 });
 

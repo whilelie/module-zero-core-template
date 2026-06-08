@@ -1508,18 +1508,130 @@ input, select {
 
 #split-modal .modal-card {
   max-height: calc(100vh - 16px);
-  max-width: 1560px;
-  width: calc(100vw - 16px);
+  max-width: 1320px;
+  width: min(1320px, calc(100vw - 16px));
 }
 
 #split-modal .modal-body {
+  display: grid;
+  gap: 12px;
   padding: 12px;
 }
 
 #split-modal th,
 #split-modal td {
   font-size: 13px;
-  padding: 9px 10px;
+  padding: 8px 10px;
+}
+
+#split-modal .modal-section {
+  margin-bottom: 0;
+}
+
+#split-modal .modal-section > h3 {
+  min-height: 40px;
+  padding: 0 12px;
+}
+
+#split-modal .modal-query {
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  padding: 12px;
+}
+
+#split-modal .readonly-field {
+  background: #fff;
+  border: 1px solid #dbe4f0;
+  border-radius: 6px;
+  min-height: 58px;
+}
+
+.split-entry-layout {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: minmax(420px, .9fr) 1.1fr;
+  padding: 14px;
+}
+
+.split-material-card {
+  background: #f8fafc;
+  border: 1px solid #dbe4f0;
+  border-radius: 6px;
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+}
+
+.split-material-label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.split-material-card > strong {
+  color: #0f172a;
+  font-size: 18px;
+}
+
+.split-material-card > span {
+  color: #334155;
+}
+
+.split-qty-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 4px;
+}
+
+.split-qty-grid div,
+.split-qty-grid label {
+  background: #fff;
+  border: 1px solid #dbe4f0;
+  border-radius: 6px;
+  display: grid;
+  gap: 5px;
+  min-height: 70px;
+  padding: 10px;
+}
+
+.split-qty-grid span,
+.split-qty-grid label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.split-qty-grid strong {
+  color: #0f172a;
+  font-size: 18px;
+}
+
+.split-entry-form {
+  align-content: start;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+}
+
+.split-entry-form label {
+  color: var(--muted);
+  display: grid;
+  font-size: 13px;
+  gap: 6px;
+}
+
+.split-entry-form label.full {
+  grid-column: 1 / -1;
+}
+
+.split-entry-form input,
+.split-entry-form select,
+.split-qty-grid input {
+  background: #fff;
+  border: 1px solid #d4deec;
+  border-radius: 5px;
+  color: #122033;
+  min-height: 36px;
+  padding: 0 12px;
+  width: 100%;
 }
 
 @media (max-width: 1180px) {
@@ -1534,6 +1646,10 @@ input, select {
   }
 
   .split-grid.two {
+    grid-template-columns: 1fr;
+  }
+
+  .split-entry-layout {
     grid-template-columns: 1fr;
   }
 }
@@ -1556,5 +1672,10 @@ input, select {
 
   .modal-card {
     max-height: calc(100vh - 20px);
+  }
+
+  .split-qty-grid,
+  .split-entry-form {
+    grid-template-columns: 1fr;
   }
 }
