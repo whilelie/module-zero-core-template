@@ -1397,6 +1397,15 @@ input, select {
   padding: 0 14px;
 }
 
+.field-value {
+  align-items: center;
+  color: #122033;
+  display: flex;
+  font-weight: 600;
+  min-height: 38px;
+  padding: 0 2px;
+}
+
 .form-item select {
   appearance: none;
   background-image: linear-gradient(45deg, transparent 50%, #8ba0ba 50%), linear-gradient(135deg, #8ba0ba 50%, transparent 50%);

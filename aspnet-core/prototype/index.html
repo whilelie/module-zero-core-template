@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>领用配送页面原型</title>
-  <link rel="stylesheet" href="./styles.css?v=20260605-split-layout-v1">
+  <link rel="stylesheet" href="./styles.css?v=20260608-cost-limit-label-v1">
 </head>
 <body>
   <header class="app-topbar">
@@ -73,7 +73,6 @@
                   <th>厂内资材库</th>
                   <th>码头仓库</th>
                   <th>供应商送货</th>
-                  <th>周转天数上限</th>
                   <th>操作</th>
                 </tr>
               </thead>
@@ -85,7 +84,6 @@
                   <td>10</td>
                   <td></td>
                   <td></td>
-                  <td></td>
                   <td><button class="link-btn" data-open-operation-cost>修改</button><button class="link-btn danger">删除</button></td>
                 </tr>
                 <tr>
@@ -95,7 +93,6 @@
                   <td></td>
                   <td></td>
                   <td>8</td>
-                  <td></td>
                   <td><button class="link-btn" data-open-operation-cost>修改</button><button class="link-btn danger">删除</button></td>
                 </tr>
                 <tr>
@@ -104,7 +101,6 @@
                   <td>TO</td>
                   <td></td>
                   <td>5</td>
-                  <td></td>
                   <td></td>
                   <td><button class="link-btn" data-open-operation-cost>修改</button><button class="link-btn danger">删除</button></td>
                 </tr>
@@ -157,7 +153,7 @@
                 <tr>
                   <th>物料</th>
                   <th>描述</th>
-                  <th>单位</th>
+                  <th>基本单位</th>
                   <th>工厂代码</th>
                   <th>库存地点</th>
                   <th>仓储类型</th>
@@ -1032,12 +1028,11 @@
       <div class="modal-body operation-cost-modal-body">
         <div class="operation-cost-form">
           <label class="form-item required"><span>物料:</span><input data-cost-material value="1100000021"></label>
-          <label class="form-item"><span>描述:</span><input data-cost-description value="LNG天然气 热值≥9200Kcal/NM3" readonly></label>
-          <label class="form-item"><span>基本单位:</span><input data-cost-unit value="TO" readonly></label>
+          <label class="form-item"><span>描述:</span><strong class="field-value" data-cost-description>LNG天然气 热值≥9200Kcal/NM3</strong></label>
+          <label class="form-item"><span>基本单位:</span><strong class="field-value" data-cost-unit>TO</strong></label>
           <label class="form-item"><span>厂内资材库:</span><input type="number" min="0" step="1" value="10"></label>
           <label class="form-item"><span>码头仓库:</span><input type="number" min="0" step="1"></label>
           <label class="form-item"><span>供应商送货:</span><input type="number" min="0" step="1"></label>
-          <label class="form-item"><span>周转天数上限:</span><input type="number" min="0" step="1"></label>
         </div>
       </div>
 
@@ -1060,8 +1055,8 @@
       <div class="modal-body loading-limit-modal-body">
         <div class="loading-limit-form">
           <label class="form-item required"><span>物料:</span><input data-limit-material value="1000000067"></label>
-          <label class="form-item"><span>描述:</span><input data-limit-description value="阴离子聚丙烯酰胺（工业用）" readonly></label>
-          <label class="form-item"><span>单位:</span><input data-limit-unit value="KG" readonly></label>
+          <label class="form-item"><span>描述:</span><strong class="field-value" data-limit-description>阴离子聚丙烯酰胺（工业用）</strong></label>
+          <label class="form-item"><span>基本单位:</span><strong class="field-value" data-limit-unit>KG</strong></label>
           <label class="form-item"><span>工厂代码:</span><input value="200A"></label>
           <label class="form-item"><span>库存地点:</span><input value="1001"></label>
           <label class="form-item"><span>仓储类型:</span><input></label>
@@ -1091,11 +1086,11 @@
         <div class="table-wrap">
           <table>
             <thead>
-              <tr><th>校验结果</th><th>物料</th><th>描述</th><th>基本单位</th><th>厂内资材库</th><th>码头仓库</th><th>供应商送货</th><th>周转天数上限</th></tr>
+              <tr><th>校验结果</th><th>物料</th><th>描述</th><th>基本单位</th><th>厂内资材库</th><th>码头仓库</th><th>供应商送货</th></tr>
             </thead>
             <tbody>
-              <tr><td><span class="badge green">校验成功</span></td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>TO</td><td>10</td><td></td><td></td><td>30</td></tr>
-              <tr class="import-error-row"><td><span class="badge red">校验失败：未填写任何列</span></td><td>20000002</td><td>木片 桉木 中国 广西</td><td>TO</td><td></td><td></td><td></td><td></td></tr>
+              <tr><td><span class="badge green">校验成功</span></td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>TO</td><td>10</td><td></td><td></td></tr>
+              <tr class="import-error-row"><td><span class="badge red">校验失败：未填写任何列</span></td><td>20000002</td><td>木片 桉木 中国 广西</td><td>TO</td><td></td><td></td><td></td></tr>
             </tbody>
           </table>
         </div>
@@ -1167,6 +1162,6 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=20260526-modal-title-v1"></script>
+  <script src="./app.js?v=20260608-cost-limit-label-v1"></script>
 </body>
 </html>

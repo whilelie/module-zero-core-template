@@ -264,3 +264,20 @@ CREATE TABLE `material_operation_cost` (
   PRIMARY KEY (`C_ID`),
   UNIQUE KEY `UK_MATERIAL_OPERATION_COST` (`C_MATERIAL_NO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='物料作业成本';
+
+
+CREATE TABLE `material_delivery_limit` (
+  `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
+  `C_MATERIAL_NO` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '物料号',
+  `C_WERKS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '工厂代码',
+  `C_LGORT` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '库存地点',
+  `C_LGTYP` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '仓储类型',
+  `C_PACKAGING_TYPE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '包装方式',
+  `C_PACKAGING_UNIT` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '包装单位',
+  `N_MAX_DELIVERY_QTY_PER_TRIP` decimal(18,3) NOT NULL COMMENT '单次配送量上限',
+  `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
+  `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
+  `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`C_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='物料单次配送上限';

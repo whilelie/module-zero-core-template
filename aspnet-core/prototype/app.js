@@ -26,7 +26,7 @@ const limitDescriptionInput = document.querySelector("[data-limit-description]")
 const limitUnitInput = document.querySelector("[data-limit-unit]");
 const trialBatchAction = document.querySelector("[data-trial-batch-action]");
 
-window.prototypeAppVersion = "20260526-modal-title-v1";
+window.prototypeAppVersion = "20260608-cost-limit-label-v1";
 
 const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],
@@ -109,15 +109,23 @@ function updateBusinessSlots() {
 function updateMaterialInfo() {
   if (!costMaterialInput || !costDescriptionInput || !costUnitInput) return;
   const info = materialInfo[costMaterialInput.value.trim()];
-  costDescriptionInput.value = info?.description || "";
-  costUnitInput.value = info?.unit || "";
+  setElementValue(costDescriptionInput, info?.description || "");
+  setElementValue(costUnitInput, info?.unit || "");
 }
 
 function updateLimitMaterialInfo() {
   if (!limitMaterialInput || !limitDescriptionInput || !limitUnitInput) return;
   const info = materialInfo[limitMaterialInput.value.trim()];
-  limitDescriptionInput.value = info?.description || "";
-  limitUnitInput.value = info?.unit || "";
+  setElementValue(limitDescriptionInput, info?.description || "");
+  setElementValue(limitUnitInput, info?.unit || "");
+}
+
+function setElementValue(element, value) {
+  if ("value" in element) {
+    element.value = value;
+  } else {
+    element.textContent = value;
+  }
 }
 
 const buttonIcons = {
