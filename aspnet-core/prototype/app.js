@@ -25,8 +25,9 @@ const limitMaterialInput = document.querySelector("[data-limit-material]");
 const limitDescriptionInput = document.querySelector("[data-limit-description]");
 const limitUnitInput = document.querySelector("[data-limit-unit]");
 const trialBatchAction = document.querySelector("[data-trial-batch-action]");
+const taskGenerationAction = document.querySelector("[data-confirm-task-generation]");
 
-window.prototypeAppVersion = "20260608-cost-limit-label-v1";
+window.prototypeAppVersion = "20260611-task-generation-count";
 
 const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],
@@ -148,7 +149,7 @@ function getButtonIconName(text) {
   if (text.includes("重置") || text.includes("重新")) return "reset";
   if (text.includes("保存")) return "save";
   if (text.includes("取消") || text.includes("关闭")) return "close";
-  if (text.includes("执行")) return "play";
+  if (text.includes("执行") || text.includes("拆分") || text.includes("绑定")) return "play";
   if (text.includes("确认") || text.includes("确定")) return "check";
   return "";
 }
@@ -187,7 +188,7 @@ function updateAllocationRowStatus() {
   allocationRows.forEach((row) => {
     const cells = row.children;
     const lineNo = cells[3]?.textContent.trim();
-    const input = cells[9]?.querySelector("input");
+    const input = cells[10]?.querySelector("input");
     const confirmed = parseAmount(input?.value);
     const demand = demandByLine.get(lineNo) || 0;
     const satisfied = demand > 0 && confirmed >= demand;
@@ -234,6 +235,35 @@ function updateTrialSelectAllState() {
 function updateTrialSelectionUi() {
   updateTrialBatchActionLabel();
   updateTrialSelectAllState();
+}
+
+function getTaskGenerationCheckboxes() {
+  return Array.from(document.querySelectorAll("#delivery-binding tbody .select-col input[type='checkbox']"));
+}
+
+function updateTaskGenerationActionLabel() {
+  if (!taskGenerationAction) return;
+  const selectedCount = getTaskGenerationCheckboxes().filter((checkbox) => checkbox.checked).length;
+  const label = selectedCount > 0 ? `生成任务+${selectedCount}` : "生成任务";
+  const icon = taskGenerationAction.querySelector(".btn-icon");
+  taskGenerationAction.textContent = label;
+  if (icon) {
+    taskGenerationAction.prepend(icon);
+  }
+}
+
+function updateTaskGenerationSelectAllState() {
+  const selectAll = document.querySelector("#delivery-binding thead .select-col input[type='checkbox']");
+  const rowCheckboxes = getTaskGenerationCheckboxes();
+  if (!selectAll || !rowCheckboxes.length) return;
+  const selectedCount = rowCheckboxes.filter((checkbox) => checkbox.checked).length;
+  selectAll.checked = selectedCount === rowCheckboxes.length;
+  selectAll.indeterminate = selectedCount > 0 && selectedCount < rowCheckboxes.length;
+}
+
+function updateTaskGenerationSelectionUi() {
+  updateTaskGenerationActionLabel();
+  updateTaskGenerationSelectAllState();
 }
 
 navItems.forEach((item) => {
@@ -344,6 +374,14 @@ document.querySelectorAll("[data-open-source-result]").forEach((button) => {
   button.addEventListener("click", () => openModal(sourceResultModal));
 });
 
+document.querySelectorAll("[data-confirm-task-generation]").forEach((button) => {
+  button.addEventListener("click", () => {
+    if (window.confirm("确定要生成任务吗？")) {
+      showToast("已生成仓储任务");
+    }
+  });
+});
+
 if (shiftSelect) {
   shiftSelect.addEventListener("change", updateBusinessSlots);
   updateBusinessSlots();
@@ -402,6 +440,19 @@ document.querySelectorAll("#demand-trial thead .select-col input[type='checkbox'
   });
 });
 
+document.querySelectorAll("#delivery-binding tbody .select-col input[type='checkbox']").forEach((checkbox) => {
+  checkbox.addEventListener("change", updateTaskGenerationSelectionUi);
+});
+
+document.querySelectorAll("#delivery-binding thead .select-col input[type='checkbox']").forEach((checkbox) => {
+  checkbox.addEventListener("change", () => {
+    getTaskGenerationCheckboxes().forEach((rowCheckbox) => {
+      rowCheckbox.checked = checkbox.checked;
+    });
+    updateTaskGenerationSelectionUi();
+  });
+});
+
 document.querySelectorAll("#trial-modal .trial-allocation-table input").forEach((input) => {
   input.addEventListener("input", updateAllocationRowStatus);
 });
@@ -416,4 +467,5 @@ toastButtons.forEach((button) => {
 
 updateAllocationRowStatus();
 updateTrialSelectionUi();
+updateTaskGenerationSelectionUi();
 updateSplitRowStatus();

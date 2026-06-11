@@ -890,6 +890,14 @@ input, select {
   grid-template-columns: repeat(4, minmax(160px, 1fr));
 }
 
+.delivery-binding-query {
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+}
+
+.delivery-binding-query label:nth-of-type(5) {
+  grid-column: 1;
+}
+
 .task-ranking-query {
   grid-template-columns: minmax(180px, 240px) 1fr;
 }
