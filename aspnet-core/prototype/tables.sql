@@ -11,6 +11,7 @@ CREATE TABLE `material_requisition` (
   `C_APPLICANT_NO` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '申请人编号',
   `C_APPLICANT_PHONE` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '申请人电话',
   `C_SPECIAL_STOCK` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '特殊库存标识',
+  `C_ORGANIZATION_UNIT` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '组织单位',
   `C_LINE_NO` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '行号',
   `C_MATERIAL_NO` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '物料号',
   `N_QUANTITY` decimal(18,3) NOT NULL COMMENT '领用数量',
@@ -143,6 +144,10 @@ CREATE TABLE `source_trial_inventory_source` (
   `C_RZZL` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '认证种类',
   `D_LWEDT` datetime DEFAULT NULL COMMENT '收货日期',
   `C_VBELN` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '内向交货单',
+  `C_VBELP` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '内向交货单行项目',
+  `C_TKNUM` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '装运编号',
+  `C_TPNUM` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '装运项目',
+  `C_BUKRS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '公司代码',
   `C_ZZCM` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '船名',
   `C_ZZHC` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '航次',
   `D_MTMD_DQR` datetime DEFAULT NULL COMMENT '码头免堆到日期',
@@ -220,6 +225,8 @@ CREATE TABLE `source_trial_supplier_source` (
   `D_UDATE_UPD` datetime DEFAULT NULL COMMENT '修改日期',
   `C_UTIME_UPD` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '修改时间',
   `C_DEL_IND` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '删除标记',
+  `C_ZNOCHK` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '是否免检',
+  `N_JYSJ` decimal(13,0) DEFAULT NULL COMMENT '检验时间',
   `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
   `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
@@ -281,3 +288,71 @@ CREATE TABLE `material_delivery_limit` (
   `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`C_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='物料单次配送上限';
+
+
+-- 1. 员工时段负责业务表
+CREATE TABLE `dispatch_staff_duty` (
+  `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
+  `N_STAFF_ID` int NOT NULL COMMENT '员工Id (staff.Id)',
+  `N_START_HOUR` tinyint NOT NULL COMMENT '时段开始小时 0/4/8/12/16/20',
+  `N_END_HOUR` tinyint NOT NULL COMMENT '时段结束小时 4/8/12/16/20/24',
+  `N_BUSINESS_TYPE` tinyint NOT NULL COMMENT '负责业务 1-纸成品 2-资材 3-浆成品',
+  `N_IS_DELETE` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除标识 0-未删除 1-删除',
+  `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
+  `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
+  `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`C_ID`),
+  UNIQUE KEY `UK_DISPATCH_STAFF_DUTY` (`N_STAFF_ID`,`N_START_HOUR`,`N_END_HOUR`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='员工时段负责业务表';
+
+-- 2. 任务排序表
+CREATE TABLE `dispatch_task_sort` (
+  `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
+  `N_FACTORY_AREA_ID` int NOT NULL COMMENT '厂区Id',
+  `N_BUSINESS_TYPE` tinyint NOT NULL COMMENT '业务 1-纸成品 2-资材 3-浆成品',
+  `N_SCENE_TYPE` tinyint NOT NULL COMMENT '场景类型 1-采购收货 2-厂内领用发货 3-让售发货 4-委外加工发货 5-固危废发货',
+  `N_SCENE_GRADE` tinyint NOT NULL COMMENT '场景分级',
+  `N_SORT_ORDER` int NOT NULL COMMENT '分级排序(同一分级内的顺序)',
+  `N_IS_DELETE` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除标识 0-未删除 1-删除',
+  `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
+  `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
+  `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`C_ID`),
+  UNIQUE KEY `UK_DISPATCH_TASK` (`N_FACTORY_AREA_ID`,`N_BUSINESS_TYPE`,`N_SCENE_TYPE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='任务排序表';
+
+-- 3. 技能排序表
+CREATE TABLE `dispatch_skill_sort` (
+  `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
+  `N_FACTORY_AREA_ID` int NOT NULL COMMENT '厂区Id',
+  `N_TASK_TYPE` tinyint NOT NULL COMMENT '任务类型 1-卷筒任务 2-平板任务 3-卷平任务',
+  `N_SKILL_TYPE` tinyint NOT NULL COMMENT '技能分类 1-卷平 2-卷筒 3-平板',
+  `N_SKILL_GRADE_SORT` tinyint NOT NULL COMMENT '技能分级排序',
+  `N_INNER_SORT` int NOT NULL COMMENT '分级内排序',
+  `N_IS_DELETE` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除标识 0-未删除 1-删除',
+  `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
+  `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
+  `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`C_ID`),
+  UNIQUE KEY `UK_DISPATCH_SKILL` (`N_FACTORY_AREA_ID`,`N_TASK_TYPE`,`N_SKILL_TYPE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='技能排序表';
+
+-- 4. 技能指标排序表
+CREATE TABLE `dispatch_skill_metric_sort` (
+  `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
+  `N_FACTORY_AREA_ID` int NOT NULL COMMENT '厂区Id',
+  `N_SKILL_TYPE` tinyint NOT NULL COMMENT '技能 1-卷平 2-卷筒 3-平板',
+  `N_METRIC_TYPE` tinyint NOT NULL COMMENT '指标 1-今日作业量 2-平均日作业量 3-当月总作业量 4-累计作业量 5-工龄',
+  `N_SORT_DIRECTION` tinyint NOT NULL COMMENT '排序 1-升序 2-降序',
+  `N_PRIORITY` int NOT NULL COMMENT '优先级(数字越小越优先)',
+  `N_IS_DELETE` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除标识 0-未删除 1-删除',
+  `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
+  `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
+  `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`C_ID`),
+  UNIQUE KEY `UK_DISPATCH_METRIC` (`N_FACTORY_AREA_ID`,`N_SKILL_TYPE`,`N_METRIC_TYPE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='技能指标排序表';

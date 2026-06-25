@@ -443,6 +443,21 @@ th {
   font-weight: 700;
 }
 
+.sticky-action-table th:last-child,
+.sticky-action-table td:last-child {
+  background: #fff;
+  box-shadow: -8px 0 12px rgba(15, 23, 42, 0.08);
+  min-width: 112px;
+  position: sticky;
+  right: 0;
+  z-index: 2;
+}
+
+.sticky-action-table th:last-child {
+  background: var(--surface-soft);
+  z-index: 3;
+}
+
 tr.selected td,
 tr.recommend td {
   background: #ecfdf5;
@@ -898,6 +913,10 @@ input, select {
   grid-column: 1;
 }
 
+.task-management-query {
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+}
+
 .task-ranking-query {
   grid-template-columns: minmax(180px, 240px) 1fr;
 }
@@ -907,6 +926,10 @@ input, select {
 }
 
 .loading-limit-query {
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+}
+
+.short-haul-query {
   grid-template-columns: repeat(4, minmax(160px, 1fr));
 }
 
@@ -1297,6 +1320,10 @@ input, select {
   max-width: 760px;
 }
 
+.short-haul-modal-card {
+  max-width: 760px;
+}
+
 .operation-cost-import-modal-card {
   max-width: 960px;
 }
@@ -1307,6 +1334,14 @@ input, select {
 
 .source-result-modal-card {
   max-width: 1120px;
+}
+
+.task-operation-modal-card {
+  max-width: 680px;
+}
+
+.task-detail-modal-card {
+  max-width: 1180px;
 }
 
 .import-error-row td {
@@ -1395,6 +1430,7 @@ input, select {
 
 .form-item input,
 .form-item select,
+.form-item textarea,
 .multi-select {
   background: #fff;
   border: 1px solid #d4deec;
@@ -1403,6 +1439,14 @@ input, select {
   font-weight: 600;
   min-height: 38px;
   padding: 0 14px;
+}
+
+.form-item textarea {
+  font-family: inherit;
+  line-height: 1.5;
+  min-height: 86px;
+  padding: 10px 14px;
+  resize: vertical;
 }
 
 .field-value {
@@ -1696,3 +1740,8 @@ input, select {
     grid-template-columns: 1fr;
   }
 }
+
+.cost-group-head {
+  text-align: center;
+}
+

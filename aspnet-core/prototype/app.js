@@ -11,9 +11,16 @@ const operationCostModal = document.querySelector("#operation-cost-modal");
 const operationCostImportModal = document.querySelector("#operation-cost-import-modal");
 const loadingLimitModal = document.querySelector("#loading-limit-modal");
 const loadingLimitImportModal = document.querySelector("#loading-limit-import-modal");
+const shortHaulModal = document.querySelector("#short-haul-modal");
+const shortHaulImportModal = document.querySelector("#short-haul-import-modal");
 const sourceResultModal = document.querySelector("#source-result-modal");
+const taskAssignModal = document.querySelector("#task-assign-modal");
+const taskCancelModal = document.querySelector("#task-cancel-modal");
+const taskDetailModal = document.querySelector("#task-detail-modal");
 const operationCostTitle = document.querySelector("#operation-cost-title");
 const loadingLimitTitle = document.querySelector("#loading-limit-title");
+const shortHaulTitle = document.querySelector("#short-haul-title");
+const taskAssignTitle = document.querySelector("#task-assign-title");
 const currentTabTitle = document.querySelector("#current-tab-title");
 const toast = document.querySelector("#toast");
 const shiftSelect = document.querySelector("[data-shift-select]");
@@ -21,13 +28,17 @@ const businessSlots = document.querySelectorAll("[data-business-slot]");
 const costMaterialInput = document.querySelector("[data-cost-material]");
 const costDescriptionInput = document.querySelector("[data-cost-description]");
 const costUnitInput = document.querySelector("[data-cost-unit]");
+const costFactoryInput = document.querySelector("[data-cost-factory]");
 const limitMaterialInput = document.querySelector("[data-limit-material]");
 const limitDescriptionInput = document.querySelector("[data-limit-description]");
 const limitUnitInput = document.querySelector("[data-limit-unit]");
+const shortHaulMaterialInput = document.querySelector("[data-short-haul-material]");
+const shortHaulDescriptionInput = document.querySelector("[data-short-haul-description]");
+const shortHaulUnitInput = document.querySelector("[data-short-haul-unit]");
 const trialBatchAction = document.querySelector("[data-trial-batch-action]");
 const taskGenerationAction = document.querySelector("[data-confirm-task-generation]");
 
-window.prototypeAppVersion = "20260611-task-generation-count";
+window.prototypeAppVersion = "20260623-operation-cost-group-center";
 
 const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],
@@ -119,6 +130,13 @@ function updateLimitMaterialInfo() {
   const info = materialInfo[limitMaterialInput.value.trim()];
   setElementValue(limitDescriptionInput, info?.description || "");
   setElementValue(limitUnitInput, info?.unit || "");
+}
+
+function updateShortHaulMaterialInfo() {
+  if (!shortHaulMaterialInput || !shortHaulDescriptionInput || !shortHaulUnitInput) return;
+  const info = materialInfo[shortHaulMaterialInput.value.trim()];
+  setElementValue(shortHaulDescriptionInput, info?.description || "");
+  setElementValue(shortHaulUnitInput, info?.unit || "");
 }
 
 function setElementValue(element, value) {
@@ -343,6 +361,9 @@ document.querySelectorAll("[data-open-operation-cost]").forEach((button) => {
       costMaterialInput.value = cells.length ? cells[0].textContent.trim() : "";
       updateMaterialInfo();
     }
+    if (costFactoryInput) {
+      costFactoryInput.value = cells.length ? cells[3].textContent.trim() : "200A";
+    }
     openModal(operationCostModal);
   });
 });
@@ -362,6 +383,21 @@ document.querySelectorAll("[data-open-loading-limit]").forEach((button) => {
   });
 });
 
+document.querySelectorAll("[data-open-short-haul]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const row = button.closest("tr");
+    const cells = row ? Array.from(row.children) : [];
+    if (shortHaulTitle) {
+      shortHaulTitle.textContent = cells.length ? "修改短驳作业配置" : "新增短驳作业配置";
+    }
+    if (shortHaulMaterialInput) {
+      shortHaulMaterialInput.value = cells.length ? cells[0].textContent.trim() : "";
+      updateShortHaulMaterialInfo();
+    }
+    openModal(shortHaulModal);
+  });
+});
+
 document.querySelectorAll("[data-open-operation-cost-import]").forEach((button) => {
   button.addEventListener("click", () => openModal(operationCostImportModal));
 });
@@ -370,8 +406,43 @@ document.querySelectorAll("[data-open-loading-limit-import]").forEach((button) =
   button.addEventListener("click", () => openModal(loadingLimitImportModal));
 });
 
+document.querySelectorAll("[data-open-short-haul-import]").forEach((button) => {
+  button.addEventListener("click", () => openModal(shortHaulImportModal));
+});
+
 document.querySelectorAll("[data-open-source-result]").forEach((button) => {
   button.addEventListener("click", () => openModal(sourceResultModal));
+});
+
+document.querySelectorAll("[data-open-task-assign]").forEach((button) => {
+  button.addEventListener("click", () => {
+    if (taskAssignTitle) {
+      taskAssignTitle.textContent = `任务${button.dataset.taskAction || "派工"}`;
+    }
+    const row = button.closest("tr");
+    const taskNo = row?.children[0]?.textContent.trim() || "";
+    const taskInput = taskAssignModal?.querySelector("[data-task-no]");
+    if (taskInput) {
+      taskInput.value = taskNo;
+    }
+    openModal(taskAssignModal);
+  });
+});
+
+document.querySelectorAll("[data-open-task-cancel]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const row = button.closest("tr");
+    const taskNo = row?.children[0]?.textContent.trim() || "";
+    const taskInput = taskCancelModal?.querySelector("[data-task-cancel-no]");
+    if (taskInput) {
+      taskInput.value = taskNo;
+    }
+    openModal(taskCancelModal);
+  });
+});
+
+document.querySelectorAll("[data-open-task-detail]").forEach((button) => {
+  button.addEventListener("click", () => openModal(taskDetailModal));
 });
 
 document.querySelectorAll("[data-confirm-task-generation]").forEach((button) => {
@@ -397,6 +468,12 @@ if (limitMaterialInput) {
   limitMaterialInput.addEventListener("input", updateLimitMaterialInfo);
   limitMaterialInput.addEventListener("change", updateLimitMaterialInfo);
   updateLimitMaterialInfo();
+}
+
+if (shortHaulMaterialInput) {
+  shortHaulMaterialInput.addEventListener("input", updateShortHaulMaterialInfo);
+  shortHaulMaterialInput.addEventListener("change", updateShortHaulMaterialInfo);
+  updateShortHaulMaterialInfo();
 }
 
 decorateButtonIcons();
@@ -469,3 +546,5 @@ updateAllocationRowStatus();
 updateTrialSelectionUi();
 updateTaskGenerationSelectionUi();
 updateSplitRowStatus();
+
+
