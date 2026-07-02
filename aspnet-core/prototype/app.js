@@ -16,11 +16,15 @@ const shortHaulImportModal = document.querySelector("#short-haul-import-modal");
 const sourceResultModal = document.querySelector("#source-result-modal");
 const taskAssignModal = document.querySelector("#task-assign-modal");
 const taskCancelModal = document.querySelector("#task-cancel-modal");
+const taskStartModal = document.querySelector("#task-start-modal");
+const taskFinishModal = document.querySelector("#task-finish-modal");
+const taskDeviceModal = document.querySelector("#task-device-modal");
 const taskDetailModal = document.querySelector("#task-detail-modal");
 const operationCostTitle = document.querySelector("#operation-cost-title");
 const loadingLimitTitle = document.querySelector("#loading-limit-title");
 const shortHaulTitle = document.querySelector("#short-haul-title");
 const taskAssignTitle = document.querySelector("#task-assign-title");
+const employeeTitle = document.querySelector("#employee-title");
 const currentTabTitle = document.querySelector("#current-tab-title");
 const toast = document.querySelector("#toast");
 const shiftSelect = document.querySelector("[data-shift-select]");
@@ -38,7 +42,7 @@ const shortHaulUnitInput = document.querySelector("[data-short-haul-unit]");
 const trialBatchAction = document.querySelector("[data-trial-batch-action]");
 const taskGenerationAction = document.querySelector("[data-confirm-task-generation]");
 
-window.prototypeAppVersion = "20260623-operation-cost-group-center";
+window.prototypeAppVersion = "20260702-dispatch-rule-tabs";
 
 const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],
@@ -191,7 +195,7 @@ function parseAmount(value) {
 
 function updateAllocationRowStatus() {
   const demandRows = document.querySelectorAll("#trial-modal .trial-demand-table tbody tr");
-  const allocationRows = document.querySelectorAll("#trial-modal .trial-allocation-table tbody tr");
+  const allocationRows = document.querySelectorAll("#trial-modal .trial-allocation-table tbody tr.allocation-main-row");
   if (!demandRows.length || !allocationRows.length) return;
 
   const demandByLine = new Map();
@@ -213,6 +217,30 @@ function updateAllocationRowStatus() {
     row.classList.toggle("allocation-satisfied", satisfied);
     row.classList.toggle("allocation-unsatisfied", !satisfied);
   });
+}
+
+function updateDeliverySplitBox(box) {
+  if (!box) return;
+  const inputs = box.querySelectorAll(".split-qty-input");
+  const sum = Array.from(inputs).reduce((total, input) => total + parseAmount(input.value), 0);
+  const limit = parseAmount(box.querySelector("[data-split-limit]")?.textContent);
+  const sumNode = box.querySelector("[data-split-sum]");
+  const totalNode = box.querySelector("[data-split-total]");
+  const targetNode = box.querySelector("[data-split-target]");
+  inputs.forEach((input) => {
+    const tipCell = input.closest("tr")?.children[2];
+    if (!tipCell) return;
+    tipCell.innerHTML = limit > 0 && parseAmount(input.value) > limit ? '<span class="split-warning">超上限</span>' : "";
+  });
+  if (sumNode) sumNode.textContent = sum;
+  if (totalNode) totalNode.textContent = sum;
+  if (targetNode && !targetNode.textContent.trim()) targetNode.textContent = sum;
+}
+
+function createDeliverySplitRow(index) {
+  const row = document.createElement("tr");
+  row.innerHTML = `<td>配送单${index}</td><td><input class="split-qty-input" value=""></td><td></td><td><button class="link-btn danger" data-remove-delivery-split>删除</button></td>`;
+  return row;
 }
 
 function updateSplitRowStatus() {
@@ -333,6 +361,9 @@ document.querySelectorAll("[data-open-split]").forEach((button) => {
 
 document.querySelectorAll("[data-open-employee]").forEach((button) => {
   button.addEventListener("click", () => {
+    if (employeeTitle) {
+      employeeTitle.textContent = button.closest("tr") ? "修改员工" : "新增员工";
+    }
     updateBusinessSlots();
     openModal(employeeModal);
   });
@@ -348,6 +379,18 @@ document.querySelectorAll("[data-open-skill-rank]").forEach((button) => {
 
 document.querySelectorAll("[data-open-skill-metric-rank]").forEach((button) => {
   button.addEventListener("click", () => openModal(skillMetricRankModal));
+});
+
+document.querySelectorAll("[data-dispatch-rule-tab]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const targetId = button.dataset.dispatchRuleTab;
+    document.querySelectorAll("[data-dispatch-rule-tab]").forEach((tab) => {
+      tab.classList.toggle("active", tab === button);
+    });
+    document.querySelectorAll(".dispatch-rule-panel").forEach((panel) => {
+      panel.classList.toggle("active", panel.id === targetId);
+    });
+  });
 });
 
 document.querySelectorAll("[data-open-operation-cost]").forEach((button) => {
@@ -388,10 +431,10 @@ document.querySelectorAll("[data-open-short-haul]").forEach((button) => {
     const row = button.closest("tr");
     const cells = row ? Array.from(row.children) : [];
     if (shortHaulTitle) {
-      shortHaulTitle.textContent = cells.length ? "修改短驳作业配置" : "新增短驳作业配置";
+      shortHaulTitle.textContent = cells.length ? "修改厂内作业车辆配置" : "新增厂内作业车辆配置";
     }
     if (shortHaulMaterialInput) {
-      shortHaulMaterialInput.value = cells.length ? cells[0].textContent.trim() : "";
+      shortHaulMaterialInput.value = button.dataset.shortHaulRowMaterial || (cells.length ? cells[0].textContent.trim() : "");
       updateShortHaulMaterialInfo();
     }
     openModal(shortHaulModal);
@@ -441,8 +484,47 @@ document.querySelectorAll("[data-open-task-cancel]").forEach((button) => {
   });
 });
 
+const bindTaskNoModal = (selector, modal, inputSelector) => {
+  document.querySelectorAll(selector).forEach((button) => {
+    button.addEventListener("click", () => {
+      const row = button.closest("tr");
+      const taskNo = row?.children[0]?.textContent.trim() || "";
+      const taskInput = modal?.querySelector(inputSelector);
+      if (taskInput) {
+        taskInput.value = taskNo;
+      }
+      openModal(modal);
+    });
+  });
+};
+
+bindTaskNoModal("[data-open-task-start]", taskStartModal, "[data-task-start-no]");
+bindTaskNoModal("[data-open-task-finish]", taskFinishModal, "[data-task-finish-no]");
+bindTaskNoModal("[data-open-task-device]", taskDeviceModal, "[data-task-device-no]");
+
 document.querySelectorAll("[data-open-task-detail]").forEach((button) => {
-  button.addEventListener("click", () => openModal(taskDetailModal));
+  button.addEventListener("click", () => {
+    taskDetailModal?.querySelectorAll("[data-task-detail-tab]").forEach((tab, index) => {
+      tab.classList.toggle("active", index === 0);
+    });
+    taskDetailModal?.querySelectorAll(".task-detail-tab-panel").forEach((panel, index) => {
+      panel.classList.toggle("active", index === 0);
+    });
+    openModal(taskDetailModal);
+  });
+});
+
+document.querySelectorAll("[data-task-detail-tab]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const targetId = button.dataset.taskDetailTab;
+    const modal = button.closest(".modal-backdrop");
+    modal?.querySelectorAll("[data-task-detail-tab]").forEach((tab) => {
+      tab.classList.toggle("active", tab === button);
+    });
+    modal?.querySelectorAll(".task-detail-tab-panel").forEach((panel) => {
+      panel.classList.toggle("active", panel.id === targetId);
+    });
+  });
 });
 
 document.querySelectorAll("[data-confirm-task-generation]").forEach((button) => {
@@ -534,6 +616,44 @@ document.querySelectorAll("#trial-modal .trial-allocation-table input").forEach(
   input.addEventListener("input", updateAllocationRowStatus);
 });
 
+document.querySelectorAll(".delivery-split-box").forEach(updateDeliverySplitBox);
+
+document.querySelectorAll("[data-toggle-delivery-split]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const row = button.closest("tr");
+    const detailRow = row?.nextElementSibling;
+    if (!detailRow?.classList.contains("delivery-split-row")) return;
+    const collapsed = detailRow.classList.toggle("is-hidden");
+    button.textContent = collapsed ? "+" : "-";
+    button.setAttribute("aria-expanded", String(!collapsed));
+  });
+});
+
+document.querySelectorAll(".delivery-split-box").forEach((box) => {
+  box.addEventListener("click", (event) => {
+    const addButton = event.target.closest("[data-add-delivery-split]");
+    const removeButton = event.target.closest("[data-remove-delivery-split]");
+    if (addButton) {
+      const tbody = box.querySelector(".delivery-split-table tbody");
+      if (!tbody) return;
+      tbody.appendChild(createDeliverySplitRow(tbody.children.length + 1));
+      updateDeliverySplitBox(box);
+    }
+    if (removeButton) {
+      const row = removeButton.closest("tr");
+      row?.remove();
+      box.querySelectorAll(".delivery-split-table tbody tr").forEach((splitRow, index) => {
+        splitRow.children[0].textContent = `配送单${index + 1}`;
+      });
+      updateDeliverySplitBox(box);
+    }
+  });
+
+  box.addEventListener("input", (event) => {
+    if (event.target.matches(".split-qty-input")) updateDeliverySplitBox(box);
+  });
+});
+
 document.querySelectorAll("#split-modal .split-current-table input").forEach((input) => {
   input.addEventListener("input", updateSplitRowStatus);
 });
@@ -546,5 +666,7 @@ updateAllocationRowStatus();
 updateTrialSelectionUi();
 updateTaskGenerationSelectionUi();
 updateSplitRowStatus();
+
+
 
 

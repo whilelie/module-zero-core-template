@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>领用配送司机端</title>
+  <link rel="stylesheet" href="./forklift-mobile.css?v=20260701-driver-detail-page">
+</head>
+<body>
+  <main class="mobile-shell">
+    <section class="login-view" id="login-view">
+      <div class="login-card">
+        <div class="brand-block">
+          <div class="brand-mark">WCT</div>
+          <h1>领用配送任务</h1>
+          <p>企业微信司机端</p>
+        </div>
+
+        <div class="login-form">
+          <label>
+            <span>账号</span>
+            <input id="login-account" value="50000068" autocomplete="off">
+          </label>
+          <label>
+            <span>密码</span>
+            <input id="login-password" type="password" value="123456" autocomplete="current-password">
+          </label>
+          <button class="primary full" id="login-btn" type="button">登录</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="task-view hidden" id="task-view">
+      <header class="mobile-header">
+        <button class="back-btn" type="button" id="logout-btn" aria-label="退出">‹</button>
+        <div>
+          <h1>我的领用配送任务</h1>
+          <p>账号 <span id="account-display">50000068</span></p>
+        </div>
+      </header>
+
+      <nav class="status-tabs" aria-label="任务筛选">
+        <button class="active" data-filter="all" type="button">全部 <strong data-count="all">0</strong></button>
+        <button data-filter="待接单" type="button">待接单 <strong data-count="待接单">0</strong></button>
+        <button data-filter="执行中" type="button">执行中 <strong data-count="执行中">0</strong></button>
+        <button data-filter="已完成" type="button">已完成 <strong data-count="已完成">0</strong></button>
+      </nav>
+
+      <section class="task-list" id="task-list"></section>
+    </section>
+
+    <section class="detail-view hidden" id="detail-view">
+      <header class="mobile-header">
+        <button class="back-btn" type="button" id="detail-back-btn" aria-label="返回">‹</button>
+        <div>
+          <h1 id="detail-task-title">任务详情</h1>
+          <p id="detail-task-summary">2 张配送单</p>
+        </div>
+      </header>
+
+      <section class="detail-page-list" id="detail-page-list"></section>
+    </section>
+  </main>
+
+  <div class="modal-mask hidden" id="action-modal-mask"></div>
+  <section class="action-modal hidden" id="action-modal" aria-hidden="true">
+    <header>
+      <h2 id="action-title">任务开始</h2>
+      <button class="close-btn" type="button" data-close-action>×</button>
+    </header>
+    <div class="action-form" id="action-form"></div>
+    <footer>
+      <button class="secondary" type="button" data-close-action>取消</button>
+      <button class="primary" type="button" id="action-confirm">确认</button>
+    </footer>
+  </section>
+
+  <div class="toast hidden" id="toast">已保存</div>
+
+  <script src="./forklift-mobile.js?v=20260701-driver-detail-page"></script>
+</body>
+</html>
