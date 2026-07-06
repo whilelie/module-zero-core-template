@@ -42,7 +42,7 @@ const shortHaulUnitInput = document.querySelector("[data-short-haul-unit]");
 const trialBatchAction = document.querySelector("[data-trial-batch-action]");
 const taskGenerationAction = document.querySelector("[data-confirm-task-generation]");
 
-window.prototypeAppVersion = "20260702-dispatch-rule-tabs";
+window.prototypeAppVersion = "20260706-finish-quantity";
 
 const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],
@@ -626,6 +626,32 @@ document.querySelectorAll("[data-toggle-delivery-split]").forEach((button) => {
     const collapsed = detailRow.classList.toggle("is-hidden");
     button.textContent = collapsed ? "+" : "-";
     button.setAttribute("aria-expanded", String(!collapsed));
+  });
+});
+
+document.querySelectorAll("#trial-modal [data-toggle-trial-section]").forEach((header) => {
+  header.addEventListener("click", () => {
+    const panel = header.closest("[data-collapsible-section]");
+    if (!panel) return;
+    const collapsed = panel.classList.toggle("is-collapsed");
+    const button = header.querySelector(".collapse-toggle");
+    if (button) {
+      button.textContent = collapsed ? "+" : "-";
+      button.setAttribute("aria-label", collapsed ? "展开内容" : "折叠内容");
+    }
+  });
+});
+
+document.querySelectorAll("#split-modal [data-toggle-split-section]").forEach((header) => {
+  header.addEventListener("click", () => {
+    const section = header.closest("[data-split-collapsible-section]");
+    if (!section) return;
+    const collapsed = section.classList.toggle("is-collapsed");
+    const button = header.querySelector(".collapse-toggle");
+    if (button) {
+      button.textContent = collapsed ? "+" : "-";
+      button.setAttribute("aria-label", collapsed ? "展开内容" : "折叠内容");
+    }
   });
 });
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>领用配送页面原型</title>
-  <link rel="stylesheet" href="./styles.css?v=20260702-dispatch-rule-tabs">
+  <link rel="stylesheet" href="./styles.css?v=20260706-finish-quantity">
 </head>
 <body>
   <header class="app-topbar">
@@ -225,16 +225,17 @@
                   <th>库存地点</th>
                   <th>仓储类型</th>
                   <th>叉车类型</th>
-                  <th>载重限制</th>
+                  <th>叉车载重限制</th>
                   <th>需要短驳</th>
                   <th>短驳车类型</th>
+                  <th>短驳载重限制</th>
                   <th>操作</th>
                 </tr>
               </thead>
               <tbody>
-                <tr><td>金桂厂区</td><td>资材</td><td>厂内领用发货</td><td>MRO</td><td>13120801</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>TO</td><td>A 散货类</td><td>200A</td><td>3108</td><td>A01</td><td><span class="badge blue">抱夹</span></td><td>35</td><td><span class="badge green">是</span></td><td>平板车</td><td><button class="link-btn" data-open-short-haul data-short-haul-row-material="1100000021">修改</button><button class="link-btn danger">删除</button></td></tr>
-                <tr><td>金桂厂区</td><td>资材</td><td>采购收货</td><td>MRO</td><td>13121401</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>TO</td><td>B 包装袋类</td><td>200A</td><td>3108</td><td></td><td><span class="badge cyan">平叉</span></td><td>25</td><td><span class="badge gray">否</span></td><td>-</td><td><button class="link-btn" data-open-short-haul data-short-haul-row-material="20000002">修改</button><button class="link-btn danger">删除</button></td></tr>
-                <tr><td>金桂厂区</td><td>资材</td><td>采购收货</td><td>CHM</td><td>27060202</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>TO</td><td>C 桶装类</td><td>200A</td><td>3108</td><td>Z01</td><td><span class="badge amber">铲车</span></td><td>20</td><td><span class="badge green">是</span></td><td>自卸车</td><td><button class="link-btn" data-open-short-haul data-short-haul-row-material="20000003">修改</button><button class="link-btn danger">删除</button></td></tr>
+                <tr><td>金桂厂区</td><td>资材</td><td>厂内领用发货</td><td>MRO</td><td>13120801</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>TO</td><td>A 散货类</td><td>200A</td><td>3108</td><td>A01</td><td><span class="badge blue">抱夹</span></td><td>35</td><td><span class="badge green">是</span></td><td><span class="badge blue">平板车</span></td><td></td><td><button class="link-btn" data-open-short-haul data-short-haul-row-material="1100000021">修改</button><button class="link-btn danger">删除</button></td></tr>
+                <tr><td>金桂厂区</td><td>资材</td><td>采购收货</td><td>MRO</td><td>13121401</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>TO</td><td>B 包装袋类</td><td>200A</td><td>3108</td><td></td><td><span class="badge cyan">平叉</span></td><td>25</td><td><span class="badge gray">否</span></td><td><span class="badge gray">-</span></td><td></td><td><button class="link-btn" data-open-short-haul data-short-haul-row-material="20000002">修改</button><button class="link-btn danger">删除</button></td></tr>
+                <tr><td>金桂厂区</td><td>资材</td><td>采购收货</td><td>CHM</td><td>27060202</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>TO</td><td>C 桶装类</td><td>200A</td><td>3108</td><td>Z01</td><td><span class="badge amber">铲车</span></td><td>20</td><td><span class="badge green">是</span></td><td><span class="badge amber">自卸车</span></td><td></td><td><button class="link-btn" data-open-short-haul data-short-haul-row-material="20000003">修改</button><button class="link-btn danger">删除</button></td></tr>
               </tbody>
             </table>
           </div>
@@ -296,7 +297,6 @@
                   <th>MES仓位</th>
                   <th>配送日期</th>
                   <th>配送时段</th>
-                  <th>最后配送日期</th>
                   <th>最后配送日期</th>
                   <th>申请人员工号</th>
                   <th>申请人电话</th>
@@ -607,8 +607,8 @@
 
           <div class="modal-body">
           <div class="split-grid">
-            <div class="sub-panel">
-              <div class="sub-head"><h3>配送需求明细行</h3></div>
+            <div class="sub-panel" data-collapsible-section>
+              <div class="sub-head" data-toggle-trial-section><button class="collapse-toggle" type="button" aria-label="折叠配送需求明细行">-</button><h3>配送需求明细行</h3></div>
               <div class="table-wrap">
                 <table class="trial-demand-table">
                   <thead>
@@ -625,8 +625,8 @@
           </div>
 
           <div class="split-grid two">
-            <div class="sub-panel">
-              <div class="sub-head"><h3>可参与试算货源</h3></div>
+            <div class="sub-panel" data-collapsible-section>
+              <div class="sub-head" data-toggle-trial-section><button class="collapse-toggle" type="button" aria-label="折叠可参与试算货源">-</button><h3>可参与试算货源</h3></div>
               <div class="table-wrap">
                 <table>
                   <thead>
@@ -641,8 +641,8 @@
               </div>
             </div>
 
-            <div class="sub-panel">
-              <div class="sub-head"><h3>货源分配结果</h3></div>
+            <div class="sub-panel" data-collapsible-section>
+              <div class="sub-head" data-toggle-trial-section><button class="collapse-toggle" type="button" aria-label="折叠货源分配结果">-</button><h3>货源分配结果</h3></div>
               <div class="table-wrap">
                 <table class="trial-allocation-table">
                   <thead>
@@ -729,6 +729,8 @@
                   <th>行项目</th>
                   <th>物料</th>
                   <th>描述</th>
+                  <th>叉车类型</th>
+                  <th>短驳车类型</th>
                   <th>货源类型</th>
                   <th>货源标识</th>
                   <th>确认数量</th>
@@ -749,49 +751,49 @@
                 <tr>
                   <td class="select-col"><input type="checkbox" checked aria-label="选择分配结果 PSD-20260509-001"></td>
                   <td>PSD-20260509-001</td><td>DELREQ-20260507-002</td><td>1000000137</td><td>1</td>
-                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
+                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge cyan">平叉</span></td><td><span class="badge gray">-</span></td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
                   <td>6</td><td>TO</td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td>
                   <td><span class="badge amber">未生成任务</span></td><td><span class="badge green">下发成功</span></td><td>-</td><td>1002898403</td><td>-</td>
                 </tr>
                  <tr>
                   <td class="select-col"><input type="checkbox" checked aria-label="选择分配结果 PSD-20260509-002"></td>
                   <td>PSD-20260509-002</td><td>DELREQ-20260507-002</td><td>1000000137</td><td>1</td>
-                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
+                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge cyan">平叉</span></td><td><span class="badge gray">-</span></td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
                   <td>6</td><td>TO</td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td>
                   <td><span class="badge amber">未生成任务</span></td><td><span class="badge green">下发成功</span></td><td>-</td><td>1002898404</td><td>-</td>
                 </tr>
                  <tr>
                   <td class="select-col"><input type="checkbox" checked aria-label="选择分配结果 PSD-20260509-003"></td>
                   <td>PSD-20260509-003</td><td>DELREQ-20260507-002</td><td>1000000137</td><td>1</td>
-                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
+                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge cyan">平叉</span></td><td><span class="badge gray">-</span></td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
                   <td>6</td><td>TO</td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td>
                   <td><span class="badge amber">未生成任务</span></td><td><span class="badge green">下发成功</span></td><td>-</td><td>1002898405</td><td>-</td>
                 </tr>
                  <tr>
                   <td class="select-col"><input type="checkbox" checked aria-label="选择分配结果 PSD-20260509-004"></td>
                   <td>PSD-20260509-004</td><td>DELREQ-20260507-002</td><td>1000000137</td><td>1</td>
-                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
+                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge cyan">平叉</span></td><td><span class="badge gray">-</span></td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
                   <td>2</td><td>TO</td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td>
                   <td><span class="badge amber">未生成任务</span></td><td><span class="badge green">下发成功</span></td><td>-</td><td>1002898406</td><td>-</td>
                 </tr>
                 <tr>
                   <td class="select-col"></td>
                   <td>PSD-20260508-002</td><td>DELREQ-20260507-003</td><td>1000000137</td><td>2</td>
-                  <td>20000002</td><td>木片 桉木 中国 广西</td><td><span class="badge green">供应商送货</span></td><td>SUP-20260508-002</td>
+                  <td>20000002</td><td>木片 桉木 中国 广西</td><td><span class="badge gray">-</span></td><td><span class="badge blue">平板车</span></td><td><span class="badge green">供应商送货</span></td><td>SUP-20260508-002</td>
                   <td>20</td><td>TO</td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td>
                   <td>-</td><td><span class="badge green">下发成功</span></td><td>-</td><td>800000349B</td><td>-</td>
                 </tr>
                    <tr>
                   <td class="select-col"></td>
                   <td>PSD-20260508-003</td><td>DELREQ-20260506-001</td><td>1000000134</td><td>2</td>
-                  <td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td><span class="badge green">供应商送货</span></td><td>SUP-20260507-001</td>
+                  <td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td><span class="badge blue">抱夹</span></td><td><span class="badge gray">-</span></td><td><span class="badge green">供应商送货</span></td><td>SUP-20260507-001</td>
                   <td>20</td><td>TO</td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.10</td>
                   <td>-</td><td><span class="badge green">下发成功</span></td><td>-</td><td>800000149B</td><td>-</td>
                 </tr>
                  <tr>
                   <td class="select-col"></td>
                   <td>PSD-20260506-001</td><td>DELREQ-20260505-001</td><td>1000000133</td><td>1</td>
-                  <td>20000002</td><td>木片 桉木 中国 广西</td><td><span class="badge amber">码头仓库</span></td><td>SUP-20260505-001</td>
+                  <td>20000002</td><td>木片 桉木 中国 广西</td><td><span class="badge gray">-</span></td><td><span class="badge blue">平板车</span></td><td><span class="badge amber">码头仓库</span></td><td>SUP-20260505-001</td>
                   <td>20</td><td>TO</td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.10</td>
                   <td>-</td><td><span class="badge red">下发失败</span></td><td>绑定短驳计划失败</td><td>-</td><td><button class="link-btn" data-toast="已重新下发">重新下发</button></td>
                 </tr>
@@ -1207,8 +1209,8 @@
       </header>
 
       <div class="modal-body">
-        <section class="modal-section">
-          <h3>领料单信息</h3>
+        <section class="modal-section" data-split-collapsible-section>
+          <div class="modal-section-head" data-toggle-split-section><button class="collapse-toggle" type="button" aria-label="折叠领料单信息">-</button><h3>领料单信息</h3></div>
           <div class="query-grid modal-query">
             <div class="readonly-field"><span>领料申请单号</span><strong>1000000137</strong></div>
             <div class="readonly-field"><span>领料工厂</span><strong>2000</strong></div>
@@ -1216,8 +1218,8 @@
           </div>
         </section>
 
-        <section class="modal-section">
-          <h3>已有拆解记录明细</h3>
+        <section class="modal-section" data-split-collapsible-section>
+          <div class="modal-section-head" data-toggle-split-section><button class="collapse-toggle" type="button" aria-label="折叠已有拆解记录明细">-</button><h3>已有拆解记录明细</h3></div>
           <div class="table-wrap">
             <table>
               <thead>
@@ -1232,8 +1234,8 @@
           </div>
         </section>
 
-        <section class="modal-section split-entry-section">
-          <h3>本次拆解填写</h3>
+        <section class="modal-section split-entry-section" data-split-collapsible-section>
+          <div class="modal-section-head" data-toggle-split-section><button class="collapse-toggle" type="button" aria-label="折叠本次拆解填写">-</button><h3>本次拆解填写</h3></div>
           <div class="split-entry-layout">
             <div class="split-material-card">
               <div class="split-material-label">当前物料</div>
@@ -1485,12 +1487,13 @@
 
           <h3 class="form-section-title">叉车配置</h3>
           <label class="form-item required"><span>叉车类型:</span><select><option>抱夹</option><option>平叉</option><option>铲车</option></select></label>
-          <label class="form-item"><span>载重限制:</span><input value="35"></label>
-          <label class="form-item"><span>特殊备注:</span><input placeholder="请输入"></label>
+          <label class="form-item"><span>叉车载重限制:</span><input value="35"></label>
+          <label class="form-item"><span>叉车备注:</span><input placeholder="请输入"></label>
 
           <h3 class="form-section-title">短驳配置</h3>
-          <label class="form-item required"><span>需要短驳:</span><select><option>是</option><option>否</option></select></label>
+          <label class="form-item required"><span>需要短驳:</span><select><option>是</option><option>否</option></select></label><br/>
           <label class="form-item"><span>短驳车类型:</span><select><option>平板车</option><option>自卸车</option></select></label>
+            <label class="form-item"><span>短驳载重限制:</span><input value="35"></label>
           <label class="form-item"><span>短驳备注:</span><input placeholder="请输入"></label>
         </div>
       </div>
@@ -1575,11 +1578,11 @@
         <div class="table-wrap">
           <table>
             <thead>
-              <tr><th>校验结果</th><th>厂区</th><th>业务</th><th>场景</th><th>物料类型</th><th>物料组</th><th>物料</th><th>描述</th><th>基本单位</th><th>ATMS包装方式</th><th>工厂代码</th><th>库存地点</th><th>仓储类型</th><th>叉车类型</th><th>载重限制</th><th>需要短驳</th><th>短驳车类型</th></tr>
+              <tr><th>校验结果</th><th>厂区</th><th>业务</th><th>场景</th><th>物料类型</th><th>物料组</th><th>物料</th><th>描述</th><th>基本单位</th><th>ATMS包装方式</th><th>工厂代码</th><th>库存地点</th><th>仓储类型</th><th>叉车类型</th><th>叉车载重限制</th><th>叉车备注</th><th>需要短驳</th><th>短驳车类型</th><th>短驳载重限制</th><th>短驳备注</th></tr>
             </thead>
             <tbody>
-              <tr><td><span class="badge green">校验成功</span></td><td>金桂厂区</td><td>资材</td><td>厂内领用发货</td><td>MRO</td><td>13120801</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>TO</td><td>A 散货类</td><td>200A</td><td>3108</td><td>A01</td><td>抱夹</td><td>35</td><td>是</td><td>平板车</td></tr>
-              <tr class="import-error-row"><td><span class="badge red">校验失败：叉车类型必填</span></td><td>金桂厂区</td><td>资材</td><td>采购收货</td><td>MRO</td><td>13121401</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>TO</td><td>B 包装袋类</td><td>200A</td><td>3108</td><td></td><td></td><td>25</td><td>否</td><td></td></tr>
+              <tr><td><span class="badge green">校验成功</span></td><td>金桂厂区</td><td>资材</td><td>厂内领用发货</td><td>MRO</td><td>13120801</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>TO</td><td>A 散货类</td><td>200A</td><td>3108</td><td>A01</td><td>抱夹</td><td>35</td><td>-</td><td>是</td><td>平板车</td><td></td><td></td></tr>
+              <tr class="import-error-row"><td><span class="badge red">校验失败：叉车类型必填</span></td><td>金桂厂区</td><td>资材</td><td>采购收货</td><td>MRO</td><td>13121401</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>TO</td><td>B 包装袋类</td><td>200A</td><td>3108</td><td></td><td></td><td>25</td><td>-</td><td>否</td><td></td><td></td><td></td></tr>
             </tbody>
           </table>
         </div>
@@ -1705,6 +1708,20 @@
         <div class="operation-cost-form">
           <label class="form-item"><span>任务单号</span><input data-task-finish-no readonly></label>
           <label class="form-item"><span>设备号</span><input value="5110100022018A9"></label>
+          <div class="form-item full-span task-finish-detail-item">
+            <span>完成数量确认</span>
+            <div class="table-wrap task-finish-detail-wrap">
+              <table>
+                <thead>
+                  <tr><th>配送单号</th><th>配送需求单号</th><th>物料</th><th>描述</th><th>计划数量</th><th>实际完成数量</th><th>基本单位</th><th>差异原因</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>PSD-20260506-006</td><td>DELREQ-20260506-001</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>14</td><td><input class="cell-input" type="number" value="14"></td><td>TO</td><td><input class="reason-input" placeholder="请输入"></td></tr>
+                  <tr><td>PSD-20260506-007</td><td>DELREQ-20260506-002</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>9</td><td><input class="cell-input" type="number" value="8"></td><td>NM3</td><td><input class="reason-input" value="现场剩余 1 NM3 未配送"></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
           <label class="form-item"><span>备注</span><textarea rows="3"></textarea></label>
         </div>
       </div>
@@ -1812,7 +1829,7 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=20260702-dispatch-rule-tabs"></script>
+  <script src="./app.js?v=20260706-finish-quantity"></script>
 </body>
 </html>
 

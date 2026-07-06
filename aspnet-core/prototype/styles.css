@@ -409,9 +409,34 @@ p {
   align-items: center;
   background: var(--surface-soft);
   border-bottom: 1px solid var(--line);
+  cursor: pointer;
   display: flex;
-  justify-content: space-between;
+  gap: 8px;
+  justify-content: flex-start;
   padding: 12px;
+}
+
+.collapse-toggle {
+  align-items: center;
+  background: #eaf3ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 5px;
+  color: var(--blue);
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 800;
+  height: 22px;
+  justify-content: center;
+  line-height: 1;
+  width: 22px;
+}
+
+.sub-panel.is-collapsed > .table-wrap {
+  display: none;
+}
+
+.sub-panel.is-collapsed .sub-head {
+  border-bottom: 0;
 }
 
 .icon-btn {
@@ -1361,10 +1386,30 @@ input, select {
   overflow: hidden;
 }
 
-.modal-section > h3 {
+.modal-section > h3,
+.modal-section-head {
+  align-items: center;
   background: var(--surface-soft);
   border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 8px;
   padding: 12px;
+}
+
+.modal-section-head {
+  cursor: pointer;
+}
+
+.modal-section-head h3 {
+  margin: 0;
+}
+
+.modal-section.is-collapsed > :not(.modal-section-head) {
+  display: none;
+}
+
+.modal-section.is-collapsed .modal-section-head {
+  border-bottom: 0;
 }
 
 .modal-query {
@@ -1421,6 +1466,27 @@ input, select {
 
 .task-operation-modal-card {
   max-width: 680px;
+}
+
+#task-finish-modal .task-operation-modal-card {
+  max-width: 1120px;
+}
+
+.task-finish-detail-item {
+  align-items: flex-start;
+}
+
+.task-finish-detail-wrap {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  max-height: 260px;
+  overflow: auto;
+  width: 100%;
+}
+
+.task-finish-detail-wrap th,
+.task-finish-detail-wrap td {
+  padding: 10px 12px;
 }
 
 .task-detail-modal-card {
