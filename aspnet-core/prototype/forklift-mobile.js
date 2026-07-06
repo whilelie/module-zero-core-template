@@ -179,15 +179,14 @@ function renderTasks() {
           <span class="badge ${badgeClass(task.status)}">${task.status}</span>
         </div>
         <div class="task-stats">
-          <div class="task-stat"><span>任务编号</span><strong>${task.id}</strong></div>
-          <div class="task-stat"><span>配送单数</span><strong>${task.deliveryCount}</strong></div>
-          <div class="task-stat"><span>物料项数</span><strong>${task.materialCount}</strong></div>
+          <div><span>配送单数</span><strong>${task.deliveryCount}</strong></div>
+          <div><span>物料项数</span><strong>${task.materialCount}</strong></div>
         </div>
         <div class="task-card-actions">
-          <button type="button" data-task-action="detail">详情</button>
-          <button type="button" data-task-action="finish" ${task.status === "执行中" ? "" : "disabled"}>结束</button>
-          <button type="button" data-task-action="device" ${task.status === "执行中" ? "" : "disabled"}>变更设备</button>
           <button type="button" data-task-action="start" ${task.status === "待接单" ? "" : "disabled"}>开始</button>
+          <button type="button" data-task-action="device" ${task.status === "执行中" ? "" : "disabled"}>变更设备</button>
+          <button type="button" data-task-action="finish" ${task.status === "执行中" ? "" : "disabled"}>结束</button>
+          <button type="button" data-task-action="detail">详情</button>
         </div>
       </article>
     `;
@@ -209,6 +208,10 @@ function fillDetailPage(task) {
       <div class="detail-delivery-grid">
         <span>物料</span><b>${point.material}</b>
         <span>描述</span><b>${point.description}</b>
+        <span>库存地点</span><b>${point.inventoryLocation || point.storage || "-"}</b>
+        <span>仓库号</span><b>${point.warehouseNo || "107"}</b>
+        <span>仓储类型</span><b>${point.storageType || "A01"}</b>
+        <span>仓位</span><b>${point.bin || "1210"}</b>
         <span>数量</span><b>${point.quantity} ${point.unit}</b>
         <span>收货库存地点</span><b>${point.storage}</b>
         <span>配送日期</span><b>${point.date}</b>

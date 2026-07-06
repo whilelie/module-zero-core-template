@@ -19,6 +19,7 @@ CREATE TABLE `material_requisition` (
   `C_BATCH` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '批次',
   `C_CERTIFICATION_TYPE` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '认证种类',
   `C_REMARK` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  `C_ISSUE_STORAGE_LOCATION` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '发货库存地点',
   `C_RECEIPT_STORAGE_LOCATION` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '收货库存地点',
   `D_DELIVERY_DATE` datetime DEFAULT NULL COMMENT '配送日期',
   `C_DELIVERY_TIME_SLOT` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '配送时间段',
@@ -261,6 +262,7 @@ CREATE TABLE `source_trial_allocation_result` (
 CREATE TABLE `material_operation_cost` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
   `C_MATERIAL_NO` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '物料号',
+  `C_WERKS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '工厂',
   `N_IN_PLANT_COST` decimal(18,2) DEFAULT NULL COMMENT '厂内资材库作业成本',
   `N_WHARF_COST` decimal(18,2) DEFAULT NULL COMMENT '码头仓库作业成本',
   `N_SUPPLIER_COST` decimal(18,2) DEFAULT NULL COMMENT '供应商送货作业成本',
