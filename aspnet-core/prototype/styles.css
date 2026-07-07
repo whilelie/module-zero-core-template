@@ -1672,6 +1672,13 @@ input, select {
   padding: 0 2px;
 }
 
+.readonly-value {
+  background: #f5f8fc;
+  border: 1px solid #d4deec;
+  border-radius: 5px;
+  padding: 0 14px;
+}
+
 .detail-tabs {
   background: #f6f8fb;
   border: 1px solid var(--line);

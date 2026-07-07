@@ -41,8 +41,11 @@ const shortHaulDescriptionInput = document.querySelector("[data-short-haul-descr
 const shortHaulUnitInput = document.querySelector("[data-short-haul-unit]");
 const trialBatchAction = document.querySelector("[data-trial-batch-action]");
 const taskGenerationAction = document.querySelector("[data-confirm-task-generation]");
+const taskAssignConfirm = document.querySelector("[data-confirm-task-assign]");
+const taskStartConfirm = document.querySelector("[data-confirm-task-start]");
+const taskDeviceConfirm = document.querySelector("[data-confirm-task-device]");
 
-window.prototypeAppVersion = "20260706-finish-quantity";
+window.prototypeAppVersion = "20260707-task-operation-rules";
 
 const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],
@@ -113,6 +116,25 @@ function closeModal(modal) {
   if (!document.querySelector(".modal-backdrop.open")) {
     document.body.classList.remove("modal-open");
   }
+}
+
+function setFieldText(field, value) {
+  if (!field) return;
+  if ("value" in field) {
+    field.value = value;
+  } else {
+    field.textContent = value;
+  }
+}
+
+function requireModalValue(modal, selector, message) {
+  const field = modal?.querySelector(selector);
+  if (!field?.value) {
+    showToast(message);
+    field?.focus();
+    return false;
+  }
+  return true;
 }
 
 function updateBusinessSlots() {
@@ -464,22 +486,34 @@ document.querySelectorAll("[data-open-task-assign]").forEach((button) => {
     }
     const row = button.closest("tr");
     const taskNo = row?.children[0]?.textContent.trim() || "";
-    const taskInput = taskAssignModal?.querySelector("[data-task-no]");
-    if (taskInput) {
-      taskInput.value = taskNo;
+    const taskNoField = taskAssignModal?.querySelector("[data-task-no]");
+    const assigneeSelect = taskAssignModal?.querySelector("[data-task-assignee]");
+    if (taskNoField) {
+      taskNoField.textContent = taskNo;
+    }
+    if (assigneeSelect) {
+      assigneeSelect.value = "";
     }
     openModal(taskAssignModal);
   });
+});
+
+taskAssignConfirm?.addEventListener("click", () => {
+  const assigneeSelect = taskAssignModal?.querySelector("[data-task-assignee]");
+  if (!assigneeSelect?.value) {
+    showToast("请选择执行人");
+    assigneeSelect?.focus();
+    return;
+  }
+  showToast("任务派工已提交");
+  closeModal(taskAssignModal);
 });
 
 document.querySelectorAll("[data-open-task-cancel]").forEach((button) => {
   button.addEventListener("click", () => {
     const row = button.closest("tr");
     const taskNo = row?.children[0]?.textContent.trim() || "";
-    const taskInput = taskCancelModal?.querySelector("[data-task-cancel-no]");
-    if (taskInput) {
-      taskInput.value = taskNo;
-    }
+    setFieldText(taskCancelModal?.querySelector("[data-task-cancel-no]"), taskNo);
     openModal(taskCancelModal);
   });
 });
@@ -490,9 +524,7 @@ const bindTaskNoModal = (selector, modal, inputSelector) => {
       const row = button.closest("tr");
       const taskNo = row?.children[0]?.textContent.trim() || "";
       const taskInput = modal?.querySelector(inputSelector);
-      if (taskInput) {
-        taskInput.value = taskNo;
-      }
+      setFieldText(taskInput, taskNo);
       openModal(modal);
     });
   });
@@ -501,6 +533,20 @@ const bindTaskNoModal = (selector, modal, inputSelector) => {
 bindTaskNoModal("[data-open-task-start]", taskStartModal, "[data-task-start-no]");
 bindTaskNoModal("[data-open-task-finish]", taskFinishModal, "[data-task-finish-no]");
 bindTaskNoModal("[data-open-task-device]", taskDeviceModal, "[data-task-device-no]");
+
+taskStartConfirm?.addEventListener("click", () => {
+  if (!requireModalValue(taskStartModal, "[data-task-start-device]", "请输入设备号")) return;
+  if (!requireModalValue(taskStartModal, "[data-task-start-device-type]", "请选择设备类型")) return;
+  showToast("任务已开始");
+  closeModal(taskStartModal);
+});
+
+taskDeviceConfirm?.addEventListener("click", () => {
+  if (!requireModalValue(taskDeviceModal, "[data-task-new-device]", "请输入新设备号")) return;
+  if (!requireModalValue(taskDeviceModal, "[data-task-device-type]", "请选择设备类型")) return;
+  showToast("设备变更已提交");
+  closeModal(taskDeviceModal);
+});
 
 document.querySelectorAll("[data-open-task-detail]").forEach((button) => {
   button.addEventListener("click", () => {
