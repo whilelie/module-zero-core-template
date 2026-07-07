@@ -136,6 +136,21 @@ function showToast(message) {
   showToast.timer = window.setTimeout(() => toast.classList.add("hidden"), 1600);
 }
 
+function demandNoForPoint(point) {
+  const map = {
+    "PSD-20260506-001": "DELREQ-20260506-001",
+    "PSD-20260506-002": "DELREQ-20260506-002",
+    "PSD-20260506-003": "DELREQ-20260506-003",
+    "PSD-20260506-004": "DELREQ-20260506-004",
+    "PSD-20260506-005": "DELREQ-20260506-005",
+    "PSD-20260506-006": "DELREQ-20260506-006",
+    "PSD-20260506-007": "DELREQ-20260506-007",
+    "PSD-20260506-008": "DELREQ-20260506-008",
+    "PSD-20260506-009": "DELREQ-20260506-009"
+  };
+  return point.demandNo || map[point.deliveryNo] || "-";
+}
+
 function badgeClass(status) {
   if (status === "执行中") return "green";
   if (status === "待接单") return "amber";
@@ -206,6 +221,7 @@ function fillDetailPage(task) {
     <article class="detail-delivery-card">
       <strong>${point.deliveryNo}</strong>
       <div class="detail-delivery-grid">
+        <span>配送需求单号</span><b>${demandNoForPoint(point)}</b>
         <span>物料</span><b>${point.material}</b>
         <span>描述</span><b>${point.description}</b>
         <span>库存地点</span><b>${point.inventoryLocation || point.storage || "-"}</b>
@@ -248,6 +264,30 @@ function actionTemplate(action, task) {
     return `
       <label><span>任务单号</span><input value="${task.id}" readonly></label>
       <label><span>设备号</span><input id="action-device" value="${task.device || "5110100022018A9"}"></label>
+      <section class="finish-confirm-section">
+        <h3>完成数量确认</h3>
+        <div class="finish-confirm-list">
+          ${task.points.map((point, index) => `
+            <article class="finish-confirm-card">
+              <strong>${point.deliveryNo}</strong>
+              <div class="finish-confirm-info">
+                <span>配送需求单号</span><b>${demandNoForPoint(point)}</b>
+                <span>物料</span><b>${point.material}</b>
+                <span>描述</span><b>${point.description}</b>
+                <span>计划数量</span><b>${point.quantity} ${point.unit}</b>
+              </div>
+              <label>
+                <span>实际完成数量</span>
+                <input class="finish-actual-input" data-point-index="${index}" value="${point.actualQuantity ?? point.quantity}" inputmode="decimal">
+              </label>
+              <label>
+                <span>差异原因</span>
+                <textarea class="finish-reason-input" data-point-index="${index}" placeholder="实际数量与计划不一致时填写">${point.finishReason || ""}</textarea>
+              </label>
+            </article>
+          `).join("")}
+        </div>
+      </section>
       <label><span>备注</span><textarea id="action-remark" placeholder=""></textarea></label>
     `;
   }
@@ -285,6 +325,16 @@ function confirmAction() {
     task.device = document.querySelector("#action-device")?.value || task.device;
     showToast("任务已开始");
   } else if (currentAction === "finish") {
+    document.querySelectorAll(".finish-actual-input").forEach((input) => {
+      const point = task.points[Number(input.dataset.pointIndex)];
+      if (!point) return;
+      point.actualQuantity = input.value;
+    });
+    document.querySelectorAll(".finish-reason-input").forEach((input) => {
+      const point = task.points[Number(input.dataset.pointIndex)];
+      if (!point) return;
+      point.finishReason = input.value;
+    });
     task.status = "已完成";
     task.finishAt = nowText();
     task.device = document.querySelector("#action-device")?.value || task.device;

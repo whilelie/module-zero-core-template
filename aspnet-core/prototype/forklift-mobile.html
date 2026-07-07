@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>领用配送司机端</title>
-  <link rel="stylesheet" href="./forklift-mobile.css?v=20260705-delivery-stock-fields">
+  <link rel="stylesheet" href="./forklift-mobile.css?v=20260707-logout-button">
 </head>
 <body>
   <main class="mobile-shell">
@@ -12,7 +12,7 @@
       <div class="login-card">
         <div class="brand-block">
           <div class="brand-mark">WCT</div>
-          <h1>领用配送任务</h1>
+          <h1>配送任务</h1>
           <p>企业微信司机端</p>
         </div>
 
@@ -32,11 +32,11 @@
 
     <section class="task-view hidden" id="task-view">
       <header class="mobile-header">
-        <button class="back-btn" type="button" id="logout-btn" aria-label="退出">‹</button>
         <div>
-          <h1>我的领用配送任务</h1>
+          <h1>我的配送任务</h1>
           <p>账号 <span id="account-display">50000068</span></p>
         </div>
+        <button class="logout-button" type="button" id="logout-btn">登出</button>
       </header>
 
       <nav class="status-tabs" aria-label="任务筛选">
@@ -77,6 +77,6 @@
 
   <div class="toast hidden" id="toast">已保存</div>
 
-  <script src="./forklift-mobile.js?v=20260705-delivery-stock-fields"></script>
+  <script src="./forklift-mobile.js?v=20260707-logout-button"></script>
 </body>
 </html>

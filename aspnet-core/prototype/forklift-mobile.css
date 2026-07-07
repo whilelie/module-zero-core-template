@@ -189,6 +189,11 @@ button {
   padding: 18px 16px 14px;
 }
 
+.mobile-header > div {
+  flex: 1;
+  min-width: 0;
+}
+
 .mobile-header h1 {
   font-size: 24px;
   margin: 0 0 3px;
@@ -210,6 +215,16 @@ button {
   height: 42px;
   justify-content: center;
   width: 42px;
+}
+
+.logout-button {
+  background: rgba(255, 255, 255, .18);
+  border: 1px solid rgba(255, 255, 255, .55);
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 700;
+  min-height: 36px;
+  padding: 0 14px;
 }
 
 .status-tabs {
@@ -493,7 +508,8 @@ button {
   border-radius: 16px;
   box-shadow: var(--shadow);
   left: 50%;
-  max-width: 470px;
+  max-height: calc(100vh - 42px);
+  max-width: 500px;
   overflow: hidden;
   position: fixed;
   top: 50%;
@@ -505,7 +521,62 @@ button {
 .action-form {
   display: grid;
   gap: 14px;
+  max-height: calc(100vh - 174px);
+  overflow: auto;
   padding: 16px;
+}
+
+.finish-confirm-section {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.finish-confirm-section h3 {
+  background: #f5f9fd;
+  border-bottom: 1px solid var(--line);
+  font-size: 16px;
+  margin: 0;
+  padding: 10px 12px;
+}
+
+.finish-confirm-list {
+  display: grid;
+  gap: 10px;
+  padding: 10px;
+}
+
+.finish-confirm-card {
+  background: #fbfdff;
+  border: 1px solid #dce9f6;
+  border-radius: 12px;
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.finish-confirm-card > strong {
+  font-size: 15px;
+}
+
+.finish-confirm-info {
+  display: grid;
+  gap: 6px 10px;
+  grid-template-columns: 82px 1fr;
+}
+
+.finish-confirm-info span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.finish-confirm-info b {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.finish-confirm-card textarea {
+  min-height: 70px;
 }
 
 .action-modal footer {
