@@ -375,6 +375,7 @@ CREATE TABLE `delivery_task_log` (
   `C_OPERATION_TYPE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '操作类型',
   `C_OPERATOR_NAME` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '操作人',
   `C_DEVICE_NO` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '设备号',
+  `C_DEVICE_TYPE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '设备类型',
   `C_REMARK` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '说明',
   `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
   `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',

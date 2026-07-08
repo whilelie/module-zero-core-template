@@ -45,7 +45,7 @@ const taskAssignConfirm = document.querySelector("[data-confirm-task-assign]");
 const taskStartConfirm = document.querySelector("[data-confirm-task-start]");
 const taskDeviceConfirm = document.querySelector("[data-confirm-task-device]");
 
-window.prototypeAppVersion = "20260707-task-operation-rules";
+window.prototypeAppVersion = "20260708-task-log-device-type1";
 
 const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],

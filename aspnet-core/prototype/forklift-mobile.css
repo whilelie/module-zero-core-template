@@ -109,6 +109,12 @@ button {
   gap: 7px;
 }
 
+.action-form label.required > span::before {
+  color: var(--danger);
+  content: "* ";
+  font-weight: 800;
+}
+
 .login-form span,
 .action-form span {
   color: #48566b;
@@ -135,6 +141,28 @@ button {
   min-height: 92px;
   padding: 10px 12px;
   resize: vertical;
+}
+
+.readonly-line {
+  display: grid;
+  gap: 7px;
+}
+
+.readonly-line span {
+  color: #48566b;
+  font-size: 14px;
+}
+
+.readonly-line strong {
+  align-items: center;
+  background: #f5f8fc;
+  border: 1px solid #c9d8e8;
+  border-radius: 10px;
+  color: var(--text);
+  display: flex;
+  font-weight: 700;
+  min-height: 46px;
+  padding: 0 12px;
 }
 
 .primary,
@@ -445,6 +473,10 @@ button {
 
 .detail-delivery-grid b {
   font-weight: 600;
+}
+
+.detail-delivery-grid .badge {
+  font-style: normal;
 }
 
 .modal-mask {

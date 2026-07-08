@@ -151,6 +151,38 @@ function demandNoForPoint(point) {
   return point.demandNo || map[point.deliveryNo] || "-";
 }
 
+function requisitionNoForPoint(point) {
+  return point.requisitionNo || "1000000137";
+}
+
+function lineNoForPoint(point, index) {
+  return point.lineNo || index + 1;
+}
+
+function sourceTypeForPoint(point) {
+  return point.sourceType || "厂内资材库";
+}
+
+function sourceTypeBadgeClass(sourceType) {
+  if (sourceType === "厂内资材库") return "blue";
+  if (sourceType === "供应商送货") return "green";
+  if (sourceType === "码头仓库") return "amber";
+  return "gray";
+}
+
+function externalDocTypeForPoint(point) {
+  const sourceType = sourceTypeForPoint(point);
+  if (point.externalDocType) return point.externalDocType;
+  if (sourceType === "厂内资材库") return "SAP拣配单";
+  if (sourceType === "供应商送货") return "供应商预约号";
+  if (sourceType === "码头仓库") return "短驳计划";
+  return "-";
+}
+
+function externalDocNoForPoint(point, index) {
+  return point.externalDocNo || `100289840${index + 3}`;
+}
+
 function badgeClass(status) {
   if (status === "执行中") return "green";
   if (status === "待接单") return "amber";
@@ -217,25 +249,40 @@ function setActiveFilter(filter) {
 function fillDetailPage(task) {
   detailTaskTitle.textContent = task.id;
   detailTaskSummary.textContent = `${task.status} · ${task.deliveryCount} 张配送单 · ${task.materialCount} 项物料`;
-  detailPageList.innerHTML = task.points.map((point) => `
+  detailPageList.innerHTML = task.points.map((point, index) => {
+    const sourceType = sourceTypeForPoint(point);
+    const actualQuantity = point.actualQuantity ?? (task.status === "已完成" ? point.quantity : "-");
+    return `
     <article class="detail-delivery-card">
       <strong>${point.deliveryNo}</strong>
       <div class="detail-delivery-grid">
         <span>配送需求单号</span><b>${demandNoForPoint(point)}</b>
+        <span>领料申请单号</span><b>${requisitionNoForPoint(point)}</b>
+        <span>行项目</span><b>${lineNoForPoint(point, index)}</b>
         <span>物料</span><b>${point.material}</b>
         <span>描述</span><b>${point.description}</b>
+        <span>批次</span><b>${point.batch || "-"}</b>
+        <span>认证种类</span><b>${point.certType || "-"}</b>
         <span>库存地点</span><b>${point.inventoryLocation || point.storage || "-"}</b>
         <span>仓库号</span><b>${point.warehouseNo || "107"}</b>
         <span>仓储类型</span><b>${point.storageType || "A01"}</b>
         <span>仓位</span><b>${point.bin || "1210"}</b>
-        <span>数量</span><b>${point.quantity} ${point.unit}</b>
+        <span>计划数量</span><b>${point.quantity}</b>
+        <span>实际完成数量</span><b>${actualQuantity}</b>
+        <span>基本单位</span><b>${point.unit}</b>
+        <span>差异原因</span><b>${point.finishReason || "-"}</b>
+        <span>货源类型</span><b><i class="badge ${sourceTypeBadgeClass(sourceType)}">${sourceType}</i></b>
+        <span>货源标识</span><b>${point.sourceCode || `SUP-20260506-00${index + 1}`}</b>
         <span>收货库存地点</span><b>${point.storage}</b>
         <span>配送日期</span><b>${point.date}</b>
         <span>配送时段</span><b>${point.period}</b>
         <span>最后配送日期</span><b>${point.latestDate}</b>
+        <span>外部单据类型</span><b>${externalDocTypeForPoint(point)}</b>
+        <span>外部单据号</span><b>${externalDocNoForPoint(point, index)}</b>
       </div>
     </article>
-  `).join("");
+  `;
+  }).join("");
 }
 
 function openDetailPage(task = getSelectedTask()) {
@@ -251,19 +298,23 @@ function closeDetailPage() {
   taskView.classList.remove("hidden");
 }
 
+function readonlyLine(label, value) {
+  return `<div class="readonly-line"><span>${label}</span><strong>${value || "-"}</strong></div>`;
+}
+
 function actionTemplate(action, task) {
   if (action === "start") {
     return `
-      <label><span>任务单号</span><input value="${task.id}" readonly></label>
-      <label><span>设备号</span><input id="action-device" value="${task.device || "5110100022018A9"}" autocomplete="off"></label>
-      <label><span>设备类型</span><select id="action-device-type"><option>请选择</option><option selected>平叉</option><option>抱夹车</option><option>牵引车</option></select></label>
+      ${readonlyLine("任务单号", task.id)}
+      <label class="required"><span>设备号</span><input id="action-device" value="${task.device || "5110100022018A9"}" autocomplete="off" required></label>
+      <label class="required"><span>设备类型</span><select id="action-device-type" required><option value="">请选择</option><option selected>抱夹</option><option>平叉</option><option>铲车</option></select></label>
       <label><span>备注</span><textarea id="action-remark" placeholder=""></textarea></label>
     `;
   }
   if (action === "finish") {
     return `
-      <label><span>任务单号</span><input value="${task.id}" readonly></label>
-      <label><span>设备号</span><input id="action-device" value="${task.device || "5110100022018A9"}"></label>
+      ${readonlyLine("任务单号", task.id)}
+      ${readonlyLine("设备号", task.device || "5110100022018A9")}
       <section class="finish-confirm-section">
         <h3>完成数量确认</h3>
         <div class="finish-confirm-list">
@@ -276,9 +327,9 @@ function actionTemplate(action, task) {
                 <span>描述</span><b>${point.description}</b>
                 <span>计划数量</span><b>${point.quantity} ${point.unit}</b>
               </div>
-              <label>
+              <label class="required">
                 <span>实际完成数量</span>
-                <input class="finish-actual-input" data-point-index="${index}" value="${point.actualQuantity ?? point.quantity}" inputmode="decimal">
+                <input class="finish-actual-input" data-point-index="${index}" value="${point.actualQuantity ?? point.quantity}" inputmode="decimal" required>
               </label>
               <label>
                 <span>差异原因</span>
@@ -292,10 +343,10 @@ function actionTemplate(action, task) {
     `;
   }
   return `
-    <label><span>任务单号</span><input value="${task.id}" readonly></label>
-    <label><span>原设备号</span><input value="${task.device || "5110100022018A9"}" readonly></label>
-    <label><span>新设备号</span><input id="action-device" value="5110100022018A0"></label>
-    <label><span>设备类型</span><select id="action-device-type"><option>请选择</option><option selected>平叉</option><option>抱夹车</option><option>牵引车</option></select></label>
+    ${readonlyLine("任务单号", task.id)}
+    ${readonlyLine("原设备号", task.device || "5110100022018A9")}
+    <label class="required"><span>新设备号</span><input id="action-device" value="5110100022018A0" required></label>
+    <label class="required"><span>设备类型</span><select id="action-device-type" required><option value="">请选择</option><option selected>抱夹</option><option>平叉</option><option>铲车</option></select></label>
     <label><span>变更原因</span><textarea id="action-remark">原设备故障，更换设备</textarea></label>
   `;
 }
@@ -317,14 +368,32 @@ function closeAction() {
   actionModal.setAttribute("aria-hidden", "true");
 }
 
+function requireActionValue(selector, message) {
+  const field = actionForm.querySelector(selector);
+  if (!field?.value) {
+    showToast(message);
+    field?.focus();
+    return false;
+  }
+  return true;
+}
+
 function confirmAction() {
   const task = getSelectedTask();
   if (currentAction === "start") {
+    if (!requireActionValue("#action-device", "请输入设备号")) return;
+    if (!requireActionValue("#action-device-type", "请选择设备类型")) return;
     task.status = "执行中";
     task.startAt = nowText();
     task.device = document.querySelector("#action-device")?.value || task.device;
     showToast("任务已开始");
   } else if (currentAction === "finish") {
+    const emptyQuantity = Array.from(document.querySelectorAll(".finish-actual-input")).find((input) => !input.value);
+    if (emptyQuantity) {
+      showToast("请输入实际完成数量");
+      emptyQuantity.focus();
+      return;
+    }
     document.querySelectorAll(".finish-actual-input").forEach((input) => {
       const point = task.points[Number(input.dataset.pointIndex)];
       if (!point) return;
@@ -337,9 +406,10 @@ function confirmAction() {
     });
     task.status = "已完成";
     task.finishAt = nowText();
-    task.device = document.querySelector("#action-device")?.value || task.device;
     showToast("任务已结束");
   } else if (currentAction === "device") {
+    if (!requireActionValue("#action-device", "请输入新设备号")) return;
+    if (!requireActionValue("#action-device-type", "请选择设备类型")) return;
     task.device = document.querySelector("#action-device")?.value || task.device;
     showToast("设备变更已提交");
   }
