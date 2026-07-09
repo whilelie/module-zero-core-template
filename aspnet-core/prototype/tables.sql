@@ -477,7 +477,7 @@ CREATE TABLE `material_operation_vehicle_config` (
   `C_WERKS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '工厂代码',
   `C_LGORT` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '库存地点',
   `C_LGTYP` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '仓储类型',
-  `N_FORKLIFT_TYPE` tinyint NOT NULL COMMENT '叉车类型 1-抱夹 2-平叉 3-铲车',
+  `N_FORKLIFT_TYPE` tinyint NOT NULL COMMENT '叉车类型 1-抱叉 2-平叉 3-铲车',
   `N_FORKLIFT_LOAD_LIMIT` decimal(13,3) DEFAULT NULL COMMENT '叉车载重限制',
   `C_FORKLIFT_REMARK` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '叉车备注',
   `N_NEED_SHUTTLE` tinyint(1) NOT NULL DEFAULT '0' COMMENT '需要短驳 0-否 1-是',

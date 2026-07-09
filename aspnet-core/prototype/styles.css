@@ -563,6 +563,28 @@ tr.recommend td {
   color: #b91c1c;
 }
 
+.duty-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-width: 190px;
+}
+
+.badge.duty-paper {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.badge.duty-material {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge.duty-pulp {
+  background: #fef3c7;
+  color: #92400e;
+}
+
 .segmented {
   background: #eef2f7;
   border: 1px solid var(--line);
@@ -1614,6 +1636,22 @@ input, select {
 
 .form-item.full-span {
   grid-column: 1 / -1;
+}
+
+.form-hint {
+  color: #63758f;
+  font-size: 13px;
+  margin: -4px 0 0 110px;
+}
+
+.form-hint.full-span {
+  grid-column: 1 / -1;
+}
+
+.form-item input:disabled {
+  background: #f3f6fa;
+  color: #98a5b6;
+  cursor: not-allowed;
 }
 
 .form-item.required > span::before {

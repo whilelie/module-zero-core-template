@@ -307,7 +307,7 @@ function actionTemplate(action, task) {
     return `
       ${readonlyLine("任务单号", task.id)}
       <label class="required"><span>设备号</span><input id="action-device" value="${task.device || "5110100022018A9"}" autocomplete="off" required></label>
-      <label class="required"><span>设备类型</span><select id="action-device-type" required><option value="">请选择</option><option selected>抱夹</option><option>平叉</option><option>铲车</option></select></label>
+      <label class="required"><span>设备类型</span><select id="action-device-type" required><option value="">请选择</option><option selected>抱叉</option><option>平叉</option><option>铲车</option></select></label>
       <label><span>备注</span><textarea id="action-remark" placeholder=""></textarea></label>
     `;
   }
@@ -346,7 +346,7 @@ function actionTemplate(action, task) {
     ${readonlyLine("任务单号", task.id)}
     ${readonlyLine("原设备号", task.device || "5110100022018A9")}
     <label class="required"><span>新设备号</span><input id="action-device" value="5110100022018A0" required></label>
-    <label class="required"><span>设备类型</span><select id="action-device-type" required><option value="">请选择</option><option selected>抱夹</option><option>平叉</option><option>铲车</option></select></label>
+    <label class="required"><span>设备类型</span><select id="action-device-type" required><option value="">请选择</option><option selected>抱叉</option><option>平叉</option><option>铲车</option></select></label>
     <label><span>变更原因</span><textarea id="action-remark">原设备故障，更换设备</textarea></label>
   `;
 }

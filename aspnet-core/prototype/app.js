@@ -4,6 +4,7 @@ const toastButtons = document.querySelectorAll("[data-toast]");
 const splitModal = document.querySelector("#split-modal");
 const trialModal = document.querySelector("#trial-modal");
 const employeeModal = document.querySelector("#employee-modal");
+const employeeDutyImportModal = document.querySelector("#employee-duty-import-modal");
 const taskRankModal = document.querySelector("#task-rank-modal");
 const skillRankModal = document.querySelector("#skill-rank-modal");
 const skillMetricRankModal = document.querySelector("#skill-metric-rank-modal");
@@ -13,6 +14,8 @@ const loadingLimitModal = document.querySelector("#loading-limit-modal");
 const loadingLimitImportModal = document.querySelector("#loading-limit-import-modal");
 const shortHaulModal = document.querySelector("#short-haul-modal");
 const shortHaulImportModal = document.querySelector("#short-haul-import-modal");
+const paperMachineMapModal = document.querySelector("#paper-machine-map-modal");
+const paperMachineMapImportModal = document.querySelector("#paper-machine-map-import-modal");
 const sourceResultModal = document.querySelector("#source-result-modal");
 const taskAssignModal = document.querySelector("#task-assign-modal");
 const taskCancelModal = document.querySelector("#task-cancel-modal");
@@ -23,6 +26,7 @@ const taskDetailModal = document.querySelector("#task-detail-modal");
 const operationCostTitle = document.querySelector("#operation-cost-title");
 const loadingLimitTitle = document.querySelector("#loading-limit-title");
 const shortHaulTitle = document.querySelector("#short-haul-title");
+const paperMachineMapTitle = document.querySelector("#paper-machine-map-title");
 const taskAssignTitle = document.querySelector("#task-assign-title");
 const employeeTitle = document.querySelector("#employee-title");
 const currentTabTitle = document.querySelector("#current-tab-title");
@@ -39,13 +43,14 @@ const limitUnitInput = document.querySelector("[data-limit-unit]");
 const shortHaulMaterialInput = document.querySelector("[data-short-haul-material]");
 const shortHaulDescriptionInput = document.querySelector("[data-short-haul-description]");
 const shortHaulUnitInput = document.querySelector("[data-short-haul-unit]");
+const paperMachineMapBasis = document.querySelector("[data-paper-machine-map-basis]");
 const trialBatchAction = document.querySelector("[data-trial-batch-action]");
 const taskGenerationAction = document.querySelector("[data-confirm-task-generation]");
 const taskAssignConfirm = document.querySelector("[data-confirm-task-assign]");
 const taskStartConfirm = document.querySelector("[data-confirm-task-start]");
 const taskDeviceConfirm = document.querySelector("[data-confirm-task-device]");
 
-window.prototypeAppVersion = "20260708-task-log-device-type1";
+window.prototypeAppVersion = "20260709-employee-duty-list-business";
 
 const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],
@@ -163,6 +168,21 @@ function updateShortHaulMaterialInfo() {
   const info = materialInfo[shortHaulMaterialInput.value.trim()];
   setElementValue(shortHaulDescriptionInput, info?.description || "");
   setElementValue(shortHaulUnitInput, info?.unit || "");
+}
+
+function updatePaperMachineMapBasis() {
+  if (!paperMachineMapModal || !paperMachineMapBasis) return;
+  const deptInput = paperMachineMapModal.querySelector("[data-paper-machine-dept]");
+  const mesInput = paperMachineMapModal.querySelector("[data-paper-machine-mes]");
+  const useDept = paperMachineMapBasis.value === "dept";
+  if (deptInput) {
+    deptInput.disabled = !useDept;
+    if (!useDept) deptInput.value = "";
+  }
+  if (mesInput) {
+    mesInput.disabled = useDept;
+    if (useDept) mesInput.value = "";
+  }
 }
 
 function setElementValue(element, value) {
@@ -391,6 +411,10 @@ document.querySelectorAll("[data-open-employee]").forEach((button) => {
   });
 });
 
+document.querySelectorAll("[data-open-employee-duty-import]").forEach((button) => {
+  button.addEventListener("click", () => openModal(employeeDutyImportModal));
+});
+
 document.querySelectorAll("[data-open-task-rank]").forEach((button) => {
   button.addEventListener("click", () => openModal(taskRankModal));
 });
@@ -463,6 +487,31 @@ document.querySelectorAll("[data-open-short-haul]").forEach((button) => {
   });
 });
 
+document.querySelectorAll("[data-open-paper-machine-map]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const row = button.closest("tr");
+    const cells = row ? Array.from(row.children) : [];
+    const paperMachine = paperMachineMapModal?.querySelector("[data-paper-machine]");
+    const deptInput = paperMachineMapModal?.querySelector("[data-paper-machine-dept]");
+    const mesInput = paperMachineMapModal?.querySelector("[data-paper-machine-mes]");
+    const remarkInput = paperMachineMapModal?.querySelector("[data-paper-machine-remark]");
+    if (paperMachineMapTitle) {
+      paperMachineMapTitle.textContent = cells.length ? "修改纸机关系映射" : "新增纸机关系映射";
+    }
+    if (paperMachine) paperMachine.value = cells.length ? cells[0].textContent.trim() : "PM1";
+    const deptValue = cells.length ? cells[1].textContent.trim() : "";
+    const mesValue = cells.length ? cells[2].textContent.trim() : "NB0004";
+    if (paperMachineMapBasis) {
+      paperMachineMapBasis.value = deptValue && deptValue !== "-" ? "dept" : "mes";
+    }
+    if (deptInput) deptInput.value = deptValue === "-" ? "" : deptValue;
+    if (mesInput) mesInput.value = mesValue === "-" ? "" : mesValue;
+    if (remarkInput) remarkInput.value = cells.length ? cells[3].textContent.trim() : "PM1GCC";
+    updatePaperMachineMapBasis();
+    openModal(paperMachineMapModal);
+  });
+});
+
 document.querySelectorAll("[data-open-operation-cost-import]").forEach((button) => {
   button.addEventListener("click", () => openModal(operationCostImportModal));
 });
@@ -473,6 +522,32 @@ document.querySelectorAll("[data-open-loading-limit-import]").forEach((button) =
 
 document.querySelectorAll("[data-open-short-haul-import]").forEach((button) => {
   button.addEventListener("click", () => openModal(shortHaulImportModal));
+});
+
+document.querySelectorAll("[data-open-paper-machine-map-import]").forEach((button) => {
+  button.addEventListener("click", () => openModal(paperMachineMapImportModal));
+});
+
+document.querySelectorAll("[data-confirm-paper-machine-map]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const paperMachine = paperMachineMapModal?.querySelector("[data-paper-machine]");
+    const deptInput = paperMachineMapModal?.querySelector("[data-paper-machine-dept]");
+    const mesInput = paperMachineMapModal?.querySelector("[data-paper-machine-mes]");
+    const hasDept = Boolean(deptInput?.value.trim());
+    const hasMes = Boolean(mesInput?.value.trim());
+    if (!paperMachine?.value) {
+      showToast("请选择纸机");
+      paperMachine?.focus();
+      return;
+    }
+    if (hasDept === hasMes) {
+      showToast("申请部门和MES仓位必须且只能填写一个");
+      (paperMachineMapBasis?.value === "dept" ? deptInput : mesInput)?.focus();
+      return;
+    }
+    showToast("纸机关系映射已保存");
+    closeModal(paperMachineMapModal);
+  });
 });
 
 document.querySelectorAll("[data-open-source-result]").forEach((button) => {
@@ -602,6 +677,11 @@ if (shortHaulMaterialInput) {
   shortHaulMaterialInput.addEventListener("input", updateShortHaulMaterialInfo);
   shortHaulMaterialInput.addEventListener("change", updateShortHaulMaterialInfo);
   updateShortHaulMaterialInfo();
+}
+
+if (paperMachineMapBasis) {
+  paperMachineMapBasis.addEventListener("change", updatePaperMachineMapBasis);
+  updatePaperMachineMapBasis();
 }
 
 decorateButtonIcons();
