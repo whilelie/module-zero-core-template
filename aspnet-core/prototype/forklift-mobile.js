@@ -317,8 +317,8 @@ function fillDetailPage(task) {
         <span>仓库号</span><b>${point.warehouseNo || "107"}</b>
         <span>仓储类型</span><b>${point.storageType || "A01"}</b>
         <span>仓位</span><b>${point.bin || "1210"}</b>
-        <span>计划数量</span><b>${point.quantity}</b>
-        <span>实际完成数量</span><b>${actualQuantity}</b>
+        <span>计划数量</span><b class="qty-highlight plan">${point.quantity}</b>
+        <span>实际完成数量</span><b class="qty-highlight actual">${actualQuantity}</b>
         <span>基本单位</span><b>${point.unit}</b>
         <span>差异原因</span><b>${point.finishReason || "-"}</b>
         <span>货源类型</span><b><i class="badge ${sourceTypeBadgeClass(sourceType)}">${sourceType}</i></b>

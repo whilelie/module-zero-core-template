@@ -499,6 +499,27 @@ button {
   font-weight: 600;
 }
 
+.detail-delivery-grid .qty-highlight {
+  border-radius: 8px;
+  display: inline-flex;
+  font-size: 16px;
+  font-weight: 800;
+  justify-content: center;
+  min-width: 56px;
+  padding: 6px 10px;
+  width: fit-content;
+}
+
+.detail-delivery-grid .qty-highlight.plan {
+  background: #dceeff;
+  color: #1167b1;
+}
+
+.detail-delivery-grid .qty-highlight.actual {
+  background: #dcfce7;
+  color: #166534;
+}
+
 .detail-delivery-grid .badge {
   font-style: normal;
 }
