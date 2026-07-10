@@ -308,6 +308,19 @@ CREATE TABLE `delivery_order` (
   UNIQUE KEY `UK_DELIVERY_ORDER_NO` (`C_DELIVERY_ORDER_NO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='配送单表';
 
+CREATE TABLE `paper_machine_relation_map` (
+  `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
+  `C_PAPER_MACHINE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '纸机',
+  `C_ORGANIZATION_UNIT` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '申请部门',
+  `C_MES_LGPLA` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'MES仓位',
+  `C_REMARK` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
+  `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
+  `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`C_ID`),
+  UNIQUE KEY `UK_PAPER_MACHINE_MAP` (`C_PAPER_MACHINE`,`C_ORGANIZATION_UNIT`,`C_MES_LGPLA`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='纸机关系映射表';
 
 CREATE TABLE `delivery_task` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
@@ -499,7 +512,6 @@ CREATE TABLE `dispatch_staff_duty` (
   `N_START_HOUR` tinyint NOT NULL COMMENT '时段开始小时 0/4/8/12/16/20',
   `N_END_HOUR` tinyint NOT NULL COMMENT '时段结束小时 4/8/12/16/20/24',
   `N_BUSINESS_TYPE` tinyint NOT NULL COMMENT '负责业务 1-纸成品 2-资材 3-浆成品',
-  `N_IS_DELETE` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除标识 0-未删除 1-删除',
   `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
   `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
@@ -516,7 +528,6 @@ CREATE TABLE `dispatch_task_sort` (
   `N_SCENE_TYPE` tinyint NOT NULL COMMENT '场景类型 1-采购收货 2-厂内领用发货 3-让售发货 4-委外加工发货 5-固危废发货',
   `N_SCENE_GRADE` tinyint NOT NULL COMMENT '场景分级',
   `N_SORT_ORDER` int NOT NULL COMMENT '分级排序(同一分级内的顺序)',
-  `N_IS_DELETE` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除标识 0-未删除 1-删除',
   `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
   `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
@@ -533,7 +544,6 @@ CREATE TABLE `dispatch_skill_sort` (
   `N_SKILL_TYPE` tinyint NOT NULL COMMENT '技能分类 1-卷平 2-卷筒 3-平板',
   `N_SKILL_GRADE_SORT` tinyint NOT NULL COMMENT '技能分级排序',
   `N_INNER_SORT` int NOT NULL COMMENT '分级内排序',
-  `N_IS_DELETE` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除标识 0-未删除 1-删除',
   `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
   `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
@@ -550,7 +560,6 @@ CREATE TABLE `dispatch_skill_metric_sort` (
   `N_METRIC_TYPE` tinyint NOT NULL COMMENT '指标 1-今日作业量 2-平均日作业量 3-当月总作业量 4-累计作业量 5-工龄',
   `N_SORT_DIRECTION` tinyint NOT NULL COMMENT '排序 1-升序 2-降序',
   `N_PRIORITY` int NOT NULL COMMENT '优先级(数字越小越优先)',
-  `N_IS_DELETE` tinyint(1) NOT NULL DEFAULT '0' COMMENT '删除标识 0-未删除 1-删除',
   `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
   `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',

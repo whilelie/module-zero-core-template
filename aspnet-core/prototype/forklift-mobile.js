@@ -38,8 +38,8 @@ const tasks = [
     cancelAt: "",
     cancelReason: "",
     points: [
-      { deliveryNo: "PSD-20260506-001", material: "1100000022", description: "BOG蒸发气 热值≥8800Kcal/NM3", storage: "3108", date: "2026.05.06", period: "上午", latestDate: "2026.05.06", quantity: 10, unit: "NM3" },
-      { deliveryNo: "PSD-20260506-002", material: "1100000021", description: "LNG天然气 热值≥9200Kcal/NM3", storage: "3104", date: "2026.05.06", period: "下午", latestDate: "2026.05.07", quantity: 20, unit: "TO" }
+      { deliveryNo: "PSD-20260506-001", material: "1100000022", description: "BOG蒸发气 热值≥8800Kcal/NM3", storage: "3108", date: "2026.05.06", period: "上午", latestDate: "2026.05.06", quantity: 10, unit: "NM3", forkliftType: "平叉", forkliftLoadLimit: "3T", shortHaulType: "平板车", shortHaulLoadLimit: "10T" },
+      { deliveryNo: "PSD-20260506-002", material: "1100000021", description: "LNG天然气 热值≥9200Kcal/NM3", storage: "3104", date: "2026.05.06", period: "下午", latestDate: "2026.05.07", quantity: 20, unit: "TO", forkliftType: "抱叉", forkliftLoadLimit: "5T", shortHaulType: "自卸车", shortHaulLoadLimit: "15T" }
     ]
   },
   {
@@ -170,6 +170,53 @@ function sourceTypeBadgeClass(sourceType) {
   return "gray";
 }
 
+function forkliftTypeForPoint(point) {
+  if (point.forkliftType) return point.forkliftType;
+  return sourceTypeForPoint(point) === "厂内资材库" ? "平叉" : "-";
+}
+
+function forkliftLoadLimitForPoint(point) {
+  if (point.forkliftLoadLimit) return point.forkliftLoadLimit;
+  return sourceTypeForPoint(point) === "厂内资材库" ? "3T" : "-";
+}
+
+function shortHaulTypeForPoint(point) {
+  if (point.shortHaulType) return point.shortHaulType;
+  return sourceTypeForPoint(point) === "码头仓库" ? "平板车" : "-";
+}
+
+function shortHaulLoadLimitForPoint(point) {
+  if (point.shortHaulLoadLimit) return point.shortHaulLoadLimit;
+  return sourceTypeForPoint(point) === "码头仓库" ? "10T" : "-";
+}
+
+function summarizePointValues(task, getter) {
+  const values = [...new Set(task.points.map(getter).filter((value) => value && value !== "-"))];
+  return values.length ? values : ["-"];
+}
+
+function equipmentTypeBadge(value) {
+  if (!value || value === "-") return `<i class="badge gray">-</i>`;
+  return `<i class="badge cyan">${value}</i>`;
+}
+
+function equipmentTypeBadges(values) {
+  return values.map(equipmentTypeBadge).join("");
+}
+
+function equipmentLoadText(values) {
+  return values.join(" / ");
+}
+
+function taskEquipmentSummary(task) {
+  return {
+    forkliftTypes: summarizePointValues(task, forkliftTypeForPoint),
+    forkliftLoads: summarizePointValues(task, forkliftLoadLimitForPoint),
+    shortHaulTypes: summarizePointValues(task, shortHaulTypeForPoint),
+    shortHaulLoads: summarizePointValues(task, shortHaulLoadLimitForPoint)
+  };
+}
+
 function externalDocTypeForPoint(point) {
   const sourceType = sourceTypeForPoint(point);
   if (point.externalDocType) return point.externalDocType;
@@ -219,6 +266,7 @@ function renderTasks() {
   renderCounts();
   taskList.innerHTML = filteredTasks().map((task) => {
     const selected = task.id === selectedTaskId ? "selected" : "";
+    const equipment = taskEquipmentSummary(task);
     return `
       <article class="task-card ${selected} ${cardClass(task)}" data-task-id="${task.id}">
         <div class="task-top">
@@ -228,6 +276,8 @@ function renderTasks() {
         <div class="task-stats">
           <div><span>配送单数</span><strong>${task.deliveryCount}</strong></div>
           <div><span>物料项数</span><strong>${task.materialCount}</strong></div>
+          <div><span>叉车要求</span><strong class="equipment-line">${equipmentTypeBadges(equipment.forkliftTypes)} <em>${equipmentLoadText(equipment.forkliftLoads)}</em></strong></div>
+          <div><span>短驳要求</span><strong class="equipment-line">${equipmentTypeBadges(equipment.shortHaulTypes)} <em>${equipmentLoadText(equipment.shortHaulLoads)}</em></strong></div>
         </div>
         <div class="task-card-actions">
           <button type="button" data-task-action="start" ${task.status === "待接单" ? "" : "disabled"}>开始</button>
@@ -277,6 +327,10 @@ function fillDetailPage(task) {
         <span>配送日期</span><b>${point.date}</b>
         <span>配送时段</span><b>${point.period}</b>
         <span>最后配送日期</span><b>${point.latestDate}</b>
+        <span>叉车类型</span><b>${equipmentTypeBadge(forkliftTypeForPoint(point))}</b>
+        <span>叉车载重限制</span><b>${forkliftLoadLimitForPoint(point)}</b>
+        <span>短驳车类型</span><b>${equipmentTypeBadge(shortHaulTypeForPoint(point))}</b>
+        <span>短驳载重限制</span><b>${shortHaulLoadLimitForPoint(point)}</b>
         <span>外部单据类型</span><b>${externalDocTypeForPoint(point)}</b>
         <span>外部单据号</span><b>${externalDocNoForPoint(point, index)}</b>
       </div>

@@ -363,6 +363,11 @@ button {
   color: #0f7b50;
 }
 
+.badge.cyan {
+  background: #dff7fb;
+  color: #0e7490;
+}
+
 .badge.amber {
   background: #fff0d8;
   color: #9a5b12;
@@ -401,6 +406,25 @@ button {
 
 .task-stats strong {
   font-size: 15px;
+}
+
+.equipment-line {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.equipment-line em {
+  color: #172033;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.equipment-line .badge {
+  font-style: normal;
 }
 
 .task-meta {
