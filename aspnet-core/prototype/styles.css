@@ -483,6 +483,36 @@ th {
   z-index: 3;
 }
 
+#task-management .table-wrap > table th:last-child,
+#task-management .table-wrap > table td:last-child,
+#loading-limit .table-wrap > table th:last-child,
+#loading-limit .table-wrap > table td:last-child,
+#short-haul-config .table-wrap > table th:last-child,
+#short-haul-config .table-wrap > table td:last-child,
+#paper-machine-map .table-wrap > table th:last-child,
+#paper-machine-map .table-wrap > table td:last-child,
+#employee-management .table-wrap > table th:last-child,
+#employee-management .table-wrap > table td:last-child,
+#dispatch-rule .table-wrap > table th:last-child,
+#dispatch-rule .table-wrap > table td:last-child {
+  background: #fff;
+  box-shadow: -8px 0 12px rgba(15, 23, 42, 0.08);
+  min-width: 112px;
+  position: sticky;
+  right: 0;
+  z-index: 2;
+}
+
+#task-management .table-wrap > table th:last-child,
+#loading-limit .table-wrap > table th:last-child,
+#short-haul-config .table-wrap > table th:last-child,
+#paper-machine-map .table-wrap > table th:last-child,
+#employee-management .table-wrap > table th:last-child,
+#dispatch-rule .table-wrap > table th:last-child {
+  background: var(--surface-soft);
+  z-index: 3;
+}
+
 tr.selected td,
 tr.recommend td {
   background: #ecfdf5;
