@@ -1,7 +1,11 @@
-const loginView = document.querySelector("#login-view");
+const workbenchView = document.querySelector("#workbench-view");
+const moduleView = document.querySelector("#module-view");
 const taskView = document.querySelector("#task-view");
 const detailView = document.querySelector("#detail-view");
-const loginBtn = document.querySelector("#login-btn");
+const openPlatformBtn = document.querySelector("#open-platform-btn");
+const moduleBackBtn = document.querySelector("#module-back-btn");
+const openTaskManagementBtn = document.querySelector("#open-task-management");
+const taskBackBtn = document.querySelector("#task-back-btn");
 const logoutBtn = document.querySelector("#logout-btn");
 const detailBackBtn = document.querySelector("#detail-back-btn");
 const accountDisplay = document.querySelector("#account-display");
@@ -253,6 +257,16 @@ function getSelectedTask() {
   return tasks.find((task) => task.id === selectedTaskId) || tasks[0];
 }
 
+function showView(viewName) {
+  workbenchView.classList.toggle("hidden", viewName !== "workbench");
+  moduleView.classList.toggle("hidden", viewName !== "module");
+  taskView.classList.toggle("hidden", viewName !== "task");
+  detailView.classList.toggle("hidden", viewName !== "detail");
+  if (viewName === "task") {
+    renderTasks();
+  }
+}
+
 function renderCounts() {
   document.querySelectorAll("[data-count]").forEach((item) => {
     const status = item.dataset.count;
@@ -342,14 +356,12 @@ function fillDetailPage(task) {
 function openDetailPage(task = getSelectedTask()) {
   selectedTaskId = task.id;
   fillDetailPage(task);
-  taskView.classList.add("hidden");
-  detailView.classList.remove("hidden");
+  showView("detail");
   renderTasks();
 }
 
 function closeDetailPage() {
-  detailView.classList.add("hidden");
-  taskView.classList.remove("hidden");
+  showView("task");
 }
 
 function readonlyLine(label, value) {
@@ -474,18 +486,13 @@ function confirmAction() {
   renderTasks();
 }
 
-loginBtn.addEventListener("click", () => {
-  const account = document.querySelector("#login-account").value;
-  accountDisplay.textContent = account;
-  loginView.classList.add("hidden");
-  taskView.classList.remove("hidden");
-  renderTasks();
-});
+openPlatformBtn.addEventListener("click", () => showView("module"));
+moduleBackBtn.addEventListener("click", () => showView("workbench"));
+openTaskManagementBtn.addEventListener("click", () => showView("task"));
+taskBackBtn.addEventListener("click", () => showView("module"));
 
 logoutBtn.addEventListener("click", () => {
-  taskView.classList.add("hidden");
-  detailView.classList.add("hidden");
-  loginView.classList.remove("hidden");
+  showView("workbench");
 });
 
 detailBackBtn.addEventListener("click", closeDetailPage);

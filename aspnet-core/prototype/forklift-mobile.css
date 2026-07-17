@@ -52,6 +52,351 @@ button {
   position: relative;
 }
 
+.workbench-view {
+  background: #f3f6fa;
+  min-height: 100vh;
+  padding: 14px 14px 92px;
+}
+
+.workbench-header {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 4px 2px 14px;
+}
+
+.workbench-header h1 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.workbench-search {
+  background: #fff;
+  border: 1px solid #e4ebf3;
+  border-radius: 999px;
+  color: var(--muted);
+  min-width: 96px;
+  padding: 8px 14px;
+  text-align: center;
+}
+
+.workbench-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 0 -2px 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.workbench-tabs button {
+  background: transparent;
+  border: 0;
+  border-radius: 10px;
+  color: #516175;
+  flex: 0 0 auto;
+  min-height: 38px;
+  padding: 0 14px;
+}
+
+.workbench-tabs button.active {
+  background: #fff;
+  color: #111827;
+  font-weight: 700;
+}
+
+.app-shortcuts,
+.app-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.app-entry,
+.app-tile {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #edf1f5;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(31, 45, 61, .06);
+  display: flex;
+  gap: 12px;
+  min-height: 80px;
+  padding: 14px;
+}
+
+.primary-entry {
+  border-color: #ff4d4f;
+  box-shadow: 0 0 0 2px rgba(255, 77, 79, .12), 0 8px 24px rgba(31, 45, 61, .08);
+}
+
+.app-logo,
+.add-logo,
+.red-logo,
+.blue-logo,
+.green-logo,
+.yellow-logo {
+  align-items: center;
+  border-radius: 10px;
+  color: #fff;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 13px;
+  font-weight: 800;
+  height: 42px;
+  justify-content: center;
+  width: 42px;
+}
+
+.app-logo {
+  background: #fff url("./app-icon.ico?v=20260717-app-icon") center / 78% 78% no-repeat;
+  border: 1px solid #e4ebf3;
+  color: transparent;
+  overflow: hidden;
+}
+
+.app-logo.small,
+.red-logo,
+.blue-logo,
+.green-logo,
+.yellow-logo {
+  height: 36px;
+  width: 36px;
+}
+
+.add-logo {
+  background: #eef2f7;
+  color: #667085;
+  font-size: 26px;
+  font-weight: 400;
+}
+
+.red-logo {
+  background: #d71920;
+}
+
+.blue-logo {
+  background: #3b82f6;
+}
+
+.green-logo {
+  background: #22c55e;
+}
+
+.yellow-logo {
+  background: #f59e0b;
+}
+
+.workbench-bottom-nav {
+  align-items: center;
+  background: rgba(255, 255, 255, .96);
+  border-top: 1px solid #e1e8f0;
+  bottom: 0;
+  box-shadow: 0 -8px 24px rgba(31, 45, 61, .08);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  left: 50%;
+  max-width: 520px;
+  min-height: 72px;
+  padding: 7px 10px 10px;
+  position: fixed;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: 20;
+}
+
+.workbench-bottom-nav button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: #667085;
+  display: grid;
+  gap: 3px;
+  justify-items: center;
+  min-height: 52px;
+}
+
+.workbench-bottom-nav button.active {
+  color: var(--primary);
+}
+
+.bottom-icon {
+  align-items: center;
+  display: inline-flex;
+  height: 30px;
+  justify-content: center;
+  width: 30px;
+}
+
+.bottom-icon img {
+  display: block;
+  height: 25px;
+  width: 25px;
+}
+
+.workbench-bottom-nav strong {
+  font-size: 12px;
+}
+
+.app-entry strong,
+.app-tile strong {
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.workbench-banner {
+  background: linear-gradient(135deg, #ffe083, #7bcf5f);
+  border-radius: 12px;
+  color: #7a2f00;
+  display: grid;
+  gap: 5px;
+  margin: 18px 0 12px;
+  min-height: 92px;
+  padding: 18px;
+}
+
+.workbench-banner strong {
+  font-size: 24px;
+}
+
+.workbench-banner span {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.module-view {
+  background: #f5f7fb;
+  min-height: 100vh;
+  padding: 0 12px 22px;
+}
+
+.platform-header {
+  align-items: center;
+  background: #fff;
+  border-bottom: 1px solid #e6edf5;
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  margin: 0 -12px;
+  min-height: 54px;
+  padding: 0 10px;
+}
+
+.platform-header .back-btn {
+  color: #344054;
+  font-size: 30px;
+}
+
+.platform-header h1 {
+  font-size: 16px;
+  margin: 0;
+  text-align: center;
+}
+
+.module-title {
+  color: #172033;
+  font-size: 24px;
+  font-weight: 800;
+  padding: 20px 0 14px;
+  text-align: center;
+}
+
+.module-group {
+  background: rgba(255, 255, 255, .88);
+  border: 1px solid #e1e8f0;
+  border-radius: 12px;
+  box-shadow: 0 10px 26px rgba(31, 45, 61, .06);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.module-group-head {
+  align-items: center;
+  background: #8d9299;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  min-height: 52px;
+  padding: 0 18px;
+}
+
+.module-group-head h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.module-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: 14px;
+}
+
+.module-grid button {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #e4ebf3;
+  border-radius: 8px;
+  color: #1f2a44;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  min-height: 78px;
+  padding: 12px;
+}
+
+.module-grid button strong {
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.module-icon {
+  align-items: center;
+  background: #eef4ff;
+  border-radius: 12px;
+  color: #6684ff;
+  display: inline-flex;
+  height: 42px;
+  justify-content: center;
+  width: 42px;
+}
+
+.module-icon img {
+  display: block;
+  height: 27px;
+  width: 27px;
+}
+
+.module-icon.gear,
+.module-icon.chip {
+  background: #eff6ff;
+  color: #3b82f6;
+}
+
+.module-icon.warn {
+  background: #fff7ed;
+  color: #f97316;
+}
+
+.module-icon.warehouse {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.module-grid .featured-module {
+  background: linear-gradient(180deg, #eaf6ff 0%, #ffffff 100%);
+  border-color: #2f8ff0;
+  box-shadow: 0 0 0 2px rgba(47, 143, 240, .12), 0 10px 24px rgba(24, 120, 216, .14);
+  color: #0f4f8f;
+}
+
+.module-grid .featured-module strong {
+  font-weight: 800;
+}
+
+.module-grid .featured-module .module-icon {
+  background: #2f8ff0;
+}
+
 .login-view {
   align-items: center;
   background: linear-gradient(180deg, #4aa8f7 0%, #edf3f8 58%);

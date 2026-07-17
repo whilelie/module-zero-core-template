@@ -4,39 +4,122 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>领用配送司机端</title>
-  <link rel="stylesheet" href="./forklift-mobile.css?v=20260709-task-equipment-fields">
+  <link rel="icon" href="./app-icon.ico?v=20260717-app-icon" type="image/x-icon">
+  <link rel="stylesheet" href="./forklift-mobile.css?v=20260717-workbench-nav-highlight">
 </head>
 <body>
   <main class="mobile-shell">
-    <section class="login-view" id="login-view">
-      <div class="login-card">
-        <div class="brand-block">
-          <div class="brand-mark">WCT</div>
-          <h1>配送任务</h1>
-          <p>企业微信司机端</p>
-        </div>
+    <section class="workbench-view" id="workbench-view">
+      <header class="workbench-header">
+        <h1>工作台</h1>
+        <div class="workbench-search">搜索</div>
+      </header>
 
-        <div class="login-form">
-          <label>
-            <span>账号</span>
-            <input id="login-account" value="50000068" autocomplete="off">
-          </label>
-          <label>
-            <span>密码</span>
-            <input id="login-password" type="password" value="123456" autocomplete="current-password">
-          </label>
-          <button class="primary full" id="login-btn" type="button">登录</button>
+      <nav class="workbench-tabs" aria-label="应用分类">
+        <button class="active" type="button">全部应用</button>
+        <button type="button">APP之声</button>
+        <button type="button">HR应用</button>
+        <button type="button">企业应用</button>
+        <button type="button">效率工具</button>
+      </nav>
+
+      <section class="app-shortcuts">
+        <article class="app-entry primary-entry" id="open-platform-btn">
+          <span class="app-logo" aria-label="APP"></span>
+          <strong>智能制造平台</strong>
+        </article>
+        <article class="app-entry">
+          <span class="add-logo">+</span>
+          <strong>添加常用</strong>
+        </article>
+      </section>
+
+      <section class="workbench-banner">
+        <strong>每天学习一点点</strong>
+        <span>5.0 正式上线</span>
+      </section>
+
+      <section class="app-grid">
+        <article class="app-tile"><span class="app-logo small" aria-label="APP"></span><strong>APP企业应用</strong></article>
+        <article class="app-tile"><span class="red-logo">政</span><strong>政策园地</strong></article>
+        <article class="app-tile"><span class="blue-logo">AI</span><strong>金光大模型</strong></article>
+        <article class="app-tile"><span class="green-logo">卡</span><strong>企业名片</strong></article>
+        <article class="app-tile"><span class="app-logo small" aria-label="APP"></span><strong>存货智能监管系统</strong></article>
+        <article class="app-tile"><span class="yellow-logo">打</span><strong>打卡</strong></article>
+      </section>
+
+      <nav class="workbench-bottom-nav" aria-label="底部导航">
+        <button type="button"><span class="bottom-icon"><img src="./assets/icons/nav-message.svg" alt=""></span><strong>消息</strong></button>
+        <button type="button"><span class="bottom-icon"><img src="./assets/icons/nav-contacts.svg" alt=""></span><strong>通讯录</strong></button>
+        <button class="active" type="button"><span class="bottom-icon"><img src="./assets/icons/nav-workbench.svg" alt=""></span><strong>工作台</strong></button>
+        <button type="button"><span class="bottom-icon"><img src="./assets/icons/nav-user.svg" alt=""></span><strong>我</strong></button>
+      </nav>
+    </section>
+
+    <section class="module-view hidden" id="module-view">
+      <header class="platform-header">
+        <button class="back-btn" type="button" id="module-back-btn" aria-label="返回">‹</button>
+        <h1>智能制造平台</h1>
+      </header>
+
+      <section class="module-title">选择功能模块</section>
+      <section class="module-group">
+        <div class="module-group-head">
+          <h2>仓储管理</h2>
+          <span>⌃</span>
         </div>
-      </div>
+        <div class="module-grid">
+          <button class="featured-module" type="button" id="open-task-management"><span class="module-icon warehouse"><img src="./assets/icons/module-warehouse.svg" alt=""></span><strong>我的配送任务</strong></button>
+        </div>
+      </section>
+      <section class="module-group">
+        <div class="module-group-head">
+          <h2>生产管理</h2>
+          <span>⌃</span>
+        </div>
+        <div class="module-grid">
+          <button type="button"><span class="module-icon chain"><img src="./assets/icons/module-link.svg" alt=""></span><strong>生产链监控页面</strong></button>
+          <button type="button"><span class="module-icon gear"><img src="./assets/icons/module-settings.svg" alt=""></span><strong>切纸机在线</strong></button>
+          <button type="button"><span class="module-icon file"><img src="./assets/icons/module-file.svg" alt=""></span><strong>令包装在线表</strong></button>
+        </div>
+      </section>
+
+      <section class="module-group">
+        <div class="module-group-head">
+          <h2>大总驾驶舱</h2>
+          <span>⌃</span>
+        </div>
+        <div class="module-grid">
+          <button type="button"><span class="module-icon chart"><img src="./assets/icons/module-chart.svg" alt=""></span><strong>工纸_日生产效率</strong></button>
+          <button type="button"><span class="module-icon clock"><img src="./assets/icons/module-clock.svg" alt=""></span><strong>工纸_月生产效率</strong></button>
+          <button type="button"><span class="module-icon gauge"><img src="./assets/icons/module-clock.svg" alt=""></span><strong>文纸_停机统计</strong></button>
+          <button type="button"><span class="module-icon plane"><img src="./assets/icons/module-chart.svg" alt=""></span><strong>PC纸_日生产效率</strong></button>
+        </div>
+      </section>
+
+      <section class="module-group">
+        <div class="module-group-head">
+          <h2>设备管理</h2>
+          <span>⌃</span>
+        </div>
+        <div class="module-grid">
+          <button type="button"><span class="module-icon file"><img src="./assets/icons/module-file.svg" alt=""></span><strong>资料库</strong></button>
+          <button type="button"><span class="module-icon warn"><img src="./assets/icons/module-alert.svg" alt=""></span><strong>设备故障追踪</strong></button>
+          <button type="button"><span class="module-icon chip"><img src="./assets/icons/module-chip.svg" alt=""></span><strong>工务设备信息集成</strong></button>
+        </div>
+      </section>
+
+      
     </section>
 
     <section class="task-view hidden" id="task-view">
       <header class="mobile-header">
+        <button class="back-btn" type="button" id="task-back-btn" aria-label="返回">‹</button>
         <div>
           <h1>我的配送任务</h1>
           <p>账号 <span id="account-display">50000068</span></p>
         </div>
-        <button class="logout-button" type="button" id="logout-btn">登出</button>
+        <button class="logout-button" type="button" id="logout-btn">工作台</button>
       </header>
 
       <nav class="status-tabs" aria-label="任务筛选">
@@ -77,6 +160,6 @@
 
   <div class="toast hidden" id="toast">已保存</div>
 
-  <script src="./forklift-mobile.js?v=20260709-task-equipment-fields"></script>
+  <script src="./forklift-mobile.js?v=20260717-workbench-nav-highlight"></script>
 </body>
 </html>
