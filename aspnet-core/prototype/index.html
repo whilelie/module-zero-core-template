@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>领用配送页面原型</title>
   <link rel="icon" href="./app-icon.ico?v=20260717-app-icon" type="image/x-icon">
-  <link rel="stylesheet" href="./styles.css?v=20260717-app-icon">
+  <link rel="stylesheet" href="./styles.css?v=20260717-device-skill">
 </head>
 <body>
   <header class="app-topbar">
@@ -31,8 +31,9 @@
         <button class="nav-item" data-page="delivery-binding">配送单与任务生成</button>
         <button class="nav-item" data-page="task-management">领用配送任务管理</button>
         <button class="nav-item" data-page="loading-limit">装载限制维护</button>
-        <button class="nav-item" data-page="short-haul-config">厂内作业车辆配置</button>
-        <button class="nav-item" data-page="paper-machine-map">纸机关系映射维护</button>
+        <button class="nav-item" data-page="short-haul-config">厂内作业设备配置</button>
+        <button class="nav-item" data-page="device-skill-config">设备技能要求维护</button>
+        <button class="nav-item" data-page="paper-machine-map">作业区域映射维护</button>
         <button class="nav-item" data-page="employee-management">员工管理</button>
         <button class="nav-item" data-page="dispatch-rule">调度规则维护</button>
       </nav>
@@ -206,7 +207,7 @@
             </div>
             <div class="top-actions">
               <button class="btn ghost" data-open-short-haul>新增</button>
-              <button class="btn ghost" data-toast="厂内作业车辆配置模板已下载">下载模板</button>
+              <button class="btn ghost" data-toast="厂内作业设备配置模板已下载">下载模板</button>
               <button class="btn primary" data-open-short-haul-import>批量导入</button>
             </div>
           </div>
@@ -243,6 +244,57 @@
           </div>
           <div class="pagination-bar">
             <div class="pagination-summary">共 3 项配置，每页 10 条</div>
+            <div class="pagination-actions">
+              <button class="page-btn" disabled>上一页</button>
+              <button class="page-btn active">1</button>
+              <button class="page-btn">下一页</button>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="page-panel" id="device-skill-config">
+        <section class="panel">
+          <div class="query-grid operation-cost-query">
+            <label>设备大类<select><option>请选择</option><option>叉车</option><option>短驳车</option></select></label>
+            <label>设备类型<select><option>请选择</option><option>平叉</option><option>抱叉</option><option>铲车</option><option>平板车</option><option>自卸车</option></select></label>
+            <label>所需技能<select><option>请选择</option><option>平叉</option><option>抱叉</option><option>铲车</option><option>短驳驾驶</option></select></label>
+            <div class="query-actions">
+              <button class="btn primary">查询</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div></div>
+            <div class="top-actions">
+              <button class="btn ghost" data-open-device-skill>新增</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>设备大类</th>
+                  <th>设备类型</th>
+                  <th>所需技能</th>
+                  <th>备注</th>
+                  <th>创建时间</th>
+                  <th>更新时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>叉车</td><td><span class="badge cyan">平叉</span></td><td><span class="skill-pill blue">平叉</span></td><td>托盘、集装箱等常规搬运</td><td>2026.07.17</td><td>2026.07.17</td><td><button class="link-btn" data-open-device-skill>修改</button><button class="link-btn danger">删除</button></td></tr>
+                <tr><td>叉车</td><td><span class="badge blue">抱叉</span></td><td><span class="skill-pill yellow">抱叉</span></td><td>桶装、袋装、夹抱类物料</td><td>2026.07.17</td><td>2026.07.17</td><td><button class="link-btn" data-open-device-skill>修改</button><button class="link-btn danger">删除</button></td></tr>
+                <tr><td>叉车</td><td><span class="badge amber">铲车</span></td><td><span class="skill-pill green">铲车</span></td><td>散料或特殊装卸场景</td><td>2026.07.17</td><td>2026.07.17</td><td><button class="link-btn" data-open-device-skill>修改</button><button class="link-btn danger">删除</button></td></tr>
+                <tr><td>短驳车</td><td><span class="badge blue">平板车</span></td><td><span class="skill-pill green">短驳驾驶</span></td><td>厂内短驳配送</td><td>2026.07.17</td><td>2026.07.17</td><td><button class="link-btn" data-open-device-skill>修改</button><button class="link-btn danger">删除</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination-bar">
+            <div class="pagination-summary">共 4 项配置，每页 10 条</div>
             <div class="pagination-actions">
               <button class="page-btn" disabled>上一页</button>
               <button class="page-btn active">1</button>
@@ -699,7 +751,7 @@
       <section class="page-panel" id="delivery-binding">
         <section class="panel">
           <div class="query-grid delivery-binding-query">
-            <label>纸机<select><option>请选择</option><option selected>PM1</option><option>PM2</option></select></label>
+            <label>区域<select><option>请选择</option><option selected>宁波亚浆PM1区域</option><option>宁波亚浆PM2区域</option></select></label>
             <label>申请部门<input value="PM1"></label>
             <label>MES仓位<input value="NB0004"></label>
             <label>配送日期<input value="2026.05.08"></label>
@@ -873,7 +925,7 @@
       <section class="page-panel" id="paper-machine-map">
         <section class="panel">
           <div class="query-grid paper-machine-map-query">
-            <label>纸机<select><option>请选择</option><option selected>PM1</option><option>PM2</option></select></label>
+            <label>区域<select><option>请选择</option><option selected>宁波亚浆PM1区域</option><option>宁波亚浆PM2区域</option></select></label>
             <label>申请部门<input placeholder="请输入申请部门"></label>
             <label>MES仓位<input value="NB0004"></label>
             <div class="query-actions">
@@ -887,7 +939,7 @@
             <div></div>
             <div class="top-actions">
               <button class="btn ghost" data-open-paper-machine-map>新增</button>
-              <button class="btn ghost" data-toast="纸机关系映射模板已下载">下载模板</button>
+              <button class="btn ghost" data-toast="作业区域映射模板已下载">下载模板</button>
               <button class="btn primary" data-open-paper-machine-map-import>批量导入</button>
             </div>
           </div>
@@ -895,7 +947,7 @@
             <table>
               <thead>
                 <tr>
-                  <th>纸机</th>
+                  <th>区域</th>
                   <th>申请部门</th>
                   <th>MES仓位</th>
                   <th>备注</th>
@@ -905,14 +957,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr><td>PM1</td><td>-</td><td>NB0004</td><td>PM1GCC</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
-                <tr><td>PM1</td><td>-</td><td>NB0005</td><td>PM1涂料</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
-                <tr><td>PM1</td><td>-</td><td>NB0006</td><td>PM1湿部化学品库</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
-                <tr><td>PM1</td><td>-</td><td>NB0007</td><td>PM1造纸</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
-                <tr><td>PM1</td><td>-</td><td>NB0008</td><td>PM1切纸纸</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
-                <tr><td>PM1</td><td>-</td><td>NB0009</td><td>PM1小复卷</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
-                <tr><td>PM1</td><td>-</td><td>NB0010</td><td>PM1选理</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
-                <tr><td>PM2</td><td>PM2抄造部</td><td>-</td><td>按申请部门识别 PM2</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>宁波亚浆PM1区域</td><td>-</td><td>NB0004</td><td>PM1GCC</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>宁波亚浆PM1区域</td><td>-</td><td>NB0005</td><td>PM1涂料</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>宁波亚浆PM1区域</td><td>-</td><td>NB0006</td><td>PM1湿部化学品库</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>宁波亚浆PM1区域</td><td>-</td><td>NB0007</td><td>PM1造纸</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>宁波亚浆PM1区域</td><td>-</td><td>NB0008</td><td>PM1切纸纸</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>宁波亚浆PM1区域</td><td>-</td><td>NB0009</td><td>PM1小复卷</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>宁波亚浆PM1区域</td><td>-</td><td>NB0010</td><td>PM1选理</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>宁波亚浆PM2区域</td><td>PM2抄造部</td><td>-</td><td>按申请部门识别 PM2</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
               </tbody>
             </table>
           </div>
@@ -1565,7 +1617,7 @@
     <section class="modal-card short-haul-modal-card" role="dialog" aria-modal="true" aria-labelledby="short-haul-title">
       <header class="modal-head">
         <div>
-          <h2 id="short-haul-title">修改厂内作业车辆配置</h2>
+          <h2 id="short-haul-title">修改厂内作业设备配置</h2>
         </div>
         <button class="icon-btn" title="关闭" data-close-modal>×</button>
       </header>
@@ -1601,7 +1653,32 @@
 
       <footer class="modal-foot">
         <button class="btn ghost" data-close-modal>取消</button>
-        <button class="btn primary" data-close-modal data-toast="厂内作业车辆配置已保存">确认</button>
+        <button class="btn primary" data-close-modal data-toast="厂内作业设备配置已保存">确认</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="device-skill-modal" aria-hidden="true">
+    <section class="modal-card operation-cost-modal-card" role="dialog" aria-modal="true" aria-labelledby="device-skill-title">
+      <header class="modal-head">
+        <div>
+          <h2 id="device-skill-title">新增设备技能要求</h2>
+        </div>
+        <button class="icon-btn" title="关闭" data-close-modal>×</button>
+      </header>
+
+      <div class="modal-body operation-cost-modal-body">
+        <div class="operation-cost-form">
+          <label class="form-item required"><span>设备大类:</span><select data-device-skill-category><option value="">请选择</option><option selected>叉车</option><option>短驳车</option></select></label>
+          <label class="form-item required"><span>设备类型:</span><select data-device-skill-type><option value="">请选择</option><option selected>平叉</option><option>抱叉</option><option>铲车</option><option>平板车</option><option>自卸车</option></select></label>
+          <label class="form-item required"><span>所需技能:</span><select data-device-skill-required><option value="">请选择</option><option selected>平叉</option><option>抱叉</option><option>铲车</option><option>短驳驾驶</option></select></label>
+          <label class="form-item"><span>备注:</span><textarea rows="3" placeholder="请输入"></textarea></label>
+        </div>
+      </div>
+
+      <footer class="modal-foot">
+        <button class="btn ghost" data-close-modal>取消</button>
+        <button class="btn primary" data-confirm-device-skill>确定</button>
       </footer>
     </section>
   </div>
@@ -1640,14 +1717,14 @@
     <section class="modal-card operation-cost-modal-card" role="dialog" aria-modal="true" aria-labelledby="paper-machine-map-title">
       <header class="modal-head">
         <div>
-          <h2 id="paper-machine-map-title">新增纸机关系映射</h2>
+          <h2 id="paper-machine-map-title">新增作业区域映射</h2>
         </div>
         <button class="icon-btn" title="关闭" data-close-modal>×</button>
       </header>
 
       <div class="modal-body operation-cost-modal-body">
         <div class="operation-cost-form paper-machine-map-form">
-          <label class="form-item required"><span>纸机:</span><select data-paper-machine><option value="">请选择</option><option selected>PM1</option><option>PM2</option></select></label>
+          <label class="form-item required"><span>区域:</span><select data-paper-machine><option value="">请选择</option><option selected>宁波亚浆PM1区域</option><option>宁波亚浆PM2区域</option></select></label>
           <label class="form-item required"><span>映射依据:</span><select data-paper-machine-map-basis><option value="mes" selected>MES仓位</option><option value="dept">申请部门</option></select></label>
           <label class="form-item"><span>申请部门:</span><input data-paper-machine-dept placeholder="选择申请部门时填写"></label>
           <label class="form-item"><span>MES仓位:</span><input data-paper-machine-mes value="NB0004" placeholder="选择MES仓位时填写"></label>
@@ -1667,7 +1744,7 @@
     <section class="modal-card operation-cost-import-modal-card" role="dialog" aria-modal="true" aria-labelledby="paper-machine-map-import-title">
       <header class="modal-head">
         <div>
-          <h2 id="paper-machine-map-import-title">批量导入纸机关系映射</h2>
+          <h2 id="paper-machine-map-import-title">批量导入作业区域映射</h2>
         </div>
         <button class="icon-btn" title="关闭" data-close-modal>×</button>
       </header>
@@ -1689,7 +1766,7 @@
 
       <footer class="modal-foot">
         <button class="btn ghost" data-close-modal>取消</button>
-        <button class="btn primary" data-close-modal data-toast="纸机关系映射导入已提交">确认导入</button>
+        <button class="btn primary" data-close-modal data-toast="作业区域映射导入已提交">确认导入</button>
       </footer>
     </section>
   </div>
@@ -1728,7 +1805,7 @@
     <section class="modal-card loading-limit-import-modal-card" role="dialog" aria-modal="true" aria-labelledby="short-haul-import-title">
       <header class="modal-head">
         <div>
-          <h2 id="short-haul-import-title">批量导入厂内作业车辆配置</h2>
+          <h2 id="short-haul-import-title">批量导入厂内作业设备配置</h2>
         </div>
         <button class="icon-btn" title="关闭" data-close-modal>×</button>
       </header>
@@ -1749,7 +1826,7 @@
 
       <footer class="modal-foot">
         <button class="btn ghost" data-close-modal>取消</button>
-        <button class="btn primary" data-close-modal data-toast="厂内作业车辆配置导入已提交">确认导入</button>
+        <button class="btn primary" data-close-modal data-toast="厂内作业设备配置导入已提交">确认导入</button>
       </footer>
     </section>
   </div>
@@ -1987,7 +2064,7 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=20260716-sticky-action-columns"></script>
+  <script src="./app.js?v=20260717-device-skill-config"></script>
 </body>
 </html>
 

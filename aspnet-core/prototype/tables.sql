@@ -1,4 +1,6 @@
 
+ALTER TABLE aimp_wct.skill MODIFY COLUMN SkillCode varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '技能编码';
+
 CREATE TABLE `material_requisition` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
   `C_REQUISITION_NO` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '领料单号',

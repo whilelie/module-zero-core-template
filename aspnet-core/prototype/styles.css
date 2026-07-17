@@ -497,6 +497,8 @@ th {
 #loading-limit .table-wrap > table td:last-child,
 #short-haul-config .table-wrap > table th:last-child,
 #short-haul-config .table-wrap > table td:last-child,
+#device-skill-config .table-wrap > table th:last-child,
+#device-skill-config .table-wrap > table td:last-child,
 #paper-machine-map .table-wrap > table th:last-child,
 #paper-machine-map .table-wrap > table td:last-child,
 #employee-management .table-wrap > table th:last-child,
@@ -514,6 +516,7 @@ th {
 #task-management .table-wrap > table th:last-child,
 #loading-limit .table-wrap > table th:last-child,
 #short-haul-config .table-wrap > table th:last-child,
+#device-skill-config .table-wrap > table th:last-child,
 #paper-machine-map .table-wrap > table th:last-child,
 #employee-management .table-wrap > table th:last-child,
 #dispatch-rule .table-wrap > table th:last-child {

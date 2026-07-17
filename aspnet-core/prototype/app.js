@@ -14,6 +14,7 @@ const loadingLimitModal = document.querySelector("#loading-limit-modal");
 const loadingLimitImportModal = document.querySelector("#loading-limit-import-modal");
 const shortHaulModal = document.querySelector("#short-haul-modal");
 const shortHaulImportModal = document.querySelector("#short-haul-import-modal");
+const deviceSkillModal = document.querySelector("#device-skill-modal");
 const paperMachineMapModal = document.querySelector("#paper-machine-map-modal");
 const paperMachineMapImportModal = document.querySelector("#paper-machine-map-import-modal");
 const sourceResultModal = document.querySelector("#source-result-modal");
@@ -26,6 +27,7 @@ const taskDetailModal = document.querySelector("#task-detail-modal");
 const operationCostTitle = document.querySelector("#operation-cost-title");
 const loadingLimitTitle = document.querySelector("#loading-limit-title");
 const shortHaulTitle = document.querySelector("#short-haul-title");
+const deviceSkillTitle = document.querySelector("#device-skill-title");
 const paperMachineMapTitle = document.querySelector("#paper-machine-map-title");
 const taskAssignTitle = document.querySelector("#task-assign-title");
 const employeeTitle = document.querySelector("#employee-title");
@@ -50,7 +52,7 @@ const taskAssignConfirm = document.querySelector("[data-confirm-task-assign]");
 const taskStartConfirm = document.querySelector("[data-confirm-task-start]");
 const taskDeviceConfirm = document.querySelector("[data-confirm-task-device]");
 
-window.prototypeAppVersion = "20260716-sticky-action-columns";
+window.prototypeAppVersion = "20260717-device-skill-config";
 
 const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],
@@ -477,13 +479,32 @@ document.querySelectorAll("[data-open-short-haul]").forEach((button) => {
     const row = button.closest("tr");
     const cells = row ? Array.from(row.children) : [];
     if (shortHaulTitle) {
-      shortHaulTitle.textContent = cells.length ? "修改厂内作业车辆配置" : "新增厂内作业车辆配置";
+      shortHaulTitle.textContent = cells.length ? "修改厂内作业设备配置" : "新增厂内作业设备配置";
     }
     if (shortHaulMaterialInput) {
       shortHaulMaterialInput.value = button.dataset.shortHaulRowMaterial || (cells.length ? cells[0].textContent.trim() : "");
       updateShortHaulMaterialInfo();
     }
     openModal(shortHaulModal);
+  });
+});
+
+document.querySelectorAll("[data-open-device-skill]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const row = button.closest("tr");
+    const cells = row ? Array.from(row.children) : [];
+    const categoryField = deviceSkillModal?.querySelector("[data-device-skill-category]");
+    const typeField = deviceSkillModal?.querySelector("[data-device-skill-type]");
+    const skillField = deviceSkillModal?.querySelector("[data-device-skill-required]");
+    const remarkField = deviceSkillModal?.querySelector("textarea");
+    if (deviceSkillTitle) {
+      deviceSkillTitle.textContent = cells.length ? "修改设备技能要求" : "新增设备技能要求";
+    }
+    if (categoryField) categoryField.value = cells.length ? cells[0].textContent.trim() : "叉车";
+    if (typeField) typeField.value = cells.length ? cells[1].textContent.trim() : "平叉";
+    if (skillField) skillField.value = cells.length ? cells[2].textContent.trim() : "平叉";
+    if (remarkField) remarkField.value = cells.length ? cells[3].textContent.trim() : "";
+    openModal(deviceSkillModal);
   });
 });
 
@@ -496,7 +517,7 @@ document.querySelectorAll("[data-open-paper-machine-map]").forEach((button) => {
     const mesInput = paperMachineMapModal?.querySelector("[data-paper-machine-mes]");
     const remarkInput = paperMachineMapModal?.querySelector("[data-paper-machine-remark]");
     if (paperMachineMapTitle) {
-      paperMachineMapTitle.textContent = cells.length ? "修改纸机关系映射" : "新增纸机关系映射";
+      paperMachineMapTitle.textContent = cells.length ? "修改作业区域映射" : "新增作业区域映射";
     }
     if (paperMachine) paperMachine.value = cells.length ? cells[0].textContent.trim() : "PM1";
     const deptValue = cells.length ? cells[1].textContent.trim() : "";
@@ -536,7 +557,7 @@ document.querySelectorAll("[data-confirm-paper-machine-map]").forEach((button) =
     const hasDept = Boolean(deptInput?.value.trim());
     const hasMes = Boolean(mesInput?.value.trim());
     if (!paperMachine?.value) {
-      showToast("请选择纸机");
+      showToast("请选择区域");
       paperMachine?.focus();
       return;
     }
@@ -545,8 +566,18 @@ document.querySelectorAll("[data-confirm-paper-machine-map]").forEach((button) =
       (paperMachineMapBasis?.value === "dept" ? deptInput : mesInput)?.focus();
       return;
     }
-    showToast("纸机关系映射已保存");
+    showToast("作业区域映射已保存");
     closeModal(paperMachineMapModal);
+  });
+});
+
+document.querySelectorAll("[data-confirm-device-skill]").forEach((button) => {
+  button.addEventListener("click", () => {
+    if (!requireModalValue(deviceSkillModal, "[data-device-skill-category]", "请选择设备大类")) return;
+    if (!requireModalValue(deviceSkillModal, "[data-device-skill-type]", "请选择设备类型")) return;
+    if (!requireModalValue(deviceSkillModal, "[data-device-skill-required]", "请选择所需技能")) return;
+    closeModal(deviceSkillModal);
+    showToast("设备技能要求已保存");
   });
 });
 
