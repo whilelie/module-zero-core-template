@@ -879,6 +879,7 @@
           <div class="query-grid task-management-query">
             <label>任务单号<input></label>
             <label>任务状态<select><option>请选择</option><option>待派工</option><option>已派工</option><option>执行中</option><option>已完成</option><option>已取消</option></select></label>
+            <label>过账状态<select><option>请选择</option><option>待过账</option><option>成功</option><option>失败</option></select></label>
             <label>货源类型<select><option>请选择</option><option>厂内资材库</option><option>码头仓库</option><option>供应商送货</option></select></label>
             <label>收货库存地点<input value="3108"></label>
             <label>配送日期<input></label>
@@ -900,14 +901,14 @@
           <div class="table-wrap">
             <table>
               <thead>
-                <tr><th>任务单号</th><th>任务状态</th><th>配送单数</th><th>物料项数</th><th>叉车类型</th><th>叉车载重限制</th><th>短驳车类型</th><th>短驳载重限制</th><th>执行人</th><th>当前设备号</th><th>当前设备类型</th><th>最早最后配送日期</th><th>创建时间</th><th>派工时间</th><th>开始时间</th><th>结束时间</th><th>取消时间</th><th>取消原因</th><th>备注</th><th>操作</th></tr>
+                <tr><th>任务单号</th><th>任务状态</th><th>过账状态</th><th>配送单数</th><th>物料项数</th><th>叉车类型</th><th>叉车载重限制</th><th>短驳车类型</th><th>短驳载重限制</th><th>执行人</th><th>当前设备号</th><th>当前设备类型</th><th>最早最后配送日期</th><th>创建时间</th><th>派工时间</th><th>开始时间</th><th>结束时间</th><th>取消时间</th><th>取消原因</th><th>备注</th><th>操作</th></tr>
               </thead>
               <tbody>
-                <tr><td>RW-20260506-001</td><td><span class="badge amber">待派工</span></td><td>2</td><td>2</td><td><span class="badge cyan">平叉</span><span class="badge blue">抱叉</span></td><td>3T / 5T</td><td><span class="badge blue">平板车</span><span class="badge green">自卸车</span></td><td>10T / 15T</td><td></td><td></td><td></td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="派工">派工</button><button class="link-btn" data-open-task-cancel>取消</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr><td>RW-20260506-002</td><td><span class="badge blue">已派工</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>张三</td><td></td><td></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="改派">改派</button><button class="link-btn" data-open-task-start>开始任务</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr><td>RW-20260506-003</td><td><span class="badge cyan">执行中</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>王五</td><td>5110100022018A9</td><td><span class="badge cyan">平叉</span></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="改派">改派</button><button class="link-btn" data-open-task-finish>结束任务</button><button class="link-btn" data-open-task-device>变更设备</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr><td>RW-20260506-004</td><td><span class="badge green">已完成</span></td><td>1</td><td>1</td><td><span class="badge blue">抱叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>李四</td><td>5110100022018A0</td><td><span class="badge cyan">平叉</span></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.07</td><td>2026.05.07</td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr><td>RW-20260506-005</td><td><span class="badge gray">已取消</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td></td><td></td><td></td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td>2026.05.06</td><td>不需要该物料了</td><td></td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>RW-20260506-001</td><td><span class="badge amber">待派工</span></td><td><span class="badge amber">待过账</span></td><td>2</td><td>2</td><td><span class="badge cyan">平叉</span><span class="badge blue">抱叉</span></td><td>3T / 5T</td><td><span class="badge blue">平板车</span><span class="badge green">自卸车</span></td><td>10T / 15T</td><td></td><td></td><td></td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="派工">派工</button><button class="link-btn" data-open-task-cancel>取消</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>RW-20260506-002</td><td><span class="badge blue">已派工</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>张三</td><td></td><td></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="改派">改派</button><button class="link-btn" data-open-task-start>开始任务</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>RW-20260506-003</td><td><span class="badge cyan">执行中</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>王五</td><td>5110100022018A9</td><td><span class="badge cyan">平叉</span></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="改派">改派</button><button class="link-btn" data-open-task-finish>结束任务</button><button class="link-btn" data-open-task-device>变更设备</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>RW-20260506-004</td><td><span class="badge green">已完成</span></td><td><span class="badge green">成功</span></td><td>1</td><td>1</td><td><span class="badge blue">抱叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>李四</td><td>5110100022018A0</td><td><span class="badge cyan">平叉</span></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.07</td><td>2026.05.07</td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>RW-20260506-005</td><td><span class="badge gray">已取消</span></td><td><span class="badge red">失败</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td></td><td></td><td></td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td>2026.05.06</td><td>不需要该物料了</td><td></td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
               </tbody>
             </table>
           </div>
@@ -2009,6 +2010,7 @@
           <button class="detail-tab active" type="button" data-task-detail-tab="task-detail-lines">任务明细列表</button>
           <button class="detail-tab" type="button" data-task-detail-tab="task-device-lines">设备使用明细</button>
           <button class="detail-tab" type="button" data-task-detail-tab="task-log-lines">操作日志</button>
+          <button class="detail-tab" type="button" data-task-detail-tab="task-posting-lines">过账结果</button>
         </div>
 
         <div class="task-detail-tab-panel active" id="task-detail-lines">
@@ -2051,6 +2053,21 @@
                 <tr><td>2026.05.06 08:25:00</td><td>开始任务</td><td>张三</td><td>5110100022018A9</td><td><span class="badge cyan">平叉</span></td><td>司机确认开始，绑定设备</td></tr>
                 <tr><td>2026.05.06 09:10:00</td><td>变更设备</td><td>张三</td><td>5110100022018A0</td><td><span class="badge cyan">平叉</span></td><td>原设备故障，更换设备</td></tr>
                 <tr><td>2026.05.06 10:05:00</td><td>结束任务</td><td>张三</td><td>5110100022018A0</td><td><span class="badge cyan">平叉</span></td><td>任务完成</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="task-detail-tab-panel" id="task-posting-lines">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>配送单号</th><th>配送需求单号</th><th>配送需求行号</th><th>工厂</th><th>实际发货数量</th><th>基本单位</th><th>过账时间</th><th>过账状态</th><th>SAP消息</th><th>领料申请单号</th><th>领料申请行项目</th><th>拣配单号</th><th>拣配行项目</th><th>物料凭证编号</th><th>物料凭证年度</th><th>物料凭证中的项目</th><th>仓库号</th><th>转储单编号</th><th>转储单项目</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>PSD-20260506-001</td><td>DELREQ-20260506-001</td><td>1</td><td>2000</td><td>10</td><td>NM3</td><td>2026.05.06 10:08:21</td><td><span class="badge green">成功</span></td><td>物料凭证 4900001821 已生成</td><td></td><td></td><td>1002898403</td><td>10</td><td>4900001821</td><td>2026</td><td>0001</td><td>107</td><td>TR-20260506001</td><td>1</td></tr>
+                <tr><td>PSD-20260506-002</td><td>DELREQ-20260506-002</td><td>1</td><td>2000</td><td>19</td><td>NM3</td><td>2026.05.06 10:09:03</td><td><span class="badge red">失败</span></td><td>实际发货数量小于计划数量，请确认差异原因</td><td></td><td></td><td>1002898404</td><td>10</td><td>-</td><td>-</td><td>-</td><td>107</td><td>TR-20260506002</td><td>1</td></tr>
+                <tr><td>PSD-20260506-003</td><td>DELREQ-20260506-003</td><td>1</td><td>2000</td><td>8</td><td>TO</td><td>-</td><td><span class="badge amber">待过账</span></td><td>等待任务结束后提交过账</td><td></td><td></td><td>1002898405</td><td>10</td><td>-</td><td>-</td><td>-</td><td>107</td><td>-</td><td>-</td></tr>
               </tbody>
             </table>
           </div>

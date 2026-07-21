@@ -1,6 +1,12 @@
 
 ALTER TABLE aimp_wct.skill MODIFY COLUMN SkillCode varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '技能编码';
 
+ALTER TABLE aimp_wct.allocationjobitem ADD Vltyp varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '源仓储类型';
+ALTER TABLE aimp_wct.allocationjobitem CHANGE Vltyp Vltyp varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '源仓储类型' AFTER BlocId;
+
+ALTER TABLE aimp_wct.storageclass ADD RegionId INT NULL COMMENT '所属区域Id';
+ALTER TABLE aimp_wct.storageclass CHANGE RegionId RegionId INT NULL COMMENT '所属区域Id' FIRST;
+
 CREATE TABLE `material_requisition` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
   `C_REQUISITION_NO` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '领料单号',
@@ -296,9 +302,11 @@ CREATE TABLE `material_delivery_limit` (
 CREATE TABLE `delivery_order` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
   `C_DELIVERY_ORDER_NO` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '配送单号',
+  `C_LINE_NO` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '行号',
   `C_ALLOCATION_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '货源分配结果ID',
   `N_DELIVERY_QUANTITY` decimal(18,3) NOT NULL COMMENT '配送数量',
   `C_EXTERNAL_DOC_NO` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '外部单据号',
+  `C_EXTERNAL_DOC_ITEM` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '外部单据行项目',
   `C_DISPATCH_STATUS` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '下发状态(1:下发成功 2:下发失败)',
   `C_DISPATCH_FAIL_REASON` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '下发失败原因',
   `C_TASK_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '任务单ID',
@@ -479,6 +487,41 @@ CREATE TABLE `shorthaul_appointment_delivery_order` (
   PRIMARY KEY (`C_ID`),
   UNIQUE KEY `UK_YYSHD_DELIVERY_ORDER_NO` (`C_YYSHD`,`C_DELIVERY_ORDER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='短驳预约配送单关系表';
+
+
+CREATE TABLE `delivery_material_post_result` (
+  `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
+  `C_DELIVERY_ORDER_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '配送单ID',
+  `C_TASK_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务ID',
+  `C_PSXQD` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '配送需求单',
+  `C_PSXQH` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '配送需求行号',
+  `C_WERKS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '工厂',
+  `N_JPSL` decimal(13,3) DEFAULT NULL COMMENT '实际发货数量',
+  `C_POST_STATUS` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0' COMMENT '过账状态（0：待过账 1：成功 2：失败）',
+  `N_RETRY_COUNT` int NOT NULL DEFAULT 0 COMMENT '重试次数',
+  `D_POST_TIME` datetime DEFAULT NULL COMMENT '最近过账时间',
+  `C_TYPE` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'SAP消息类型（S成功 E错误 W警告 I信息 A中断）',
+  `C_MESSAGE` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '过账结果/失败原因',
+  `C_LLJPD` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '领料拣配单号',
+  `C_LLJPDHXM` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '领料拣配单行项目',
+  `C_ZPSXQ` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '配送需求单',
+  `C_ZPSXQH` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '配送需求行号',
+  `C_LLSQD` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '领料申请单号',
+  `C_LLPOS` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '领料申请行项目',
+  `C_MBLNR` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '物料凭证编号',
+  `C_MJAHR` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '物料凭证年度',
+  `C_ZEILE` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '物料凭证中的项目',
+  `C_LGNUM` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '仓库号',
+  `C_TANUM` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '转储单编号',
+  `C_TAPOS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '转储单项目',
+  `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
+  `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
+  `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`C_ID`),
+  UNIQUE KEY `UK_POST_DELIVERY_ORDER` (`C_DELIVERY_ORDER_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='领料件过账结果表';
+
 
 CREATE TABLE `material_operation_vehicle_config` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
