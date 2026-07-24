@@ -1095,6 +1095,10 @@ input, select {
   grid-template-columns: minmax(180px, 280px) minmax(180px, 280px) 1fr auto;
 }
 
+.material-master-query {
+  grid-template-columns: repeat(4, minmax(180px, 1fr)) auto;
+}
+
 .loading-limit-query {
   grid-template-columns: repeat(4, minmax(160px, 1fr));
 }
@@ -1103,11 +1107,19 @@ input, select {
   grid-template-columns: repeat(4, minmax(180px, 1fr));
 }
 
+.available-stock-query {
+  grid-template-columns: repeat(4, minmax(180px, 1fr)) auto;
+}
+
 .query-actions {
   display: flex;
   gap: 8px;
   justify-content: flex-end;
 }
+.muted {
+  color: var(--muted);
+}
+
 
 .table-wrap {
   overflow-x: auto;
@@ -1794,6 +1806,28 @@ input, select {
 
 .task-detail-tab-panel.active {
   display: block;
+}
+
+.posting-result-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: max-content;
+  width: max-content;
+}
+
+.posting-result-table th:first-child,
+.posting-result-table td:first-child {
+  background: #fff;
+  box-shadow: 1px 0 0 var(--line);
+  left: 0;
+  min-width: 112px;
+  position: sticky;
+  z-index: 5;
+}
+
+.posting-result-table th:first-child {
+  background: var(--surface-soft);
+  z-index: 6;
 }
 
 .dispatch-tabs {

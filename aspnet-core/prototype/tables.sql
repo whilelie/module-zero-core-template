@@ -138,6 +138,7 @@ CREATE TABLE `source_trial_inventory_source` (
   `C_SOURCE_NO` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '货源标识',
   `D_USABLE_TIME` datetime DEFAULT NULL COMMENT '库存可使用时间',
   `N_AVAILABLE_QUANTITY` decimal(18,3) NOT NULL COMMENT '可供量',
+  `N_OCCUPIED_QUANTITY` decimal(18,3) DEFAULT NULL COMMENT '占用量',
   `N_DELAY_COST` decimal(18,2) DEFAULT NULL COMMENT '延滞成本',
   `N_OPERATION_COST` decimal(18,2) DEFAULT NULL COMMENT '作业成本',
   `C_WERKS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '工厂',
@@ -320,7 +321,7 @@ CREATE TABLE `delivery_order` (
 
 CREATE TABLE `paper_machine_relation_map` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
-  `C_PAPER_MACHINE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '纸机',
+  `C_REGION_ID` int NOT NULL COMMENT '所属区域Id',
   `C_ORGANIZATION_UNIT` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '申请部门',
   `C_MES_LGPLA` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'MES仓位',
   `C_REMARK` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
@@ -329,7 +330,7 @@ CREATE TABLE `paper_machine_relation_map` (
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
   `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`C_ID`),
-  UNIQUE KEY `UK_PAPER_MACHINE_MAP` (`C_PAPER_MACHINE`,`C_ORGANIZATION_UNIT`,`C_MES_LGPLA`)
+  UNIQUE KEY `UK_PAPER_MACHINE_MAP` (`C_REGION_ID`,`C_ORGANIZATION_UNIT`,`C_MES_LGPLA`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='纸机关系映射表';
 
 CREATE TABLE `delivery_task` (
@@ -549,6 +550,21 @@ CREATE TABLE `material_operation_vehicle_config` (
   PRIMARY KEY (`C_ID`),
   UNIQUE KEY `UK_MOV_CONFIG` (`N_FACTORY_AREA_ID`,`N_BUSINESS_TYPE`,`C_MTART`,`C_MATKL`,`C_MATNR`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='厂内作业车辆配置表';
+
+
+CREATE TABLE `vehicle_skill_requirement` (
+  `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
+  `N_DEVICE_KIND` int NOT NULL COMMENT '设备大类（1-叉车 2-短驳车）',
+  `N_DEVICE_TYPE` int NOT NULL COMMENT '设备类型（叉车大类下（1-抱叉，2-平叉，3-铲车），短驳车大类下（1-平板车，2-自卸车））',
+  `N_SKILL_TYPE` int NOT NULL COMMENT '技能类型（1-抱叉，2-平叉，3-短驳）',
+  `C_REMARK` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+  `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
+  `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
+  `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`C_ID`),
+  UNIQUE KEY `UK_DEVICE_SKILL` (`N_DEVICE_KIND`,`N_DEVICE_TYPE`,`N_SKILL_TYPE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='车辆技能要求维护';
 
 -- 1. 员工时段负责业务表
 CREATE TABLE `dispatch_staff_duty` (

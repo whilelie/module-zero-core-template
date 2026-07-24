@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>领用配送页面原型</title>
   <link rel="icon" href="./app-icon.ico?v=20260717-app-icon" type="image/x-icon">
-  <link rel="stylesheet" href="./styles.css?v=20260717-device-skill">
+  <link rel="stylesheet" href="./styles.css?v=20260723-available-stock">
 </head>
 <body>
   <header class="app-topbar">
@@ -25,6 +25,8 @@
   <div class="app-shell compact-shell">
     <aside class="sidebar">
       <nav class="side-nav" aria-label="页面导航">
+        <button class="nav-item" data-page="material-master">物料主数据维护</button>
+        <button class="nav-item" data-page="available-stock">可用库存查询</button>
         <button class="nav-item" data-page="operation-cost">作业成本</button>
         <button class="nav-item active" data-page="material-order">创建领料配送需求</button>
         <button class="nav-item" data-page="demand-trial">配送货源试算</button>
@@ -40,6 +42,124 @@
     </aside>
 
     <main class="main">
+      <section class="page-panel" id="material-master">
+        <section class="panel">
+          <div class="query-grid material-master-query">
+            <label>物料类型<input list="material-type-options" value="CHM"></label>
+            <label>物料组<input list="material-group-options" value="13120801"></label>
+            <label>物料<input value="1000000014"></label>
+            <label>描述<input value="盐酸 浓度31%"></label>
+            <div class="query-actions">
+              <button class="btn primary">查询</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>物料组</th>
+                  <th>物料组描述</th>
+                  <th>物料编码</th>
+                  <th>物料描述(中文)</th>
+                  <th>物料描述(英语)</th>
+                  <th>物料类型</th>
+                  <th>物料类型描述</th>
+                  <th>基本计量单位</th>
+                  <th>基本计量描述</th>
+                  <th>订单单位</th>
+                  <th>订单单位描述</th>
+                  <th>批次管理需求的标识</th>
+                  <th>跨工厂物料状态</th>
+                  <th>旧物料号（SKU）</th>
+                  <th>在客户级标记要删除的物料</th>
+                  <th>备注</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>13120801</td>
+                  <td>-</td>
+                  <td>1000000014</td>
+                  <td>盐酸 浓度31%</td>
+                  <td>-</td>
+                  <td>CHM</td>
+                  <td>盐酸(HCl)</td>
+                  <td>KG</td>
+                  <td>kg</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>X</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>27030501</td>
+                  <td>-</td>
+                  <td>1800000020</td>
+                  <td>浮子式疏水阀 DN80 PN16 浮球式 SUS304 法兰 SC41H-16</td>
+                  <td>-</td>
+                  <td>MRO</td>
+                  <td>蒸汽疏水阀</td>
+                  <td>EA</td>
+                  <td>个</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>X</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td>13090101</td>
+                  <td>-</td>
+                  <td>1000000713</td>
+                  <td>涂料分散剂</td>
+                  <td>-</td>
+                  <td>CHM</td>
+                  <td>分散剂</td>
+                  <td>KG</td>
+                  <td>kg</td>
+                  <td>TO</td>
+                  <td>吨</td>
+                  <td>X</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination-bar">
+            <div class="pagination-summary">共 3 项数据，每页 10 条</div>
+            <div class="pagination-actions">
+              <button class="page-btn" disabled>上一页</button>
+              <button class="page-btn active">1</button>
+              <button class="page-btn">下一页</button>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <datalist id="material-type-options">
+        <option value="CHM">化学物料</option>
+        <option value="MRO">备品备件</option>
+        <option value="ROH">原材料</option>
+        <option value="HALB">半成品</option>
+      </datalist>
+      <datalist id="material-group-options">
+        <option value="13120801">盐酸类</option>
+        <option value="27030501">蒸汽疏水阀</option>
+        <option value="13090101">分散剂</option>
+        <option value="13120802">资材辅料</option>
+      </datalist>
+
       <section class="page-panel" id="operation-cost">
         <section class="panel">
           <div class="query-grid operation-cost-query">
@@ -976,6 +1096,34 @@
               <button class="page-btn active">1</button>
               <button class="page-btn">下一页</button>
             </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="page-panel" id="available-stock">
+        <section class="panel">
+          <div class="query-grid available-stock-query">
+            <label>工厂<div class="multi-select"><em>2000 ×</em><em>3000 ×</em></div></label>
+            <label>物料<div class="multi-select"><em>1100000022 ×</em><strong>+2</strong></div></label>
+            <div class="query-actions">
+              <button class="btn primary">查询</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="table-wrap">
+            <table class="available-stock-table">
+              <thead>
+                <tr><th>工厂</th><th>物料</th><th>描述</th><th>批次</th><th>库存地点</th><th>库存类型</th><th>仓库号</th><th>仓储类型</th><th>仓位</th><th>基本单位</th><th>SAP库存量</th><th>占用量</th><th>可用库存</th><th>特殊库存标识</th><th>特殊库存编号</th><th>认证种类</th><th>收货日期</th><th>内向交货单</th><th>交货单行项目</th><th>装运编号</th><th>装运项目</th><th>公司代码</th><th>船名</th><th>航次</th><th>码头免堆日期</th><th>逾期延滞费</th><th>转栈日期</th><th>是否免检</th><th>检验时间</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>2000</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>B20260501</td><td>3108</td><td>E</td><td>107</td><td>A01</td><td>1210</td><td>NM3</td><td>120</td><td><button class="link-btn" data-open-occupation-detail>30</button></td><td>90</td><td></td><td></td><td>FSC</td><td>2026.05.01</td><td></td><td></td><td></td><td></td><td>1000</td><td></td><td></td><td></td><td>0</td><td></td><td>Y</td><td>0</td></tr>
+                <tr><td>2000</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>B20260503</td><td>3108</td><td>E</td><td>107</td><td>A01</td><td>1211</td><td>NM3</td><td>80</td><td><span class="muted">0</span></td><td>80</td><td></td><td></td><td>FSC</td><td>2026.05.03</td><td></td><td></td><td></td><td></td><td>1000</td><td></td><td></td><td></td><td>0</td><td></td><td>Y</td><td>0</td></tr>
+                <tr><td>2000</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>B20260428</td><td>3108</td><td>E</td><td>107</td><td>A02</td><td>1305</td><td>NM3</td><td>50</td><td><button class="link-btn" data-open-occupation-detail>50</button></td><td><span class="badge red">0</span></td><td></td><td></td><td></td><td>2026.04.28</td><td></td><td></td><td></td><td></td><td>1000</td><td></td><td></td><td></td><td>0</td><td></td><td>Y</td><td>0</td></tr>
+                <tr><td>3000</td><td>1000000014</td><td>盐酸 浓度31%</td><td></td><td>3208</td><td>Q</td><td>108</td><td>B01</td><td>2101</td><td>TO</td><td>26</td><td><button class="link-btn" data-open-occupation-detail>8</button></td><td>18</td><td>Q</td><td>P2026001</td><td></td><td>2026.04.20</td><td></td><td></td><td></td><td></td><td>1000</td><td></td><td></td><td></td><td>0</td><td></td><td>N</td><td>24</td></tr>
+              </tbody>
+            </table>
           </div>
         </section>
       </section>
@@ -1996,6 +2144,36 @@
     </section>
   </div>
 
+  <div class="modal-backdrop" id="occupation-detail-modal" aria-hidden="true">
+    <section class="modal-card task-detail-modal-card" role="dialog" aria-modal="true" aria-labelledby="occupation-detail-title">
+      <header class="modal-head">
+        <div>
+          <h2 id="occupation-detail-title">占用明细</h2>
+        </div>
+        <button class="icon-btn" title="关闭" data-close-modal>×</button>
+      </header>
+
+      <div class="modal-body">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>配送单号</th><th>配送需求单号</th><th>领料申请单号</th><th>行项目</th><th>占用数量</th><th>货源类型</th><th>下发状态</th><th>下发失败原因</th><th>任务单号</th><th>任务状态</th><th>过账状态</th><th>过账失败原因</th><th>创建时间</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>PSD-20260506-002</td><td>DELREQ-20260506-002</td><td>1000000133</td><td>1</td><td>19</td><td><span class="badge blue">厂内资材库</span></td><td><span class="badge green">成功</span></td><td></td><td>RW-20260506-002</td><td><span class="badge green">已完成</span></td><td><span class="badge red">失败</span></td><td>实际发货数量小于计划数量，请确认差异原因</td><td>2026.05.06 08:05:12</td></tr>
+              <tr><td>PSD-20260507-004</td><td>DELREQ-20260507-004</td><td>1000000141</td><td>2</td><td>8</td><td><span class="badge blue">厂内资材库</span></td><td><span class="badge green">成功</span></td><td></td><td>RW-20260507-001</td><td><span class="badge cyan">执行中</span></td><td><span class="badge amber">待过账</span></td><td></td><td>2026.05.07 09:12:40</td></tr>
+              <tr><td>PSD-20260508-001</td><td>DELREQ-20260508-001</td><td>1000000152</td><td>1</td><td>3</td><td><span class="badge blue">厂内资材库</span></td><td><span class="badge red">失败</span></td><td>SAP返回：拣配单创建失败，库位被锁定</td><td></td><td><span class="badge gray">-</span></td><td><span class="badge amber">待过账</span></td><td></td><td>2026.05.08 07:48:03</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <footer class="modal-foot">
+        <button class="btn primary" data-close-modal>关闭</button>
+      </footer>
+    </section>
+  </div>
+
   <div class="modal-backdrop" id="task-detail-modal" aria-hidden="true">
     <section class="modal-card task-detail-modal-card" role="dialog" aria-modal="true" aria-labelledby="task-detail-title">
       <header class="modal-head">
@@ -2059,15 +2237,15 @@
         </div>
 
         <div class="task-detail-tab-panel" id="task-posting-lines">
-          <div class="table-wrap">
-            <table>
+          <div class="table-wrap posting-result-scroll">
+            <table class="posting-result-table">
               <thead>
-                <tr><th>配送单号</th><th>配送需求单号</th><th>配送需求行号</th><th>工厂</th><th>实际发货数量</th><th>基本单位</th><th>过账时间</th><th>过账状态</th><th>SAP消息</th><th>领料申请单号</th><th>领料申请行项目</th><th>拣配单号</th><th>拣配行项目</th><th>物料凭证编号</th><th>物料凭证年度</th><th>物料凭证中的项目</th><th>仓库号</th><th>转储单编号</th><th>转储单项目</th></tr>
+                <tr><th>操作</th><th>配送单号</th><th>配送需求单号</th><th>配送需求行号</th><th>工厂</th><th>实际发货数量</th><th>基本单位</th><th>过账时间</th><th>过账状态</th><th>SAP消息</th><th>领料申请单号</th><th>领料申请行项目</th><th>拣配单号</th><th>拣配行项目</th><th>物料凭证编号</th><th>物料凭证年度</th><th>物料凭证中的项目</th><th>仓库号</th><th>转储单编号</th><th>转储单项目</th></tr>
               </thead>
               <tbody>
-                <tr><td>PSD-20260506-001</td><td>DELREQ-20260506-001</td><td>1</td><td>2000</td><td>10</td><td>NM3</td><td>2026.05.06 10:08:21</td><td><span class="badge green">成功</span></td><td>物料凭证 4900001821 已生成</td><td></td><td></td><td>1002898403</td><td>10</td><td>4900001821</td><td>2026</td><td>0001</td><td>107</td><td>TR-20260506001</td><td>1</td></tr>
-                <tr><td>PSD-20260506-002</td><td>DELREQ-20260506-002</td><td>1</td><td>2000</td><td>19</td><td>NM3</td><td>2026.05.06 10:09:03</td><td><span class="badge red">失败</span></td><td>实际发货数量小于计划数量，请确认差异原因</td><td></td><td></td><td>1002898404</td><td>10</td><td>-</td><td>-</td><td>-</td><td>107</td><td>TR-20260506002</td><td>1</td></tr>
-                <tr><td>PSD-20260506-003</td><td>DELREQ-20260506-003</td><td>1</td><td>2000</td><td>8</td><td>TO</td><td>-</td><td><span class="badge amber">待过账</span></td><td>等待任务结束后提交过账</td><td></td><td></td><td>1002898405</td><td>10</td><td>-</td><td>-</td><td>-</td><td>107</td><td>-</td><td>-</td></tr>
+                <tr><td>-</td><td>PSD-20260506-001</td><td>DELREQ-20260506-001</td><td>1</td><td>2000</td><td>10</td><td>NM3</td><td>2026.05.06 10:08:21</td><td><span class="badge green">成功</span></td><td>物料凭证 4900001821 已生成</td><td></td><td></td><td>1002898403</td><td>10</td><td>4900001821</td><td>2026</td><td>0001</td><td>107</td><td>TR-20260506001</td><td>1</td></tr>
+                <tr><td><button class="link-btn" data-toast="已发起重试过账">重试过账</button></td><td>PSD-20260506-002</td><td>DELREQ-20260506-002</td><td>1</td><td>2000</td><td>19</td><td>NM3</td><td>2026.05.06 10:09:03</td><td><span class="badge red">失败</span></td><td>实际发货数量小于计划数量，请确认差异原因</td><td></td><td></td><td>1002898404</td><td>10</td><td>-</td><td>-</td><td>-</td><td>107</td><td>TR-20260506002</td><td>1</td></tr>
+                <tr><td>-</td><td>PSD-20260506-003</td><td>DELREQ-20260506-003</td><td>1</td><td>2000</td><td>8</td><td>TO</td><td>-</td><td><span class="badge amber">待过账</span></td><td>等待任务结束后提交过账</td><td></td><td></td><td>1002898405</td><td>10</td><td>-</td><td>-</td><td>-</td><td>107</td><td>-</td><td>-</td></tr>
               </tbody>
             </table>
           </div>

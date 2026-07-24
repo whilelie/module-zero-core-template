@@ -654,6 +654,13 @@ taskDeviceConfirm?.addEventListener("click", () => {
   closeModal(taskDeviceModal);
 });
 
+const occupationDetailModal = document.getElementById("occupation-detail-modal");
+document.querySelectorAll("[data-open-occupation-detail]").forEach((button) => {
+  button.addEventListener("click", () => {
+    openModal(occupationDetailModal);
+  });
+});
+
 document.querySelectorAll("[data-open-task-detail]").forEach((button) => {
   button.addEventListener("click", () => {
     taskDetailModal?.querySelectorAll("[data-task-detail-tab]").forEach((tab, index) => {
