@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>领用配送司机端</title>
   <link rel="icon" href="./app-icon.ico?v=20260717-app-icon" type="image/x-icon">
-  <link rel="stylesheet" href="./forklift-mobile.css?v=20260717-workbench-nav-highlight">
+  <link rel="stylesheet" href="./forklift-mobile.css?v=20260725-module-icon-white">
 </head>
 <body>
   <main class="mobile-shell">
@@ -69,7 +69,8 @@
           <span>⌃</span>
         </div>
         <div class="module-grid">
-          <button class="featured-module" type="button" id="open-task-management"><span class="module-icon warehouse"><img src="./assets/icons/module-warehouse.svg" alt=""></span><strong>我的仓储任务</strong></button>
+          <button class="featured-module" type="button" id="open-delivery-task"><span class="module-icon warehouse"><img src="./assets/icons/module-warehouse.svg" alt=""></span><strong>厂内配送任务</strong></button>
+          <button class="featured-module" type="button" id="open-receipt-task"><span class="module-icon file"><img src="./assets/icons/module-file.svg" alt=""></span><strong>采购收货任务</strong></button>
         </div>
       </section>
       <section class="module-group">
@@ -116,7 +117,7 @@
       <header class="mobile-header">
         <button class="back-btn" type="button" id="task-back-btn" aria-label="返回">‹</button>
         <div>
-          <h1>我的仓储任务</h1>
+          <h1 id="task-page-title">厂内配送任务</h1>
           <p>账号 <span id="account-display">50000068</span></p>
         </div>
         <button class="logout-button" type="button" id="logout-btn">工作台</button>
@@ -160,6 +161,6 @@
 
   <div class="toast hidden" id="toast">已保存</div>
 
-  <script src="./forklift-mobile.js?v=20260717-workbench-nav-highlight"></script>
+  <script src="./forklift-mobile.js?v=20260725-module-icon-white"></script>
 </body>
 </html>

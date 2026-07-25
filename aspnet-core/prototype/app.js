@@ -24,6 +24,7 @@ const taskStartModal = document.querySelector("#task-start-modal");
 const taskFinishModal = document.querySelector("#task-finish-modal");
 const taskDeviceModal = document.querySelector("#task-device-modal");
 const taskDetailModal = document.querySelector("#task-detail-modal");
+const receiptDetailModal = document.querySelector("#receipt-detail-modal");
 const operationCostTitle = document.querySelector("#operation-cost-title");
 const loadingLimitTitle = document.querySelector("#loading-limit-title");
 const shortHaulTitle = document.querySelector("#short-haul-title");
@@ -631,6 +632,23 @@ const bindTaskNoModal = (selector, modal, inputSelector) => {
       const taskNo = row?.children[0]?.textContent.trim() || "";
       const taskInput = modal?.querySelector(inputSelector);
       setFieldText(taskInput, taskNo);
+      if (modal === taskStartModal) {
+        const taskStartTitle = document.querySelector("#task-start-title");
+        const startDeviceInput = taskStartModal?.querySelector("[data-task-start-device]");
+        const startDeviceTypeSelect = taskStartModal?.querySelector("[data-task-start-device-type]");
+        if (taskStartTitle) {
+          taskStartTitle.textContent = "开始任务";
+        }
+        if (taskStartModal) {
+          taskStartModal.dataset.taskStartAction = "开始任务";
+        }
+        if (startDeviceInput) {
+          startDeviceInput.value = "5110100022018A9";
+        }
+        if (startDeviceTypeSelect) {
+          startDeviceTypeSelect.value = "抱叉";
+        }
+      }
       openModal(modal);
     });
   });
@@ -643,15 +661,152 @@ bindTaskNoModal("[data-open-task-device]", taskDeviceModal, "[data-task-device-n
 taskStartConfirm?.addEventListener("click", () => {
   if (!requireModalValue(taskStartModal, "[data-task-start-device]", "请输入设备号")) return;
   if (!requireModalValue(taskStartModal, "[data-task-start-device-type]", "请选择设备类型")) return;
-  showToast("任务已开始");
+  showToast(taskStartModal?.dataset.taskStartAction === "绑定设备" ? "设备绑定已提交" : "任务已开始");
   closeModal(taskStartModal);
 });
 
 taskDeviceConfirm?.addEventListener("click", () => {
   if (!requireModalValue(taskDeviceModal, "[data-task-new-device]", "请输入新设备号")) return;
   if (!requireModalValue(taskDeviceModal, "[data-task-device-type]", "请选择设备类型")) return;
-  showToast("设备变更已提交");
+  showToast(taskDeviceModal?.dataset.taskDeviceAction === "绑定设备" ? "设备绑定已提交" : "设备变更已提交");
   closeModal(taskDeviceModal);
+});
+
+// 领用配送任务管理：厂内配送任务 / 采购收货任务 顶部 tab 切换
+document.querySelectorAll("[data-task-tab]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const targetId = button.dataset.taskTab;
+    const page = button.closest(".page-panel");
+    page?.querySelectorAll("[data-task-tab]").forEach((tab) => {
+      tab.classList.toggle("active", tab === button);
+    });
+    page?.querySelectorAll(".task-page-panel").forEach((panel) => {
+      panel.classList.toggle("active", panel.id === targetId);
+    });
+  });
+});
+
+// 采购收货任务派工（复用叉车司机派工弹窗）
+const taskAssignModalForReceipt = document.getElementById("task-assign-modal");
+document.querySelectorAll("[data-open-receipt-assign]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const row = button.closest("tr");
+    const taskNo = row?.children[0]?.textContent.trim() || "";
+    const taskNoField = taskAssignModalForReceipt?.querySelector("[data-task-no]");
+    const assigneeSelect = taskAssignModalForReceipt?.querySelector("[data-task-assignee]");
+    if (taskAssignTitle) {
+      taskAssignTitle.textContent = `${button.dataset.taskAction || "派工"}`;
+    }
+    if (taskNoField) {
+      taskNoField.textContent = taskNo;
+    }
+    if (assigneeSelect) {
+      assigneeSelect.value = "";
+    }
+    openModal(taskAssignModalForReceipt);
+  });
+});
+
+document.querySelectorAll("[data-open-receipt-device]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const row = button.closest("tr");
+    const action = button.dataset.deviceAction || "变更设备";
+    const taskNo = row?.children[0]?.textContent.trim() || "";
+    if (action === "绑定设备") {
+      const taskStartTitle = document.querySelector("#task-start-title");
+      const taskNoField = taskStartModal?.querySelector("[data-task-start-no]");
+      const deviceInput = taskStartModal?.querySelector("[data-task-start-device]");
+      const deviceTypeSelect = taskStartModal?.querySelector("[data-task-start-device-type]");
+      if (taskStartTitle) {
+        taskStartTitle.textContent = "绑定设备";
+      }
+      if (taskStartModal) {
+        taskStartModal.dataset.taskStartAction = "绑定设备";
+      }
+      if (taskNoField) {
+        taskNoField.textContent = taskNo;
+      }
+      if (deviceInput) {
+        deviceInput.value = "";
+      }
+      if (deviceTypeSelect) {
+        deviceTypeSelect.value = "平叉";
+      }
+      openModal(taskStartModal);
+      return;
+    }
+    const originalDevice = row?.children[5]?.textContent.trim() || "-";
+    const taskNoField = taskDeviceModal?.querySelector("[data-task-device-no]");
+    const originalDeviceField = taskDeviceModal?.querySelector("[data-task-device-original]");
+    const newDeviceInput = taskDeviceModal?.querySelector("[data-task-new-device]");
+    const deviceTypeSelect = taskDeviceModal?.querySelector("[data-task-device-type]");
+    const taskDeviceTitle = document.querySelector("#task-device-title");
+    if (taskDeviceTitle) {
+      taskDeviceTitle.textContent = action;
+    }
+    if (taskDeviceModal) {
+      taskDeviceModal.dataset.taskDeviceAction = action;
+    }
+    if (taskNoField) {
+      taskNoField.textContent = taskNo;
+    }
+    if (originalDeviceField) {
+      originalDeviceField.textContent = action === "绑定设备" ? "-" : originalDevice;
+    }
+    if (newDeviceInput) {
+      newDeviceInput.value = action === "绑定设备" ? "" : "5110100022018A0";
+    }
+    if (deviceTypeSelect) {
+      deviceTypeSelect.value = "平叉";
+    }
+    openModal(taskDeviceModal);
+  });
+});
+
+document.querySelectorAll("[data-open-receipt-detail]").forEach((button) => {
+  button.addEventListener("click", () => {
+    receiptDetailModal?.querySelectorAll("[data-receipt-detail-tab]").forEach((tab, index) => {
+      tab.classList.toggle("active", index === 0);
+    });
+    receiptDetailModal?.querySelectorAll(".task-detail-tab-panel").forEach((panel, index) => {
+      panel.classList.toggle("active", index === 0);
+    });
+    openModal(receiptDetailModal);
+  });
+});
+
+document.querySelectorAll("[data-receipt-detail-tab]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const targetId = button.dataset.receiptDetailTab;
+    const modal = button.closest(".modal-backdrop");
+    modal?.querySelectorAll("[data-receipt-detail-tab]").forEach((tab) => {
+      tab.classList.toggle("active", tab === button);
+    });
+    modal?.querySelectorAll(".task-detail-tab-panel").forEach((panel) => {
+      panel.classList.toggle("active", panel.id === targetId);
+    });
+  });
+});
+
+document.querySelectorAll("[data-open-receipt-appointment]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const title = document.querySelector("[data-receipt-page-title]");
+    if (title) {
+      title.textContent = `预约送货单明细 - ${button.textContent.trim()}`;
+    }
+    showPage("receipt-appointment-page");
+    if (currentTabTitle) {
+      currentTabTitle.textContent = "预约送货单明细";
+    }
+  });
+});
+
+document.querySelectorAll("[data-return-receipt-task]").forEach((button) => {
+  button.addEventListener("click", () => {
+    showPage("task-management");
+    const receiptTab = document.querySelector('[data-task-tab="task-receipt"]');
+    receiptTab?.click();
+  });
 });
 
 const occupationDetailModal = document.getElementById("occupation-detail-modal");

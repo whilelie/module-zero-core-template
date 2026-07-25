@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>领用配送页面原型</title>
   <link rel="icon" href="./app-icon.ico?v=20260717-app-icon" type="image/x-icon">
-  <link rel="stylesheet" href="./styles.css?v=20260723-available-stock">
+  <link rel="stylesheet" href="./styles.css?v=20260725-receipt-checkbox">
 </head>
 <body>
   <header class="app-topbar">
@@ -995,6 +995,12 @@
       </section>
 
       <section class="page-panel" id="task-management">
+        <div class="page-tabs">
+          <button class="page-tab active" type="button" data-task-tab="task-inplant">厂内配送任务</button>
+          <button class="page-tab" type="button" data-task-tab="task-receipt">采购收货任务</button>
+        </div>
+
+        <div class="task-page-panel active" id="task-inplant">
         <section class="panel">
           <div class="query-grid task-management-query">
             <label>任务单号<input></label>
@@ -1011,7 +1017,6 @@
             <label>单据号<input placeholder="配送单号/配送需求单号/领料单号"></label>
             <label>创建时间<input></label>
             <div class="query-actions">
-              <button class="btn ghost">重置</button>
               <button class="btn primary">查询</button>
             </div>
           </div>
@@ -1026,7 +1031,7 @@
               <tbody>
                 <tr><td>RW-20260506-001</td><td><span class="badge amber">待派工</span></td><td><span class="badge amber">待过账</span></td><td>2</td><td>2</td><td><span class="badge cyan">平叉</span><span class="badge blue">抱叉</span></td><td>3T / 5T</td><td><span class="badge blue">平板车</span><span class="badge green">自卸车</span></td><td>10T / 15T</td><td></td><td></td><td></td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="派工">派工</button><button class="link-btn" data-open-task-cancel>取消</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
                 <tr><td>RW-20260506-002</td><td><span class="badge blue">已派工</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>张三</td><td></td><td></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="改派">改派</button><button class="link-btn" data-open-task-start>开始任务</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr><td>RW-20260506-003</td><td><span class="badge cyan">执行中</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>王五</td><td>5110100022018A9</td><td><span class="badge cyan">平叉</span></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="改派">改派</button><button class="link-btn" data-open-task-finish>结束任务</button><button class="link-btn" data-open-task-device>变更设备</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>RW-20260506-003</td><td><span class="badge cyan">执行中</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>王五</td><td>5110100022018A9</td><td><span class="badge cyan">平叉</span></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-finish>结束任务</button><button class="link-btn" data-open-task-device>变更设备</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
                 <tr><td>RW-20260506-004</td><td><span class="badge green">已完成</span></td><td><span class="badge green">成功</span></td><td>1</td><td>1</td><td><span class="badge blue">抱叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>李四</td><td>5110100022018A0</td><td><span class="badge cyan">平叉</span></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.07</td><td>2026.05.07</td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
                 <tr><td>RW-20260506-005</td><td><span class="badge gray">已取消</span></td><td><span class="badge red">失败</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td></td><td></td><td></td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td>2026.05.06</td><td>不需要该物料了</td><td></td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
               </tbody>
@@ -1039,6 +1044,95 @@
               <button class="page-btn active">1</button>
               <button class="page-btn">下一页</button>
             </div>
+          </div>
+        </section>
+        </div><!-- /task-inplant -->
+
+        <div class="task-page-panel" id="task-receipt">
+          <section class="panel">
+            <div class="query-grid task-receipt-query">
+              <label>任务单号<input></label>
+              <label>派工状态<select><option>请选择</option><option>待派工</option><option>已派工</option></select></label>
+              <label>预约送货单号<input value="2411151642"></label>
+              <label>物料<input></label>
+              <label>描述<input></label>
+              <div class="query-actions">
+                <button class="btn primary">查询</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr><th>任务单号</th><th>派工状态</th><th>叉车类型</th><th>叉车载重限制</th><th>执行人</th><th>当前设备号</th><th>当前设备类型</th><th>预约送货单号</th><th>交货单</th><th>交货项目</th><th>工厂</th><th>仓库号</th><th>库存地点</th><th>仓储类型</th><th>仓位</th><th>卸货平台</th><th>集散点</th><th>区域</th><th>物料</th><th>描述</th><th>基本单位</th><th>包装类型</th><th>任务数量</th><th>操作</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>1000000098</td><td><span class="badge amber">待派工</span></td><td><span class="badge cyan">平叉</span></td><td>3T</td><td>-</td><td>-</td><td>-</td><td><button class="link-btn" data-open-receipt-appointment>2411151642</button></td><td>0180013000</td><td>000010</td><td>7003</td><td>104</td><td>1101</td><td>A01</td><td>A01-DSL03</td><td>-</td><td>-</td><td>PM1</td><td>30000103</td><td>长纤化学浆(NBKP) 白云</td><td>ADT</td><td>-</td><td>3</td><td><button class="link-btn" data-open-receipt-assign data-task-action="派工">派工</button><button class="link-btn" data-open-receipt-detail>任务详情</button></td></tr>
+                  <tr><td>1000000099</td><td><span class="badge blue">已派工</span></td><td><span class="badge cyan">平叉</span></td><td>3T</td><td>张三</td><td>-</td><td>-</td><td><button class="link-btn" data-open-receipt-appointment>2411151642</button></td><td>0180013000</td><td>000020</td><td>7003</td><td>104</td><td>1101</td><td>A01</td><td>A01-DSL01</td><td>-</td><td>-</td><td>PM1</td><td>30000102</td><td>短纤化学浆(LBKP) LPPI 正品</td><td>ADT</td><td>-</td><td>3</td><td><button class="link-btn" data-open-receipt-assign data-task-action="改派">改派</button><button class="link-btn" data-open-receipt-device data-device-action="绑定设备">绑定设备</button><button class="link-btn" data-open-receipt-detail>任务详情</button></td></tr>
+                  <tr><td>1000000100</td><td><span class="badge blue">已派工</span></td><td><span class="badge cyan">平叉</span></td><td>3T</td><td>李四</td><td>5110100022018A0</td><td><span class="badge cyan">平叉</span></td><td><button class="link-btn" data-open-receipt-appointment>2411151642</button></td><td>0180013000</td><td>000030</td><td>7003</td><td>104</td><td>1101</td><td>A01</td><td>A01-DSL05</td><td>-</td><td>-</td><td>PM1</td><td>1000000701</td><td>阳离子淀粉（ASA乳化用）</td><td>KG</td><td>A 散货类</td><td>2</td><td><button class="link-btn" data-open-receipt-assign data-task-action="改派">改派</button><button class="link-btn" data-open-receipt-device data-device-action="变更设备">变更设备</button><button class="link-btn" data-open-receipt-detail>任务详情</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="pagination-bar">
+              <div class="pagination-summary">共 3 条，每页 10 条</div>
+              <div class="pagination-actions">
+                <button class="page-btn" disabled>上一页</button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">下一页</button>
+              </div>
+            </div>
+          </section>
+        </div><!-- /task-receipt -->
+      </section>
+
+      <section class="page-panel" id="receipt-appointment-page">
+        <section class="receipt-appointment-page-card">
+          <div class="receipt-warning">
+            <div class="receipt-warning-icon">!</div>
+            <div>
+              <h3>过磅确认操作提示</h3>
+              <p>1、如需分批过磅，请分别勾选每次装卸完成的任务去点击过磅确认；</p>
+              <p>2、如果不需要分批过磅，待车上货物全部装卸完后，请全选所有任务点击过磅确认，否则无法出厂。</p>
+            </div>
+          </div>
+          <div class="receipt-action-toolbar">
+            <button class="receipt-action-btn">任务上移</button>
+            <button class="receipt-action-btn">任务下移</button>
+            <button class="receipt-action-btn">保存顺序</button>
+            <button class="receipt-action-btn">任务开始</button>
+            <button class="receipt-action-btn">任务结束</button>
+            <button class="receipt-action-btn">任务签收</button>
+            <button class="receipt-action-btn">过磅确认</button>
+            <button class="receipt-action-btn">取消过磅确认</button>
+            <button class="receipt-action-btn">任务确认</button>
+            <button class="receipt-action-btn">策略信息更改</button>
+            <button class="receipt-action-btn">任务拆分</button>
+            <button class="receipt-action-btn">任务恢复/删除</button>
+            <button class="receipt-action-btn success" data-return-receipt-task>返回</button>
+            <button class="receipt-action-btn">刷新</button>
+            <button class="receipt-action-btn">批量任务签收</button>
+            <button class="receipt-action-btn">批量任务签收保存</button>
+            <button class="receipt-action-btn">标签打印</button>
+            <button class="receipt-action-btn">拒装拒卸</button>
+            <button class="receipt-action-btn">直退放行</button>
+            <button class="receipt-action-btn">集装箱放行</button>
+            <button class="receipt-action-btn">携带物放行</button>
+            <button class="receipt-action-btn">上传附件</button>
+            <button class="receipt-action-btn">一车多单处理</button>
+            <button class="receipt-action-btn icon-only" title="视图切换">▦</button>
+          </div>
+          <h2 class="visually-hidden" data-receipt-page-title>预约送货单明细</h2>
+          <div class="table-wrap receipt-appointment-table-wrap">
+            <table class="receipt-appointment-table">
+              <thead>
+                <tr><th><input type="checkbox"></th><th>任务单号</th><th>任务顺序</th><th>预约送货单号</th><th>交货</th><th>交货项目</th><th>任务状态编码</th><th>任务状态描述</th><th>作业类型编码</th><th>作业类型描述</th><th>预约类型</th><th>分批收货</th><th>采购凭证号</th><th>采购凭证的项目编号</th><th>物料编号</th><th>物料描述</th><th>小料号</th><th>小料号描述</th><th>工厂</th><th>来料加工工厂</th><th>仓库号/混合仓库</th><th>EWM仓库号</th><th>短驳运输计划</th><th>基本计量单位</th><th>司机姓名</th><th>车/船名</th><th>车型</th><th>预约送货量</th><th>预约件数</th><th>库存地点</th><th>仓储类型</th><th>仓位</th><th>集散点</th><th>卸货平台</th><th>ATMS平台号</th><th>办事员</th><th>叉车工</th><th>任务数量</th><th>分配模式编码</th><th>分配模式描述</th><th>补货需求编号</th><th>包装类型</th><th>到货标识</th><th>签收数量</th><th>签收件数</th><th>单件标准重量</th><th>地磅扣除量</th><th>扣除说明</th><th>标准重量总计</th><th>单件包装物重</th><th>预约包装物总重</th><th>备案单件包装物重</th><th>备案包装物总重</th><th>车辆作业追踪表ID</th><th>磅单号</th><th>地磅净重</th><th>收货数量</th><th>凭证中的过帐日期</th><th>生产日期</th><th>是否最后一车</th><th>评估类型</th><th>批号</th><th>供应商的批次</th><th>资材初判不合格原因</th><th>项目文本</th><th>仓库任务</th><th>仓库任务</th><th>物料凭证编号</th><th>物料凭证年度</th><th>物料凭证中的项目</th><th>来料交货单</th><th>来料交货单行号</th><th>香港工厂物料凭证</th><th>香港工厂物料凭证年度</th><th>香港工厂物料凭证项目</th><th>短驳源仓储类型</th><th>短驳源仓位</th><th>记录创建者</th><th>创建日期</th><th>创建时间</th><th>记录修改者</th><th>修改日期</th><th>修改时间</th><th>删除标记</th><th>QM要求</th><th>检验结果</th><th>国废等级</th><th>预约备注</th><th>有无一次榜</th><th>请购人</th><th>需求跟踪号</th><th>车辆进厂时间</th><th>不合格原因</th><th>认证种类</th><th>保质期(天)</th><th>一车多单编号</th><th>第一次过磅时间</th><th>集装箱号</th><th>锁定人</th><th>操作</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><input type="checkbox"></td><td>1000001635</td><td>0000000001</td><td>80000034E7</td><td>0180014948</td><td>000010</td><td>E</td><td>过磅确认</td><td>A</td><td>入库</td><td>供应商送货</td><td>否</td><td>4500001832</td><td>00010</td><td>30000103</td><td>长纤化学浆(NBKP) 白云</td><td>-</td><td>-</td><td>7003</td><td>-</td><td>104</td><td>EWM-104</td><td>-</td><td>ADT</td><td>王强</td><td>皖A12345</td><td>平板车</td><td>3</td><td>3</td><td>1101</td><td>A01</td><td>A01-DSL03</td><td>-</td><td>-</td><td>ATMS-001</td><td>李明</td><td>张三</td><td>3</td><td>AUTO</td><td>系统分配</td><td>-</td><td>A 散货类</td><td>已到货</td><td>3</td><td>3</td><td>1</td><td>0</td><td>-</td><td>3</td><td>0</td><td>0</td><td>0</td><td>0</td><td>TRACK-20260506-001</td><td>WB-20260506-001</td><td>2.9</td><td>3</td><td>2026.05.06</td><td>2026.04.30</td><td>否</td><td>-</td><td>-</td><td>B20260430</td><td>-</td><td>采购收货</td><td>WT-001</td><td>WT-LINE-001</td><td>4900001234</td><td>2026</td><td>0001</td><td>0180014948</td><td>000010</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>system</td><td>2026.05.06</td><td>08:20:00</td><td>system</td><td>2026.05.06</td><td>09:10:00</td><td>否</td><td>是</td><td>合格</td><td>-</td><td>预约过磅确认</td><td>无</td><td>王敏</td><td>REQ-20260506-001</td><td>2026.05.06 08:10:00</td><td>-</td><td>-</td><td>365</td><td>-</td><td>2026.05.06 08:35:00</td><td>-</td><td>-</td><td></td></tr>
+              </tbody>
+            </table>
           </div>
         </section>
       </section>
@@ -2130,7 +2224,7 @@
       <div class="modal-body operation-cost-modal-body">
         <div class="operation-cost-form">
           <label class="form-item"><span>任务单号</span><strong class="field-value readonly-value" data-task-device-no></strong></label>
-          <label class="form-item"><span>原设备号</span><strong class="field-value readonly-value">5110100022018A9</strong></label>
+          <label class="form-item"><span>原设备号</span><strong class="field-value readonly-value" data-task-device-original>5110100022018A9</strong></label>
           <label class="form-item required"><span>新设备号</span><input data-task-new-device value="5110100022018A0" required></label>
           <label class="form-item required"><span>设备类型</span><select data-task-device-type required><option value="">请选择</option><option selected>抱叉</option><option>平叉</option><option>铲车</option></select></label>
           <label class="form-item"><span>变更原因</span><textarea rows="3">原设备故障，更换设备</textarea></label>
@@ -2258,14 +2352,57 @@
     </section>
   </div>
 
+  <div class="modal-backdrop" id="receipt-detail-modal" aria-hidden="true">
+    <section class="modal-card task-detail-modal-card" role="dialog" aria-modal="true" aria-labelledby="receipt-detail-title">
+      <header class="modal-head">
+        <div>
+          <h2 id="receipt-detail-title">任务详情</h2>
+        </div>
+        <button class="icon-btn" title="关闭" data-close-modal>×</button>
+      </header>
+      <div class="modal-body">
+        <div class="detail-tabs" role="tablist" aria-label="采购收货任务详情">
+          <button class="detail-tab active" type="button" data-receipt-detail-tab="receipt-device-lines">设备使用明细</button>
+          <button class="detail-tab" type="button" data-receipt-detail-tab="receipt-log-lines">操作日志</button>
+        </div>
+
+        <div class="task-detail-tab-panel active" id="receipt-device-lines">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>任务单号</th><th>设备号</th><th>设备类型</th><th>使用人</th><th>绑定时间</th><th>变更原因</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1000000099</td><td>5110100022018A0</td><td><span class="badge cyan">平叉</span></td><td>张三</td><td>2026.05.06 08:35:16</td><td>-</td></tr>
+                <tr><td>1000000099</td><td>5110100022018A1</td><td><span class="badge cyan">平叉</span></td><td>李四</td><td>2026.05.06 09:05:22</td><td>原设备故障，更换设备</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="task-detail-tab-panel" id="receipt-log-lines">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>时间</th><th>操作类型</th><th>操作人</th><th>设备号</th><th>设备类型</th><th>说明</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>2026.05.06 08:20:00</td><td>生成任务</td><td>系统</td><td></td><td></td><td>采购收货任务同步</td></tr>
+                <tr><td>2026.05.06 08:35:16</td><td>派工</td><td>系统</td><td></td><td></td><td>派给张三</td></tr>
+                <tr><td>2026.05.06 09:05:22</td><td>改派</td><td>王五</td><td></td><td></td><td>由张三改派给王五</td></tr>
+                <tr><td>2026.05.06 09:16:30</td><td>绑定设备</td><td>张三</td><td>5110100022018A9</td><td><span class="badge cyan">平叉</span></td><td>绑定设备 5110100022018A0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <footer class="modal-foot">
+        <button class="btn primary" data-close-modal>关闭</button>
+      </footer>
+    </section>
+  </div>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=20260717-device-skill-config"></script>
+  <script src="./app.js?v=20260725-receipt-detail-tab-order"></script>
 </body>
 </html>
-
-
-
-
-
-
-

@@ -397,6 +397,10 @@ button {
   background: #2f8ff0;
 }
 
+.module-grid .featured-module .module-icon img {
+  filter: brightness(0) invert(1);
+}
+
 .login-view {
   align-items: center;
   background: linear-gradient(180deg, #4aa8f7 0%, #edf3f8 58%);
@@ -789,6 +793,10 @@ button {
 
 .task-card-actions.four {
   grid-template-columns: repeat(4, 1fr);
+}
+
+.task-card-actions.compact {
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .task-card-actions button {
