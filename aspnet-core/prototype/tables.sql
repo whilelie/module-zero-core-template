@@ -321,16 +321,18 @@ CREATE TABLE `delivery_order` (
 
 CREATE TABLE `paper_machine_relation_map` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
-  `C_REGION_ID` int NOT NULL COMMENT '所属区域Id',
-  `C_ORGANIZATION_UNIT` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '申请部门',
-  `C_MES_LGPLA` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'MES仓位',
+  `N_TASK_TYPE` int NOT NULL COMMENT '任务类型 1厂内配送任务/2采购收货任务',
+  `N_REGION_ID` int NOT NULL COMMENT '所属区域Id',
+  `C_ORGANIZATION_UNIT` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '申请部门',
+  `C_MES_LGPLA` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'MES仓位',
+  `C_LGTYP` varchar(3) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '仓储类型',
+  `C_LGPLA` varchar(10) COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '仓位',
   `C_REMARK` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
   `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
   `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
   `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`C_ID`),
-  UNIQUE KEY `UK_PAPER_MACHINE_MAP` (`C_REGION_ID`,`C_ORGANIZATION_UNIT`,`C_MES_LGPLA`)
+  PRIMARY KEY (`C_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='纸机关系映射表';
 
 CREATE TABLE `delivery_task` (
@@ -340,6 +342,7 @@ CREATE TABLE `delivery_task` (
   `C_SOURCE_TYPE` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '货源类型（1：厂内资材库 2：码头仓库 3：供应商送货）',
   `N_DELIVERY_ORDER_COUNT` int NOT NULL COMMENT '配送单数',
   `N_MATERIAL_ITEM_COUNT` int NOT NULL COMMENT '物料项数',
+  `N_REGION_ID` int DEFAULT NULL COMMENT '区域',
   `N_STAFF_ID` int DEFAULT NULL COMMENT '执行人ID',
   `C_CURRENT_DEVICE_NO` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '当前设备号',
   `C_CURRENT_DEVICE_TYPE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '当前设备类型',
@@ -408,6 +411,74 @@ CREATE TABLE `delivery_task_log` (
   PRIMARY KEY (`C_ID`),
   KEY `IX_TASK_LOG_TASK` (`C_TASK_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='领用配送任务操作日志';
+
+CREATE TABLE `inbound_task` (
+  `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
+  `C_TASK_ID` varchar(10) COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务号',
+  `C_YYSHD` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '预约送货单号',
+  `C_VBELN` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '交货',
+  `C_POSNR` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '交货项目',
+  `C_WERKS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '工厂',
+  `C_LGNUM` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '仓库号',
+  `C_LGORT` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '库存地点',
+  `C_LGTYP` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '仓储类型',
+  `C_LGPLA` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '仓位',
+  `C_XHPT` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '卸货平台',
+  `C_JSD` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '集散点',
+  `C_MATNR` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '物料编号',
+  `C_MEINS` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '基本单位',
+  `C_BZLX` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '包装类型',
+  `N_RWSL` decimal(13,3) DEFAULT NULL COMMENT '任务数量',
+  `N_REGION_ID` int DEFAULT NULL COMMENT '区域',
+  `N_STAFF_ID` int DEFAULT NULL COMMENT '执行人ID',
+  `C_CURRENT_DEVICE_NO` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '当前设备号',
+  `C_CURRENT_DEVICE_TYPE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '当前设备类型',
+  `C_ASSIGN_STATUS` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '派工状态 0未派工/1已派工',
+  `D_ASSIGN_TIME` datetime DEFAULT NULL COMMENT '派工时间',
+  `C_SYNC_STATUS` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '029同步状态 0未同步/1成功/2失败',
+  `D_SYNC_TIME` datetime DEFAULT NULL COMMENT '最近同步SAP时间',
+  `C_SYNC_FAIL_REASON` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '同步失败原因',
+  `C_SAP_STATUS` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT 'SAP任务状态',
+  `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
+  `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
+  `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`C_ID`),
+  UNIQUE KEY `UK_INBOUND_TASK` (`C_TASK_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='采购收货任务';
+
+CREATE TABLE `inbound_task_device` (
+  `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
+  `C_TASK_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务ID',
+  `C_DEVICE_NO` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '设备号',
+  `C_DEVICE_TYPE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '设备类型',
+  `N_STAFF_ID` int NOT NULL COMMENT '执行人ID',
+  `D_BIND_TIME` datetime NOT NULL COMMENT '绑定时间',
+  `C_CHANGE_REASON` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '变更原因',
+  `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
+  `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
+  `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`C_ID`),
+  KEY `IX_TASK_DEVICE_TASK` (`C_TASK_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='采购收货任务设备使用明细';
+
+CREATE TABLE `inbound_task_log` (
+  `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
+  `C_TASK_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务ID',
+  `D_OPERATION_TIME` datetime NOT NULL COMMENT '操作时间',
+  `C_OPERATION_TYPE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '操作类型',
+  `C_OPERATOR_NAME` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '操作人',
+  `C_DEVICE_NO` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '设备号',
+  `C_DEVICE_TYPE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '设备类型',
+  `C_REMARK` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '说明',
+  `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
+  `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
+  `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
+  `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`C_ID`),
+  KEY `IX_TASK_LOG_TASK` (`C_TASK_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='采购收货任务操作日志';
 
 CREATE TABLE `shorthaul_appointment` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',

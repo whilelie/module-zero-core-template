@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>领用配送页面原型</title>
   <link rel="icon" href="./app-icon.ico?v=20260717-app-icon" type="image/x-icon">
-  <link rel="stylesheet" href="./styles.css?v=20260725-receipt-checkbox">
+  <link rel="stylesheet" href="./styles.css?v=20260727-area-task-type-2">
 </head>
 <body>
   <header class="app-topbar">
@@ -871,6 +871,8 @@
       <section class="page-panel" id="delivery-binding">
         <section class="panel">
           <div class="query-grid delivery-binding-query">
+            <label>领料工厂<input value="2000"></label>
+            <label>发料工厂<input value="2601"></label>
             <label>区域<select><option>请选择</option><option selected>宁波亚浆PM1区域</option><option>宁波亚浆PM2区域</option></select></label>
             <label>申请部门<input value="PM1"></label>
             <label>MES仓位<input value="NB0004"></label>
@@ -900,8 +902,11 @@
               <thead>
                 <tr>
                   <th class="select-col"><input type="checkbox" checked aria-label="全选配送单"></th>
+                  <th>领料工厂</th>
+                  <th>发料工厂</th>
                   <th>配送单号</th>
                   <th>配送需求单号</th>
+                  <th>区域</th>
                   <th>申请部门</th>
                   <th>领料申请单号</th>
                   <th>行项目</th>
@@ -932,49 +937,49 @@
               <tbody>
                 <tr>
                   <td class="select-col"><input type="checkbox" checked aria-label="选择分配结果 PSD-20260509-001"></td>
-                  <td>PSD-20260509-001</td><td>DELREQ-20260507-002</td><td>PM1</td><td>1000000137</td><td>1</td>
+                  <td>2000</td><td>2601</td><td>PSD-20260509-001</td><td>DELREQ-20260507-002</td><td>宁波亚浆PM1区域</td><td>PM1</td><td>1000000137</td><td>1</td>
                   <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge cyan">平叉</span></td><td>3</td><td><span>-</span></td><td>-</td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
                   <td>6</td><td>TO</td><td>1106</td><td>3108</td><td>NB0004</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td>
                   <td><span class="badge amber">未生成任务</span></td><td><span class="badge green">下发成功</span></td><td>-</td><td>1002898403</td><td>-</td>
                 </tr>
                  <tr>
                   <td class="select-col"><input type="checkbox" checked aria-label="选择分配结果 PSD-20260509-002"></td>
-                  <td>PSD-20260509-002</td><td>DELREQ-20260507-002</td><td>PM1</td><td>1000000137</td><td>1</td>
+                  <td>2000</td><td>2601</td><td>PSD-20260509-002</td><td>DELREQ-20260507-002</td><td>宁波亚浆PM1区域</td><td>PM1</td><td>1000000137</td><td>1</td>
                   <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge cyan">平叉</span></td><td>3</td><td><span>-</span></td><td>-</td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
                   <td>6</td><td>TO</td><td>1106</td><td>3108</td><td>NB0004</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td>
                   <td><span class="badge amber">未生成任务</span></td><td><span class="badge green">下发成功</span></td><td>-</td><td>1002898404</td><td>-</td>
                 </tr>
                  <tr>
                   <td class="select-col"><input type="checkbox" checked aria-label="选择分配结果 PSD-20260509-003"></td>
-                  <td>PSD-20260509-003</td><td>DELREQ-20260507-002</td><td>PM1</td><td>1000000137</td><td>1</td>
+                  <td>2000</td><td>2601</td><td>PSD-20260509-003</td><td>DELREQ-20260507-002</td><td>宁波亚浆PM1区域</td><td>PM1</td><td>1000000137</td><td>1</td>
                   <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge cyan">平叉</span></td><td>3</td><td><span>-</span></td><td>-</td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
                   <td>6</td><td>TO</td><td>1106</td><td>3108</td><td>NB0004</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td>
                   <td><span class="badge amber">未生成任务</span></td><td><span class="badge green">下发成功</span></td><td>-</td><td>1002898405</td><td>-</td>
                 </tr>
                  <tr>
                   <td class="select-col"><input type="checkbox" checked aria-label="选择分配结果 PSD-20260509-004"></td>
-                  <td>PSD-20260509-004</td><td>DELREQ-20260507-002</td><td>PM1</td><td>1000000137</td><td>1</td>
+                  <td>2000</td><td>2601</td><td>PSD-20260509-004</td><td>DELREQ-20260507-002</td><td>宁波亚浆PM1区域</td><td>PM1</td><td>1000000137</td><td>1</td>
                   <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge cyan">平叉</span></td><td>3</td><td><span>-</span><td>-</td></td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
                   <td>2</td><td>TO</td><td>1106</td><td>3108</td><td>NB0004</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td>
                   <td><span class="badge amber">未生成任务</span></td><td><span class="badge green">下发成功</span></td><td>-</td><td>1002898406</td><td>-</td>
                 </tr>
                 <tr>
                   <td class="select-col"></td>
-                  <td>PSD-20260508-002</td><td>DELREQ-20260507-003</td><td>PM1</td><td>1000000137</td><td>2</td>
+                  <td>2000</td><td>2601</td><td>PSD-20260508-002</td><td>DELREQ-20260507-003</td><td>宁波亚浆PM1区域</td><td>PM1</td><td>1000000137</td><td>2</td>
                   <td>20000002</td><td>木片 桉木 中国 广西</td><td><span>-</span></td><td>-</td><td><span class="badge blue">平板车</span></td><td>2</td><td><span class="badge green">供应商送货</span></td><td>SUP-20260508-002</td>
                   <td>20</td><td>TO</td><td>1106</td><td>3108</td><td>NB0005</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td>
                   <td>-</td><td><span class="badge green">下发成功</span></td><td>-</td><td>800000349B</td><td>-</td>
                 </tr>
                    <tr>
                   <td class="select-col"></td>
-                  <td>PSD-20260508-003</td><td>DELREQ-20260506-001</td><td>PM1</td><td>1000000134</td><td>2</td>
+                  <td>2000</td><td>2601</td><td>PSD-20260508-003</td><td>DELREQ-20260506-001</td><td>宁波亚浆PM2区域</td><td>PM1</td><td>1000000134</td><td>2</td>
                   <td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td><span class="badge blue">抱叉</span></td><td>3</td><td><span>-</span></td><td>-</td><td><span class="badge green">供应商送货</span></td><td>SUP-20260507-001</td>
                   <td>20</td><td>TO</td><td>1112</td><td>3108</td><td>NB0006</td><td>2026.05.08</td><td>上午</td><td>2026.05.10</td>
                   <td>-</td><td><span class="badge green">下发成功</span></td><td>-</td><td>800000149B</td><td>-</td>
                 </tr>
                  <tr>
                   <td class="select-col"></td>
-                  <td>PSD-20260506-001</td><td>DELREQ-20260505-001</td><td>PM1</td><td>1000000133</td><td>1</td>
+                  <td>2000</td><td>2601</td><td>PSD-20260506-001</td><td>DELREQ-20260505-001</td><td>宁波亚浆PM2区域</td><td>PM1</td><td>1000000133</td><td>1</td>
                   <td>20000002</td><td>木片 桉木 中国 广西</td><td><span>-</span></td><td>-</td><td><span class="badge blue">平板车</span></td><td>2</td><td><span class="badge amber">码头仓库</span></td><td>SUP-20260505-001</td>
                   <td>20</td><td>TO</td><td>1112</td><td>3108</td><td>NB0007</td><td>2026.05.08</td><td>上午</td><td>2026.05.10</td>
                   <td>-</td><td><span class="badge red">下发失败</span></td><td>绑定短驳计划失败</td><td>-</td><td><button class="link-btn" data-toast="已重新下发">重新下发</button></td>
@@ -1003,6 +1008,7 @@
         <div class="task-page-panel active" id="task-inplant">
         <section class="panel">
           <div class="query-grid task-management-query">
+            <label>区域<select><option>请选择</option><option>宁波亚浆PM1区域</option><option>宁波亚浆PM2区域</option></select></label>
             <label>任务单号<input></label>
             <label>任务状态<select><option>请选择</option><option>待派工</option><option>已派工</option><option>执行中</option><option>已完成</option><option>已取消</option></select></label>
             <label>过账状态<select><option>请选择</option><option>待过账</option><option>成功</option><option>失败</option></select></label>
@@ -1026,14 +1032,14 @@
           <div class="table-wrap">
             <table>
               <thead>
-                <tr><th>任务单号</th><th>任务状态</th><th>过账状态</th><th>配送单数</th><th>物料项数</th><th>叉车类型</th><th>叉车载重限制</th><th>短驳车类型</th><th>短驳载重限制</th><th>执行人</th><th>当前设备号</th><th>当前设备类型</th><th>最早最后配送日期</th><th>创建时间</th><th>派工时间</th><th>开始时间</th><th>结束时间</th><th>取消时间</th><th>取消原因</th><th>备注</th><th>操作</th></tr>
+                <tr><th>任务单号</th><th>区域</th><th>任务状态</th><th>过账状态</th><th>配送单数</th><th>物料项数</th><th>叉车类型</th><th>叉车载重限制</th><th>短驳车类型</th><th>短驳载重限制</th><th>执行人</th><th>当前设备号</th><th>当前设备类型</th><th>最早最后配送日期</th><th>创建时间</th><th>派工时间</th><th>开始时间</th><th>结束时间</th><th>取消时间</th><th>取消原因</th><th>备注</th><th>操作</th></tr>
               </thead>
               <tbody>
-                <tr><td>RW-20260506-001</td><td><span class="badge amber">待派工</span></td><td><span class="badge amber">待过账</span></td><td>2</td><td>2</td><td><span class="badge cyan">平叉</span><span class="badge blue">抱叉</span></td><td>3T / 5T</td><td><span class="badge blue">平板车</span><span class="badge green">自卸车</span></td><td>10T / 15T</td><td></td><td></td><td></td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="派工">派工</button><button class="link-btn" data-open-task-cancel>取消</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr><td>RW-20260506-002</td><td><span class="badge blue">已派工</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>张三</td><td></td><td></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="改派">改派</button><button class="link-btn" data-open-task-start>开始任务</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr><td>RW-20260506-003</td><td><span class="badge cyan">执行中</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>王五</td><td>5110100022018A9</td><td><span class="badge cyan">平叉</span></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-finish>结束任务</button><button class="link-btn" data-open-task-device>变更设备</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr><td>RW-20260506-004</td><td><span class="badge green">已完成</span></td><td><span class="badge green">成功</span></td><td>1</td><td>1</td><td><span class="badge blue">抱叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>李四</td><td>5110100022018A0</td><td><span class="badge cyan">平叉</span></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.07</td><td>2026.05.07</td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr><td>RW-20260506-005</td><td><span class="badge gray">已取消</span></td><td><span class="badge red">失败</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td></td><td></td><td></td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td>2026.05.06</td><td>不需要该物料了</td><td></td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>RW-20260506-001</td><td>宁波亚浆PM1区域</td><td><span class="badge amber">待派工</span></td><td><span class="badge amber">待过账</span></td><td>2</td><td>2</td><td><span class="badge cyan">平叉</span><span class="badge blue">抱叉</span></td><td>3T / 5T</td><td><span class="badge blue">平板车</span><span class="badge green">自卸车</span></td><td>10T / 15T</td><td></td><td></td><td></td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="派工">派工</button><button class="link-btn" data-open-task-cancel>取消</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>RW-20260506-002</td><td>宁波亚浆PM1区域</td><td><span class="badge blue">已派工</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>张三</td><td></td><td></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="改派">改派</button><button class="link-btn" data-open-task-start>开始任务</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>RW-20260506-003</td><td>宁波亚浆PM1区域</td><td><span class="badge cyan">执行中</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>王五</td><td>5110100022018A9</td><td><span class="badge cyan">平叉</span></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-finish>结束任务</button><button class="link-btn" data-open-task-device>变更设备</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>RW-20260506-004</td><td>宁波亚浆PM2区域</td><td><span class="badge green">已完成</span></td><td><span class="badge green">成功</span></td><td>1</td><td>1</td><td><span class="badge blue">抱叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>李四</td><td>5110100022018A0</td><td><span class="badge cyan">平叉</span></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.07</td><td>2026.05.07</td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>RW-20260506-005</td><td>宁波亚浆PM2区域</td><td><span class="badge gray">已取消</span></td><td><span class="badge red">失败</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td></td><td></td><td></td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td>2026.05.06</td><td>不需要该物料了</td><td></td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
               </tbody>
             </table>
           </div>
@@ -1051,6 +1057,7 @@
         <div class="task-page-panel" id="task-receipt">
           <section class="panel">
             <div class="query-grid task-receipt-query">
+               <label>区域<select><option>请选择</option><option>宁波亚浆PM1区域</option><option>宁波亚浆PM2区域</option></select></label>
               <label>任务单号<input></label>
               <label>派工状态<select><option>请选择</option><option>待派工</option><option>已派工</option></select></label>
               <label>预约送货单号<input value="2411151642"></label>
@@ -1066,12 +1073,12 @@
             <div class="table-wrap">
               <table>
                 <thead>
-                  <tr><th>任务单号</th><th>派工状态</th><th>叉车类型</th><th>叉车载重限制</th><th>执行人</th><th>当前设备号</th><th>当前设备类型</th><th>预约送货单号</th><th>交货单</th><th>交货项目</th><th>工厂</th><th>仓库号</th><th>库存地点</th><th>仓储类型</th><th>仓位</th><th>卸货平台</th><th>集散点</th><th>区域</th><th>物料</th><th>描述</th><th>基本单位</th><th>包装类型</th><th>任务数量</th><th>操作</th></tr>
+                  <tr><th>任务单号</th><th>区域</th><th>派工状态</th><th>叉车类型</th><th>叉车载重限制</th><th>执行人</th><th>当前设备号</th><th>当前设备类型</th><th>预约送货单号</th><th>交货单</th><th>交货项目</th><th>工厂</th><th>仓库号</th><th>库存地点</th><th>仓储类型</th><th>仓位</th><th>卸货平台</th><th>集散点</th><th>物料</th><th>描述</th><th>基本单位</th><th>包装类型</th><th>任务数量</th><th>操作</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td>1000000098</td><td><span class="badge amber">待派工</span></td><td><span class="badge cyan">平叉</span></td><td>3T</td><td>-</td><td>-</td><td>-</td><td><button class="link-btn" data-open-receipt-appointment>2411151642</button></td><td>0180013000</td><td>000010</td><td>7003</td><td>104</td><td>1101</td><td>A01</td><td>A01-DSL03</td><td>-</td><td>-</td><td>PM1</td><td>30000103</td><td>长纤化学浆(NBKP) 白云</td><td>ADT</td><td>-</td><td>3</td><td><button class="link-btn" data-open-receipt-assign data-task-action="派工">派工</button><button class="link-btn" data-open-receipt-detail>任务详情</button></td></tr>
-                  <tr><td>1000000099</td><td><span class="badge blue">已派工</span></td><td><span class="badge cyan">平叉</span></td><td>3T</td><td>张三</td><td>-</td><td>-</td><td><button class="link-btn" data-open-receipt-appointment>2411151642</button></td><td>0180013000</td><td>000020</td><td>7003</td><td>104</td><td>1101</td><td>A01</td><td>A01-DSL01</td><td>-</td><td>-</td><td>PM1</td><td>30000102</td><td>短纤化学浆(LBKP) LPPI 正品</td><td>ADT</td><td>-</td><td>3</td><td><button class="link-btn" data-open-receipt-assign data-task-action="改派">改派</button><button class="link-btn" data-open-receipt-device data-device-action="绑定设备">绑定设备</button><button class="link-btn" data-open-receipt-detail>任务详情</button></td></tr>
-                  <tr><td>1000000100</td><td><span class="badge blue">已派工</span></td><td><span class="badge cyan">平叉</span></td><td>3T</td><td>李四</td><td>5110100022018A0</td><td><span class="badge cyan">平叉</span></td><td><button class="link-btn" data-open-receipt-appointment>2411151642</button></td><td>0180013000</td><td>000030</td><td>7003</td><td>104</td><td>1101</td><td>A01</td><td>A01-DSL05</td><td>-</td><td>-</td><td>PM1</td><td>1000000701</td><td>阳离子淀粉（ASA乳化用）</td><td>KG</td><td>A 散货类</td><td>2</td><td><button class="link-btn" data-open-receipt-assign data-task-action="改派">改派</button><button class="link-btn" data-open-receipt-device data-device-action="变更设备">变更设备</button><button class="link-btn" data-open-receipt-detail>任务详情</button></td></tr>
+                  <tr><td>1000000098</td><td>宁波亚浆PM1区域</td><td><span class="badge amber">待派工</span></td><td><span class="badge cyan">平叉</span></td><td>3T</td><td>-</td><td>-</td><td>-</td><td><button class="link-btn" data-open-receipt-appointment>2411151642</button></td><td>0180013000</td><td>000010</td><td>7003</td><td>104</td><td>1101</td><td>A01</td><td>A01-DSL03</td><td>-</td><td>-</td><td>30000103</td><td>长纤化学浆(NBKP) 白云</td><td>ADT</td><td>-</td><td>3</td><td><button class="link-btn" data-open-receipt-assign data-task-action="派工">派工</button><button class="link-btn" data-open-receipt-detail>任务详情</button></td></tr>
+                  <tr><td>1000000099</td><td>宁波亚浆PM1区域</td><td><span class="badge blue">已派工</span></td><td><span class="badge cyan">平叉</span></td><td>3T</td><td>张三</td><td>-</td><td>-</td><td><button class="link-btn" data-open-receipt-appointment>2411151642</button></td><td>0180013000</td><td>000020</td><td>7003</td><td>104</td><td>1101</td><td>A01</td><td>A01-DSL01</td><td>-</td><td>-</td><td>30000102</td><td>短纤化学浆(LBKP) LPPI 正品</td><td>ADT</td><td>-</td><td>3</td><td><button class="link-btn" data-open-receipt-assign data-task-action="改派">改派</button><button class="link-btn" data-open-receipt-device data-device-action="绑定设备">绑定设备</button><button class="link-btn" data-open-receipt-detail>任务详情</button></td></tr>
+                  <tr><td>1000000100</td><td>宁波亚浆PM1区域</td><td><span class="badge blue">已派工</span></td><td><span class="badge cyan">平叉</span></td><td>3T</td><td>李四</td><td>5110100022018A0</td><td><span class="badge cyan">平叉</span></td><td><button class="link-btn" data-open-receipt-appointment>2411151642</button></td><td>0180013000</td><td>000030</td><td>7003</td><td>104</td><td>1101</td><td>A01</td><td>A01-DSL05</td><td>-</td><td>-</td><td>1000000701</td><td>阳离子淀粉（ASA乳化用）</td><td>KG</td><td>A 散货类</td><td>2</td><td><button class="link-btn" data-open-receipt-assign data-task-action="改派">改派</button><button class="link-btn" data-open-receipt-device data-device-action="变更设备">变更设备</button><button class="link-btn" data-open-receipt-detail>任务详情</button></td></tr>
                 </tbody>
               </table>
             </div>
@@ -1140,9 +1147,12 @@
       <section class="page-panel" id="paper-machine-map">
         <section class="panel">
           <div class="query-grid paper-machine-map-query">
+            <label>任务类型<select><option>请选择</option><option selected>厂内配送任务</option><option>采购收货任务</option></select></label>
             <label>区域<select><option>请选择</option><option selected>宁波亚浆PM1区域</option><option>宁波亚浆PM2区域</option></select></label>
             <label>申请部门<input placeholder="请输入申请部门"></label>
             <label>MES仓位<input value="NB0004"></label>
+            <label>仓储类型<input placeholder="请输入仓储类型"></label>
+            <label>仓位<input placeholder="请输入仓位"></label>
             <div class="query-actions">
               <button class="btn primary">查询</button>
             </div>
@@ -1162,9 +1172,12 @@
             <table>
               <thead>
                 <tr>
+                  <th>任务类型</th>
                   <th>区域</th>
                   <th>申请部门</th>
                   <th>MES仓位</th>
+                  <th>仓储类型</th>
+                  <th>仓位</th>
                   <th>备注</th>
                   <th>创建时间</th>
                   <th>更新时间</th>
@@ -1172,19 +1185,20 @@
                 </tr>
               </thead>
               <tbody>
-                <tr><td>宁波亚浆PM1区域</td><td>-</td><td>NB0004</td><td>PM1GCC</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
-                <tr><td>宁波亚浆PM1区域</td><td>-</td><td>NB0005</td><td>PM1涂料</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
-                <tr><td>宁波亚浆PM1区域</td><td>-</td><td>NB0006</td><td>PM1湿部化学品库</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
-                <tr><td>宁波亚浆PM1区域</td><td>-</td><td>NB0007</td><td>PM1造纸</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
-                <tr><td>宁波亚浆PM1区域</td><td>-</td><td>NB0008</td><td>PM1切纸纸</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
-                <tr><td>宁波亚浆PM1区域</td><td>-</td><td>NB0009</td><td>PM1小复卷</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
-                <tr><td>宁波亚浆PM1区域</td><td>-</td><td>NB0010</td><td>PM1选理</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
-                <tr><td>宁波亚浆PM2区域</td><td>PM2抄造部</td><td>-</td><td>按申请部门识别 PM2</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>厂内配送任务</td><td>宁波亚浆PM1区域</td><td>-</td><td>NB0004</td><td>-</td><td>-</td><td>PM1GCC</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>厂内配送任务</td><td>宁波亚浆PM1区域</td><td>-</td><td>NB0005</td><td>-</td><td>-</td><td>PM1涂料</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>厂内配送任务</td><td>宁波亚浆PM1区域</td><td>-</td><td>NB0006</td><td>-</td><td>-</td><td>PM1湿部化学品库</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>厂内配送任务</td><td>宁波亚浆PM1区域</td><td>-</td><td>NB0007</td><td>-</td><td>-</td><td>PM1造纸</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>厂内配送任务</td><td>宁波亚浆PM1区域</td><td>-</td><td>NB0008</td><td>-</td><td>-</td><td>PM1切纸纸</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>厂内配送任务</td><td>宁波亚浆PM1区域</td><td>-</td><td>NB0009</td><td>-</td><td>-</td><td>PM1小复卷</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>厂内配送任务</td><td>宁波亚浆PM1区域</td><td>-</td><td>NB0010</td><td>-</td><td>-</td><td>PM1选理</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>厂内配送任务</td><td>宁波亚浆PM2区域</td><td>PM2抄造部</td><td>-</td><td>-</td><td>-</td><td>按申请部门识别 PM2</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
+                <tr><td>采购收货任务</td><td>-</td><td>-</td><td>-</td><td>A01</td><td>A01-DSL03</td><td>按仓储类型和仓位识别收货作业区域</td><td>2026.07.08</td><td>2026.07.08</td><td><button class="link-btn" data-open-paper-machine-map>修改</button><button class="link-btn">删除</button></td></tr>
               </tbody>
             </table>
           </div>
           <div class="pagination-bar">
-            <div class="pagination-summary">共 8 项数据，每页 10 条</div>
+            <div class="pagination-summary">共 9 项数据，每页 10 条</div>
             <div class="pagination-actions">
               <button class="page-btn" disabled>上一页</button>
               <button class="page-btn active">1</button>
@@ -1967,12 +1981,16 @@
 
       <div class="modal-body operation-cost-modal-body">
         <div class="operation-cost-form paper-machine-map-form">
+          <label class="form-item required"><span>任务类型:</span><select data-paper-machine-task-type><option value="delivery" selected>厂内配送任务</option><option value="receipt">采购收货任务</option></select></label>
           <label class="form-item required"><span>区域:</span><select data-paper-machine><option value="">请选择</option><option selected>宁波亚浆PM1区域</option><option>宁波亚浆PM2区域</option></select></label>
-          <label class="form-item required"><span>映射依据:</span><select data-paper-machine-map-basis><option value="mes" selected>MES仓位</option><option value="dept">申请部门</option></select></label>
-          <label class="form-item"><span>申请部门:</span><input data-paper-machine-dept placeholder="选择申请部门时填写"></label>
-          <label class="form-item"><span>MES仓位:</span><input data-paper-machine-mes value="NB0004" placeholder="选择MES仓位时填写"></label>
+          <label class="form-item required" data-paper-machine-delivery-field><span>映射依据:</span><select data-paper-machine-map-basis><option value="mes" selected>MES仓位</option><option value="dept">申请部门</option></select></label>
+          <label class="form-item" data-paper-machine-delivery-field><span>申请部门:</span><input data-paper-machine-dept placeholder="选择申请部门时填写"></label>
+          <label class="form-item" data-paper-machine-delivery-field><span>MES仓位:</span><input data-paper-machine-mes value="NB0004" placeholder="选择MES仓位时填写"></label>
+          <label class="form-item required" data-paper-machine-receipt-field hidden><span>仓储类型:</span><input data-paper-machine-storage-type placeholder="请输入仓储类型"></label>
+          <label class="form-item required" data-paper-machine-receipt-field hidden><span>仓位:</span><input data-paper-machine-bin placeholder="请输入仓位"></label>
           <label class="form-item full-span"><span>备注:</span><textarea data-paper-machine-remark rows="3">PM1GCC</textarea></label>
-          <p class="form-hint full-span">申请部门和 MES 仓位必须且只能填写一个。</p>
+          <p class="form-hint full-span" data-paper-machine-delivery-field>厂内配送任务：申请部门和 MES 仓位必须且只能填写一个。</p>
+          <p class="form-hint full-span" data-paper-machine-receipt-field hidden>采购收货任务：仓储类型和仓位为必填。</p>
         </div>
       </div>
 
@@ -1996,12 +2014,12 @@
         <div class="table-wrap">
           <table>
             <thead>
-              <tr><th>校验结果</th><th>纸机</th><th>申请部门</th><th>MES仓位</th><th>备注</th></tr>
+              <tr><th>校验结果</th><th>任务类型</th><th>区域</th><th>申请部门</th><th>MES仓位</th><th>仓储类型</th><th>仓位</th><th>备注</th></tr>
             </thead>
             <tbody>
-              <tr><td><span class="badge green">校验成功</span></td><td>PM1</td><td></td><td>NB0004</td><td>PM1GCC</td></tr>
-              <tr><td><span class="badge green">校验成功</span></td><td>PM1</td><td></td><td>NB0005</td><td>PM1涂料</td></tr>
-              <tr class="import-error-row"><td><span class="badge red">校验失败：申请部门和MES仓位只能填写一个</span></td><td>PM2</td><td>PM2抄造部</td><td>NB0201</td><td>同时填写了两个识别条件</td></tr>
+              <tr><td><span class="badge green">校验成功</span></td><td>厂内配送任务</td><td>宁波亚浆PM1区域</td><td></td><td>NB0004</td><td></td><td></td><td>PM1GCC</td></tr>
+              <tr><td><span class="badge green">校验成功</span></td><td>采购收货任务</td><td></td><td></td><td></td><td>A01</td><td>A01-DSL03</td><td>按仓储类型和仓位识别</td></tr>
+              <tr class="import-error-row"><td><span class="badge red">校验失败：采购收货任务必须填写仓储类型和仓位</span></td><td>采购收货任务</td><td></td><td></td><td></td><td>A01</td><td></td><td>缺少仓位</td></tr>
             </tbody>
           </table>
         </div>
@@ -2403,6 +2421,6 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=20260725-receipt-detail-tab-order"></script>
+  <script src="./app.js?v=20260728-factory-columns"></script>
 </body>
 </html>

@@ -46,6 +46,7 @@ const limitUnitInput = document.querySelector("[data-limit-unit]");
 const shortHaulMaterialInput = document.querySelector("[data-short-haul-material]");
 const shortHaulDescriptionInput = document.querySelector("[data-short-haul-description]");
 const shortHaulUnitInput = document.querySelector("[data-short-haul-unit]");
+const paperMachineMapTaskType = document.querySelector("[data-paper-machine-task-type]");
 const paperMachineMapBasis = document.querySelector("[data-paper-machine-map-basis]");
 const trialBatchAction = document.querySelector("[data-trial-batch-action]");
 const taskGenerationAction = document.querySelector("[data-confirm-task-generation]");
@@ -53,7 +54,7 @@ const taskAssignConfirm = document.querySelector("[data-confirm-task-assign]");
 const taskStartConfirm = document.querySelector("[data-confirm-task-start]");
 const taskDeviceConfirm = document.querySelector("[data-confirm-task-device]");
 
-window.prototypeAppVersion = "20260717-device-skill-config";
+window.prototypeAppVersion = "20260727-area-task-type-2";
 
 const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],
@@ -175,16 +176,33 @@ function updateShortHaulMaterialInfo() {
 
 function updatePaperMachineMapBasis() {
   if (!paperMachineMapModal || !paperMachineMapBasis) return;
+  const isReceipt = paperMachineMapTaskType?.value === "receipt";
+  paperMachineMapModal.querySelectorAll("[data-paper-machine-delivery-field]").forEach((field) => {
+    field.hidden = isReceipt;
+  });
+  paperMachineMapModal.querySelectorAll("[data-paper-machine-receipt-field]").forEach((field) => {
+    field.hidden = !isReceipt;
+  });
   const deptInput = paperMachineMapModal.querySelector("[data-paper-machine-dept]");
   const mesInput = paperMachineMapModal.querySelector("[data-paper-machine-mes]");
+  const storageTypeInput = paperMachineMapModal.querySelector("[data-paper-machine-storage-type]");
+  const binInput = paperMachineMapModal.querySelector("[data-paper-machine-bin]");
   const useDept = paperMachineMapBasis.value === "dept";
   if (deptInput) {
-    deptInput.disabled = !useDept;
-    if (!useDept) deptInput.value = "";
+    deptInput.disabled = isReceipt || !useDept;
+    if (isReceipt || !useDept) deptInput.value = "";
   }
   if (mesInput) {
-    mesInput.disabled = useDept;
-    if (useDept) mesInput.value = "";
+    mesInput.disabled = isReceipt || useDept;
+    if (isReceipt || useDept) mesInput.value = "";
+  }
+  if (storageTypeInput) {
+    storageTypeInput.disabled = !isReceipt;
+    if (!isReceipt) storageTypeInput.value = "";
+  }
+  if (binInput) {
+    binInput.disabled = !isReceipt;
+    if (!isReceipt) binInput.value = "";
   }
 }
 
@@ -513,22 +531,31 @@ document.querySelectorAll("[data-open-paper-machine-map]").forEach((button) => {
   button.addEventListener("click", () => {
     const row = button.closest("tr");
     const cells = row ? Array.from(row.children) : [];
+    const taskTypeField = paperMachineMapModal?.querySelector("[data-paper-machine-task-type]");
     const paperMachine = paperMachineMapModal?.querySelector("[data-paper-machine]");
     const deptInput = paperMachineMapModal?.querySelector("[data-paper-machine-dept]");
     const mesInput = paperMachineMapModal?.querySelector("[data-paper-machine-mes]");
+    const storageTypeInput = paperMachineMapModal?.querySelector("[data-paper-machine-storage-type]");
+    const binInput = paperMachineMapModal?.querySelector("[data-paper-machine-bin]");
     const remarkInput = paperMachineMapModal?.querySelector("[data-paper-machine-remark]");
     if (paperMachineMapTitle) {
       paperMachineMapTitle.textContent = cells.length ? "修改作业区域映射" : "新增作业区域映射";
     }
-    if (paperMachine) paperMachine.value = cells.length ? cells[0].textContent.trim() : "PM1";
-    const deptValue = cells.length ? cells[1].textContent.trim() : "";
-    const mesValue = cells.length ? cells[2].textContent.trim() : "NB0004";
+    const taskTypeValue = cells.length ? cells[0].textContent.trim() : "厂内配送任务";
+    if (taskTypeField) taskTypeField.value = taskTypeValue === "采购收货任务" ? "receipt" : "delivery";
+    if (paperMachine) paperMachine.value = cells.length ? cells[1].textContent.trim() : "宁波亚浆PM1区域";
+    const deptValue = cells.length ? cells[2].textContent.trim() : "";
+    const mesValue = cells.length ? cells[3].textContent.trim() : "NB0004";
+    const storageTypeValue = cells.length ? cells[4].textContent.trim() : "";
+    const binValue = cells.length ? cells[5].textContent.trim() : "";
     if (paperMachineMapBasis) {
       paperMachineMapBasis.value = deptValue && deptValue !== "-" ? "dept" : "mes";
     }
     if (deptInput) deptInput.value = deptValue === "-" ? "" : deptValue;
     if (mesInput) mesInput.value = mesValue === "-" ? "" : mesValue;
-    if (remarkInput) remarkInput.value = cells.length ? cells[3].textContent.trim() : "PM1GCC";
+    if (storageTypeInput) storageTypeInput.value = storageTypeValue === "-" ? "" : storageTypeValue;
+    if (binInput) binInput.value = binValue === "-" ? "" : binValue;
+    if (remarkInput) remarkInput.value = cells.length ? cells[6].textContent.trim() : "PM1GCC";
     updatePaperMachineMapBasis();
     openModal(paperMachineMapModal);
   });
@@ -552,14 +579,38 @@ document.querySelectorAll("[data-open-paper-machine-map-import]").forEach((butto
 
 document.querySelectorAll("[data-confirm-paper-machine-map]").forEach((button) => {
   button.addEventListener("click", () => {
+    const taskTypeField = paperMachineMapModal?.querySelector("[data-paper-machine-task-type]");
     const paperMachine = paperMachineMapModal?.querySelector("[data-paper-machine]");
     const deptInput = paperMachineMapModal?.querySelector("[data-paper-machine-dept]");
     const mesInput = paperMachineMapModal?.querySelector("[data-paper-machine-mes]");
+    const storageTypeInput = paperMachineMapModal?.querySelector("[data-paper-machine-storage-type]");
+    const binInput = paperMachineMapModal?.querySelector("[data-paper-machine-bin]");
+    const isReceipt = taskTypeField?.value === "receipt";
     const hasDept = Boolean(deptInput?.value.trim());
     const hasMes = Boolean(mesInput?.value.trim());
+    if (!taskTypeField?.value) {
+      showToast("请选择任务类型");
+      taskTypeField?.focus();
+      return;
+    }
     if (!paperMachine?.value) {
       showToast("请选择区域");
       paperMachine?.focus();
+      return;
+    }
+    if (isReceipt) {
+      if (!storageTypeInput?.value.trim()) {
+        showToast("请输入仓储类型");
+        storageTypeInput?.focus();
+        return;
+      }
+      if (!binInput?.value.trim()) {
+        showToast("请输入仓位");
+        binInput?.focus();
+        return;
+      }
+      showToast("作业区域映射已保存");
+      closeModal(paperMachineMapModal);
       return;
     }
     if (hasDept === hasMes) {
@@ -875,6 +926,10 @@ if (shortHaulMaterialInput) {
 if (paperMachineMapBasis) {
   paperMachineMapBasis.addEventListener("change", updatePaperMachineMapBasis);
   updatePaperMachineMapBasis();
+}
+
+if (paperMachineMapTaskType) {
+  paperMachineMapTaskType.addEventListener("change", updatePaperMachineMapBasis);
 }
 
 decorateButtonIcons();

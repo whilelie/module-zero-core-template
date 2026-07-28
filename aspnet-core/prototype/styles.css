@@ -1797,6 +1797,11 @@ input, select {
   grid-template-columns: 82px 1fr;
 }
 
+.form-item[hidden],
+.form-hint[hidden] {
+  display: none;
+}
+
 .form-item > span {
   color: #34445c;
   font-size: 15px;
