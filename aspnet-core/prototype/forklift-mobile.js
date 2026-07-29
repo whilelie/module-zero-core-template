@@ -413,6 +413,12 @@ function renderTaskStats(task, equipment) {
   </div>`;
 }
 
+function renderReceiptTaskStats(task) {
+  return `<div class="task-stats">
+    <div><span>叉车要求</span><strong class="equipment-line">${equipmentTypeBadges([task.forkliftType || "-"])} <em>${equipmentLoadText([task.forkliftLoadLimit || "-"])}</em></strong></div>
+  </div>`;
+}
+
 function renderDeliveryTaskCard(task) {
   const equipment = taskEquipmentSummary(task);
   return `
@@ -429,15 +435,9 @@ function renderDeliveryTaskCard(task) {
 }
 
 function renderReceiptTaskCard(task) {
-  const equipment = {
-    forkliftTypes: [task.forkliftType || "-"],
-    forkliftLoads: [task.forkliftLoadLimit || "-"],
-    shortHaulTypes: ["-"],
-    shortHaulLoads: ["-"]
-  };
   return `
     ${renderTaskHeader(task)}
-      ${renderTaskStats(task, equipment)}
+      ${renderReceiptTaskStats(task)}
       <div class="task-card-actions compact">
         <button type="button" data-task-action="bind" ${task.device ? "disabled" : ""}>绑定设备</button>
         <button type="button" data-task-action="device" ${task.device ? "" : "disabled"}>变更设备</button>
