@@ -32,6 +32,10 @@ const deliveryTasks = [
   {
     id: "RW-20260506-001",
     status: "待接单",
+    myRole: "叉车",
+    needShuttle: true,
+    forkliftDriver: "张三",
+    shuttleDriver: "赵六",
     deliveryCount: 2,
     materialCount: 2,
     pointCount: 2,
@@ -77,7 +81,7 @@ const deliveryTasks = [
     materialCount: 1,
     pointCount: 2,
     sourceType: "厂内资材库",
-    executor: "王五",
+    executor: "张三",
     device: "5110100022018A9",
     createdAt: "2026.05.06 09:10",
     acceptAt: "2026.05.06 09:15",
@@ -97,7 +101,7 @@ const deliveryTasks = [
     materialCount: 1,
     pointCount: 1,
     sourceType: "厂内资材库",
-    executor: "李四",
+    executor: "张三",
     device: "5110100022018A0",
     createdAt: "2026.05.06 07:50",
     acceptAt: "2026.05.06 07:55",
@@ -126,6 +130,56 @@ const deliveryTasks = [
     cancelReason: "现场取消，不需要该任务",
     points: [
       { deliveryNo: "PSD-20260506-009", material: "1100000021", description: "LNG天然气 热值≥9200Kcal/NM3", storage: "3104", date: "2026.05.06", period: "下午", latestDate: "2026.05.07", quantity: 5, unit: "TO" }
+    ]
+  },
+  {
+    id: "RW-20260506-010",
+    status: "待接单",
+    myRole: "短驳",
+    needShuttle: true,
+    forkliftDriver: "王五",
+    shuttleDriver: "张三",
+    forkliftDone: false,
+    deliveryCount: 1,
+    materialCount: 1,
+    pointCount: 1,
+    sourceType: "厂内资材库",
+    executor: "张三",
+    device: "",
+    deviceType: "",
+    createdAt: "2026.05.06 08:30",
+    acceptAt: "",
+    startAt: "",
+    finishAt: "",
+    cancelAt: "",
+    cancelReason: "",
+    points: [
+      { deliveryNo: "PSD-20260506-010", material: "1100000022", description: "BOG蒸发气 热值≥8800Kcal/NM3", storage: "3108", date: "2026.05.06", period: "上午", latestDate: "2026.05.06", quantity: 10, unit: "NM3", forkliftType: "平叉", forkliftLoadLimit: "3T", shortHaulType: "平板车", shortHaulLoadLimit: "10T" }
+    ]
+  },
+  {
+    id: "RW-20260506-011",
+    status: "待接单",
+    myRole: "短驳",
+    needShuttle: true,
+    forkliftDriver: "李四",
+    shuttleDriver: "张三",
+    forkliftDone: true,
+    deliveryCount: 1,
+    materialCount: 1,
+    pointCount: 1,
+    sourceType: "厂内资材库",
+    executor: "张三",
+    device: "",
+    deviceType: "",
+    createdAt: "2026.05.06 08:35",
+    acceptAt: "",
+    startAt: "",
+    finishAt: "",
+    cancelAt: "",
+    cancelReason: "",
+    points: [
+      { deliveryNo: "PSD-20260506-011", material: "1100000021", description: "LNG天然气 热值≥9200Kcal/NM3", storage: "3104", date: "2026.05.06", period: "下午", latestDate: "2026.05.07", quantity: 20, unit: "TO", forkliftType: "抱叉", forkliftLoadLimit: "5T", shortHaulType: "自卸车", shortHaulLoadLimit: "15T" }
     ]
   }
 ];
@@ -337,6 +391,31 @@ function cardClass(task) {
   return "";
 }
 
+// 当前登录司机在该任务上的角色：叉车 / 短驳（同一司机既可开叉车也可开短驳）
+function taskMyRole(task) {
+  return task.myRole === "短驳" ? "短驳" : "叉车";
+}
+
+// 短驳只能在叉车结束后开始（叉车先、短驳后）
+function shuttleGated(task) {
+  return taskMyRole(task) === "短驳" && task.status === "待接单" && !task.forkliftDone;
+}
+
+// 按角色给出设备类型下拉：叉车=抱叉/平叉/铲车，短驳=平板车/自卸车
+function deviceTypeOptionsHtml(task) {
+  const opts = taskMyRole(task) === "短驳" ? ["平板车", "自卸车"] : ["抱叉", "平叉", "铲车"];
+  const current = task.deviceType || (taskMyRole(task) === "短驳" ? "平板车" : "平叉");
+  return `<option value="">请选择</option>` + opts.map((opt) => `<option ${opt === current ? "selected" : ""}>${opt}</option>`).join("");
+}
+
+function defaultDeviceNo(task) {
+  return task.device || (taskMyRole(task) === "短驳" ? "短驳-A08" : "5110100022018A9");
+}
+
+function changeDeviceNo(task) {
+  return taskMyRole(task) === "短驳" ? "短驳-A09" : "5110100022018A0";
+}
+
 function filteredTasks() {
   const tasks = activeTasks();
   if (activeFilter === "all") return tasks;
@@ -421,11 +500,23 @@ function renderReceiptTaskStats(task) {
 
 function renderDeliveryTaskCard(task) {
   const equipment = taskEquipmentSummary(task);
+  const isShuttle = taskMyRole(task) === "短驳";
+  const gated = shuttleGated(task);
+  const roleBadge = `<span class="badge ${isShuttle ? "blue" : "cyan"}">我：${isShuttle ? "短驳司机" : "叉车司机"}</span>`;
+  // 需短驳的任务额外显示对方角色的司机（我是叉车→显示短驳司机，反之亦然），同样高亮成徽标
+  const peerName = isShuttle ? (task.forkliftDriver || "-") : (task.shuttleDriver || "-");
+  const peerRole = isShuttle ? "叉车司机" : "短驳司机";
+  const peerBadgeClass = isShuttle ? "cyan" : "blue";
+  const peerLine = task.needShuttle
+    ? `<span class="badge ${peerBadgeClass}">${peerName}：${peerRole}</span>`
+    : "";
   return `
     ${renderTaskHeader(task)}
+      <div class="task-role-line">${roleBadge}${peerLine}</div>
       ${renderTaskStats(task, equipment)}
+      ${gated ? `<p class="shuttle-gate-hint">⚠ 需等叉车司机（${task.forkliftDriver || "-"}）结束后，短驳才能开始</p>` : ""}
       <div class="task-card-actions">
-        <button type="button" data-task-action="start" ${task.status === "待接单" ? "" : "disabled"}>开始</button>
+        <button type="button" data-task-action="start" ${task.status === "待接单" && !gated ? "" : "disabled"}>开始</button>
         <button type="button" data-task-action="device" ${task.status === "执行中" ? "" : "disabled"}>变更设备</button>
         <button type="button" data-task-action="finish" ${task.status === "执行中" ? "" : "disabled"}>结束</button>
         <button type="button" data-task-action="detail">详情</button>
@@ -494,7 +585,8 @@ function fillDetailPage(task) {
     `;
     return;
   }
-  detailTaskSummary.textContent = `${task.status} · ${task.deliveryCount} 张配送单 · ${task.materialCount} 项物料`;
+  const roleText = task.needShuttle ? ` · 我:${taskMyRole(task) === "短驳" ? "短驳司机" : "叉车司机"}` : "";
+  detailTaskSummary.textContent = `${task.status} · ${task.deliveryCount} 张配送单 · ${task.materialCount} 项物料${roleText}`;
   detailPageList.innerHTML = task.points.map((point, index) => {
     const sourceType = sourceTypeForPoint(point);
     const actualQuantity = point.actualQuantity ?? (task.status === "已完成" ? point.quantity : "-");
@@ -554,15 +646,15 @@ function actionTemplate(action, task) {
   if (action === "start" || action === "bind") {
     return `
       ${readonlyLine("任务单号", task.id)}
-      <label class="required"><span>设备号</span><input id="action-device" value="${task.device || "5110100022018A9"}" autocomplete="off" required></label>
-      <label class="required"><span>设备类型</span><select id="action-device-type" required><option value="">请选择</option><option ${task.deviceType === "抱叉" ? "selected" : ""}>抱叉</option><option ${task.deviceType === "平叉" || !task.deviceType ? "selected" : ""}>平叉</option><option ${task.deviceType === "铲车" ? "selected" : ""}>铲车</option></select></label>
+      <label class="required"><span>设备号</span><input id="action-device" value="${defaultDeviceNo(task)}" autocomplete="off" required></label>
+      <label class="required"><span>设备类型</span><select id="action-device-type" required>${deviceTypeOptionsHtml(task)}</select></label>
       <label><span>备注</span><textarea id="action-remark" placeholder=""></textarea></label>
     `;
   }
   if (action === "finish") {
     return `
       ${readonlyLine("任务单号", task.id)}
-      ${readonlyLine("设备号", task.device || "5110100022018A9")}
+      ${readonlyLine("设备号", defaultDeviceNo(task))}
       <section class="finish-confirm-section">
         <h3>完成数量确认</h3>
         <div class="finish-confirm-list">
@@ -592,9 +684,9 @@ function actionTemplate(action, task) {
   }
   return `
     ${readonlyLine("任务单号", task.id)}
-    ${readonlyLine("原设备号", task.device || "5110100022018A9")}
-    <label class="required"><span>新设备号</span><input id="action-device" value="5110100022018A0" required></label>
-    <label class="required"><span>设备类型</span><select id="action-device-type" required><option value="">请选择</option><option selected>抱叉</option><option>平叉</option><option>铲车</option></select></label>
+    ${readonlyLine("原设备号", defaultDeviceNo(task))}
+    <label class="required"><span>新设备号</span><input id="action-device" value="${changeDeviceNo(task)}" required></label>
+    <label class="required"><span>设备类型</span><select id="action-device-type" required>${deviceTypeOptionsHtml(task)}</select></label>
     <label><span>变更原因</span><textarea id="action-remark">原设备故障，更换设备</textarea></label>
   `;
 }
@@ -629,6 +721,10 @@ function requireActionValue(selector, message) {
 function confirmAction() {
   const task = getSelectedTask();
   if (currentAction === "start" || currentAction === "bind") {
+    if (currentAction === "start" && shuttleGated(task)) {
+      showToast("需等叉车司机结束后再开始短驳");
+      return;
+    }
     if (!requireActionValue("#action-device", "请输入设备号")) return;
     if (!requireActionValue("#action-device-type", "请选择设备类型")) return;
     if (currentAction === "start") {

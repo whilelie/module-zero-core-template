@@ -639,31 +639,72 @@ document.querySelectorAll("[data-open-source-result]").forEach((button) => {
 
 document.querySelectorAll("[data-open-task-assign]").forEach((button) => {
   button.addEventListener("click", () => {
+    const action = button.dataset.taskAction || "派工";
+    const role = button.dataset.role;
     if (taskAssignTitle) {
-      taskAssignTitle.textContent = `任务${button.dataset.taskAction || "派工"}`;
+      taskAssignTitle.textContent =
+        action === "改派" && role ? `任务改派（${role}）` : `任务${action}`;
     }
     const row = button.closest("tr");
     const taskNo = row?.children[0]?.textContent.trim() || "";
     const taskNoField = taskAssignModal?.querySelector("[data-task-no]");
-    const assigneeSelect = taskAssignModal?.querySelector("[data-task-assignee]");
     if (taskNoField) {
       taskNoField.textContent = taskNo;
     }
-    if (assigneeSelect) {
-      assigneeSelect.value = "";
+    // 决定显示哪些司机下拉：
+    // 派工 → 叉车（+需短驳则短驳）；改派（叉车）→ 只叉车；改派（短驳）→ 只短驳
+    let config;
+    if (action === "改派") {
+      config = role === "短驳" ? { forklift: false, shuttle: true } : { forklift: true, shuttle: false };
+    } else {
+      config = { forklift: true, shuttle: row?.dataset.needShuttle === "1" };
     }
+    configureAssignFields(config);
     openModal(taskAssignModal);
   });
 });
 
+// 配置派工/改派弹窗里的司机下拉显隐（叉车 / 短驳）
+function configureAssignFields({ forklift, shuttle }) {
+  const forkliftField = taskAssignModal?.querySelector("[data-forklift-assign-field]");
+  const forkliftSelect = taskAssignModal?.querySelector("[data-task-assignee]");
+  const shuttleField = taskAssignModal?.querySelector("[data-shuttle-assign-field]");
+  const shuttleHint = taskAssignModal?.querySelector("[data-shuttle-assign-hint]");
+  const shuttleSelect = taskAssignModal?.querySelector("[data-task-shuttle-assignee]");
+  if (forkliftSelect) {
+    forkliftSelect.value = "";
+  }
+  if (shuttleSelect) {
+    shuttleSelect.value = "";
+  }
+  if (forkliftField) {
+    forkliftField.hidden = !forklift;
+  }
+  if (shuttleField) {
+    shuttleField.hidden = !shuttle;
+  }
+  // 提示只在派工同时派两个角色时显示
+  if (shuttleHint) {
+    shuttleHint.hidden = !(forklift && shuttle);
+  }
+}
+
 taskAssignConfirm?.addEventListener("click", () => {
-  const assigneeSelect = taskAssignModal?.querySelector("[data-task-assignee]");
-  if (!assigneeSelect?.value) {
-    showToast("请选择执行人");
-    assigneeSelect?.focus();
+  const forkliftField = taskAssignModal?.querySelector("[data-forklift-assign-field]");
+  const forkliftSelect = taskAssignModal?.querySelector("[data-task-assignee]");
+  const shuttleField = taskAssignModal?.querySelector("[data-shuttle-assign-field]");
+  const shuttleSelect = taskAssignModal?.querySelector("[data-task-shuttle-assignee]");
+  if (forkliftField && !forkliftField.hidden && !forkliftSelect?.value) {
+    showToast("请选择叉车司机");
+    forkliftSelect?.focus();
     return;
   }
-  showToast("任务派工已提交");
+  if (shuttleField && !shuttleField.hidden && !shuttleSelect?.value) {
+    showToast("请选择短驳司机");
+    shuttleSelect?.focus();
+    return;
+  }
+  showToast(`${taskAssignTitle?.textContent || "任务"}已提交`);
   closeModal(taskAssignModal);
 });
 
@@ -676,11 +717,21 @@ document.querySelectorAll("[data-open-task-cancel]").forEach((button) => {
   });
 });
 
+// 按角色重建设备类型下拉：叉车=抱叉/平叉/铲车，短驳=平板车/自卸车
+function setDeviceTypeSelect(select, role) {
+  if (!select) return;
+  const opts = role === "短驳" ? ["平板车", "自卸车"] : ["抱叉", "平叉", "铲车"];
+  select.innerHTML =
+    '<option value="">请选择</option>' +
+    opts.map((opt, i) => `<option ${i === 0 ? "selected" : ""}>${opt}</option>`).join("");
+}
+
 const bindTaskNoModal = (selector, modal, inputSelector) => {
   document.querySelectorAll(selector).forEach((button) => {
     button.addEventListener("click", () => {
       const row = button.closest("tr");
       const taskNo = row?.children[0]?.textContent.trim() || "";
+      const role = button.dataset.role === "短驳" ? "短驳" : "叉车";
       const taskInput = modal?.querySelector(inputSelector);
       setFieldText(taskInput, taskNo);
       if (modal === taskStartModal) {
@@ -688,17 +739,34 @@ const bindTaskNoModal = (selector, modal, inputSelector) => {
         const startDeviceInput = taskStartModal?.querySelector("[data-task-start-device]");
         const startDeviceTypeSelect = taskStartModal?.querySelector("[data-task-start-device-type]");
         if (taskStartTitle) {
-          taskStartTitle.textContent = "开始任务";
+          taskStartTitle.textContent = role === "短驳" ? "开始任务（短驳）" : "开始任务";
         }
         if (taskStartModal) {
           taskStartModal.dataset.taskStartAction = "开始任务";
         }
         if (startDeviceInput) {
-          startDeviceInput.value = "5110100022018A9";
+          startDeviceInput.value = role === "短驳" ? "短驳-A09" : "5110100022018A9";
         }
-        if (startDeviceTypeSelect) {
-          startDeviceTypeSelect.value = "抱叉";
+        setDeviceTypeSelect(startDeviceTypeSelect, role);
+      }
+      if (modal === taskDeviceModal) {
+        const taskDeviceTitle = document.querySelector("#task-device-title");
+        const originalField = taskDeviceModal?.querySelector("[data-task-device-original]");
+        const newDeviceInput = taskDeviceModal?.querySelector("[data-task-new-device]");
+        const deviceTypeSelect = taskDeviceModal?.querySelector("[data-task-device-type]");
+        if (taskDeviceTitle) {
+          taskDeviceTitle.textContent = role === "短驳" ? "变更设备（短驳）" : "变更设备";
         }
+        if (taskDeviceModal) {
+          taskDeviceModal.dataset.taskDeviceAction = "变更设备";
+        }
+        if (originalField) {
+          originalField.textContent = role === "短驳" ? "短驳-A08" : "5110100022018A9";
+        }
+        if (newDeviceInput) {
+          newDeviceInput.value = role === "短驳" ? "短驳-A09" : "5110100022018A0";
+        }
+        setDeviceTypeSelect(deviceTypeSelect, role);
       }
       openModal(modal);
     });
@@ -754,6 +822,8 @@ document.querySelectorAll("[data-open-receipt-assign]").forEach((button) => {
     if (assigneeSelect) {
       assigneeSelect.value = "";
     }
+    // 采购收货任务不涉及短驳，只显示叉车司机
+    configureAssignFields({ forklift: true, shuttle: false });
     openModal(taskAssignModalForReceipt);
   });
 });
@@ -780,6 +850,8 @@ document.querySelectorAll("[data-open-receipt-device]").forEach((button) => {
       if (deviceInput) {
         deviceInput.value = "";
       }
+      // 采购收货为叉车作业，重置设备类型下拉为叉车（避免残留短驳选项）
+      setDeviceTypeSelect(deviceTypeSelect, "叉车");
       if (deviceTypeSelect) {
         deviceTypeSelect.value = "平叉";
       }
@@ -807,6 +879,8 @@ document.querySelectorAll("[data-open-receipt-device]").forEach((button) => {
     if (newDeviceInput) {
       newDeviceInput.value = action === "绑定设备" ? "" : "5110100022018A0";
     }
+    // 采购收货为叉车作业，重置设备类型下拉为叉车（避免残留短驳选项）
+    setDeviceTypeSelect(deviceTypeSelect, "叉车");
     if (deviceTypeSelect) {
       deviceTypeSelect.value = "平叉";
     }

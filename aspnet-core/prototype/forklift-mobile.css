@@ -737,6 +737,29 @@ button {
   font-size: 13px;
 }
 
+.task-role-line {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.task-role-line .role-peer {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.shuttle-gate-hint {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  color: #b45309;
+  font-size: 12px;
+  margin: 8px 0 0;
+  padding: 6px 10px;
+}
+
 .task-stats {
   display: grid;
   gap: 4px;

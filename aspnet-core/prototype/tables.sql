@@ -350,6 +350,12 @@ CREATE TABLE `delivery_task` (
   `D_ASSIGN_TIME` datetime DEFAULT NULL COMMENT '派工时间',
   `D_START_TIME` datetime DEFAULT NULL COMMENT '开始时间',
   `D_FINISH_TIME` datetime DEFAULT NULL COMMENT '结束时间',
+  `N_NEED_SHUTTLE` tinyint(1) NOT NULL COMMENT '是否需要短驳司机',
+  `N_SHUTTLE_STAFF_ID` int DEFAULT NULL COMMENT '执行人ID（短驳）',
+  `C_CURRENT_SHUTTLE_DEVICE_NO` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '当前设备号（短驳）',
+  `C_CURRENT_SHUTTLE_DEVICE_TYPE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '当前设备类型（短驳）',
+  `D_SHUTTLE_START_TIME` datetime DEFAULT NULL COMMENT '开始时间（短驳）',
+  `D_SHUTTLE_FINISH_TIME` datetime DEFAULT NULL COMMENT '结束时间（短驳）',
   `D_CANCEL_TIME` datetime DEFAULT NULL COMMENT '取消时间',
   `C_CANCEL_REASON` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '取消原因',
   `C_REMARK` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
@@ -381,6 +387,7 @@ CREATE TABLE `delivery_task_detail` (
 CREATE TABLE `delivery_task_device` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
   `C_TASK_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务ID',
+  `N_DEVICE_KIND` int NOT NULL COMMENT '设备大类（1-叉车 2-短驳车）',
   `C_DEVICE_NO` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '设备号',
   `C_DEVICE_TYPE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '设备类型',
   `N_STAFF_ID` int NOT NULL COMMENT '执行人ID',
@@ -398,6 +405,7 @@ CREATE TABLE `delivery_task_device` (
 CREATE TABLE `delivery_task_log` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
   `C_TASK_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '任务ID',
+  `N_DEVICE_KIND` int NOT NULL COMMENT '设备大类（1-叉车 2-短驳车）',
   `D_OPERATION_TIME` datetime NOT NULL COMMENT '操作时间',
   `C_OPERATION_TYPE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '操作类型',
   `C_OPERATOR_NAME` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '操作人',
