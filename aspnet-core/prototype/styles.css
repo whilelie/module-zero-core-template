@@ -67,7 +67,7 @@ body {
   align-items: center;
   display: flex;
   height: 100%;
-  margin-left: 10px;
+  margin-left: 22px;
 }
 
 .top-tab {
@@ -163,6 +163,37 @@ button, input, select {
   gap: 0;
 }
 
+.nav-tree-title {
+  border-bottom: 1px solid var(--line);
+  color: #17233b;
+  font-size: 16px;
+  font-weight: 700;
+  min-height: 46px;
+  padding: 13px 16px 10px;
+}
+
+.nav-tree-group {
+  padding: 10px 0 4px;
+}
+
+.nav-tree-group + .nav-tree-group {
+  border-top: 1px solid var(--line);
+}
+
+.nav-tree-group-title {
+  color: #69758a;
+  font-size: 14px;
+  font-weight: 600;
+  min-height: 28px;
+  padding: 5px 16px 7px;
+}
+
+.nav-tree-items {
+  border-left: 1px solid #d9e1ec;
+  display: grid;
+  margin-left: 16px;
+}
+
 .nav-item {
   background: transparent;
   border: 0;
@@ -170,8 +201,9 @@ button, input, select {
   border-radius: 0;
   color: #303846;
   cursor: pointer;
+  font-size: 14px;
   min-height: 36px;
-  padding: 0 18px 0 32px;
+  padding: 0 12px 0 14px;
   text-align: left;
 }
 
@@ -1002,6 +1034,10 @@ input, select {
 
   .side-nav {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  .nav-tree-title {
+    grid-column: 1 / -1;
   }
 
   .metric-grid,
@@ -2300,6 +2336,10 @@ input, select {
   .modal-query,
   .split-common-fields {
     grid-template-columns: 1fr;
+  }
+
+  .nav-tree-title {
+    grid-column: auto;
   }
 
   #device-skill-config .device-skill-query {
