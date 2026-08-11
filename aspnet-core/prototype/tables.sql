@@ -271,7 +271,7 @@ CREATE TABLE `source_trial_allocation_result` (
 CREATE TABLE `material_operation_cost` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
   `C_MATERIAL_NO` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '物料号',
-  `C_WERKS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '工厂',
+  `C_WERKS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '工厂代码',
   `N_IN_PLANT_COST` decimal(18,2) DEFAULT NULL COMMENT '厂内资材库作业成本',
   `N_WHARF_COST` decimal(18,2) DEFAULT NULL COMMENT '码头仓库作业成本',
   `N_SUPPLIER_COST` decimal(18,2) DEFAULT NULL COMMENT '供应商送货作业成本',
@@ -280,14 +280,14 @@ CREATE TABLE `material_operation_cost` (
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
   `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`C_ID`),
-  UNIQUE KEY `UK_MATERIAL_OPERATION_COST` (`C_MATERIAL_NO`)
+  UNIQUE KEY `UK_MATERIAL_OPERATION_COST` (`C_WERKS`,`C_MATERIAL_NO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='物料作业成本';
 
 
 CREATE TABLE `material_delivery_limit` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
   `C_MATERIAL_NO` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '物料号',
-  `C_WERKS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '工厂代码',
+  `C_WERKS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '工厂代码',
   `C_LGORT` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '库存地点',
   `C_LGTYP` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '仓储类型',
   `C_PACKAGING_TYPE` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '包装方式',
@@ -297,7 +297,8 @@ CREATE TABLE `material_delivery_limit` (
   `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
   `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`C_ID`)
+  PRIMARY KEY (`C_ID`),
+  UNIQUE KEY `UK_MATERIAL_DELIVERY_LIMIT` (`C_WERKS`,`C_MATERIAL_NO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='物料单次配送上限';
 
 CREATE TABLE `delivery_order` (
@@ -342,6 +343,7 @@ CREATE TABLE `delivery_task` (
   `C_SOURCE_TYPE` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '货源类型（1：厂内资材库 2：码头仓库 3：供应商送货）',
   `N_DELIVERY_ORDER_COUNT` int NOT NULL COMMENT '配送单数',
   `N_MATERIAL_ITEM_COUNT` int NOT NULL COMMENT '物料项数',
+  `C_WERKS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '工厂',
   `N_REGION_ID` int DEFAULT NULL COMMENT '区域',
   `N_STAFF_ID` int DEFAULT NULL COMMENT '执行人ID',
   `C_CURRENT_DEVICE_NO` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '当前设备号',
@@ -612,7 +614,7 @@ CREATE TABLE `material_operation_vehicle_config` (
   `C_MATKL` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '物料组',
   `C_MATNR` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '物料',
   `N_ATMS_PACK_TYPE` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ATMS包装方式 A-散货类 B-包装袋类 C-桶装类 D-多包材类(标准件) E-多包材类(非标准件) F-其它',
-  `C_WERKS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '工厂代码',
+  `C_WERKS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '工厂代码',
   `C_LGORT` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '库存地点',
   `C_LGTYP` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '仓储类型',
   `N_FORKLIFT_TYPE` tinyint NOT NULL COMMENT '叉车类型 1-抱叉 2-平叉 3-铲车',
@@ -627,12 +629,13 @@ CREATE TABLE `material_operation_vehicle_config` (
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
   `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`C_ID`),
-  UNIQUE KEY `UK_MOV_CONFIG` (`N_FACTORY_AREA_ID`,`N_BUSINESS_TYPE`,`C_MTART`,`C_MATKL`,`C_MATNR`)
+  UNIQUE KEY `UK_MOV_CONFIG` (`N_FACTORY_AREA_ID`, `C_WERKS`,`N_BUSINESS_TYPE`,`C_MTART`,`C_MATKL`,`C_MATNR`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='厂内作业车辆配置表';
 
 
 CREATE TABLE `vehicle_skill_requirement` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
+  `C_WERKS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '工厂代码',
   `N_DEVICE_KIND` int NOT NULL COMMENT '设备大类（1-叉车 2-短驳车）',
   `N_DEVICE_TYPE` int NOT NULL COMMENT '设备类型（叉车大类下（1-抱叉，2-平叉，3-铲车），短驳车大类下（1-平板车，2-自卸车））',
   `N_SKILL_TYPE` int NOT NULL COMMENT '技能类型（1-抱叉，2-平叉，3-短驳）',
@@ -642,7 +645,7 @@ CREATE TABLE `vehicle_skill_requirement` (
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
   `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`C_ID`),
-  UNIQUE KEY `UK_DEVICE_SKILL` (`N_DEVICE_KIND`,`N_DEVICE_TYPE`,`N_SKILL_TYPE`)
+  UNIQUE KEY `UK_DEVICE_SKILL` (`C_WERKS`,`N_DEVICE_KIND`,`N_DEVICE_TYPE`,`N_SKILL_TYPE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='车辆技能要求维护';
 
 -- 1. 员工时段负责业务表

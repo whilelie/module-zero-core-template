@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>领用配送页面原型</title>
   <link rel="icon" href="./app-icon.ico?v=20260717-app-icon" type="image/x-icon">
-  <link rel="stylesheet" href="./styles.css?v=20260727-area-task-type-2">
+  <link rel="stylesheet" href="./styles.css?v=20260810-device-skill-query-fluid">
 </head>
 <body>
   <header class="app-topbar">
@@ -163,6 +163,7 @@
       <section class="page-panel" id="operation-cost">
         <section class="panel">
           <div class="query-grid operation-cost-query">
+            <label>工厂代码<input value="2200"></label>
             <label>物料<input value="1100000021"></label>
             <label>描述<input></label>
             <div class="query-actions">
@@ -375,7 +376,8 @@
 
       <section class="page-panel" id="device-skill-config">
         <section class="panel">
-          <div class="query-grid operation-cost-query">
+          <div class="query-grid operation-cost-query device-skill-query">
+            <label>工厂代码<input value="2200"></label>
             <label>设备大类<select><option>请选择</option><option>叉车</option><option>短驳车</option></select></label>
             <label>设备类型<select><option>请选择</option><option>平叉</option><option>抱叉</option><option>铲车</option><option>平板车</option><option>自卸车</option></select></label>
             <label>所需技能<select><option>请选择</option><option>平叉</option><option>抱叉</option><option>铲车</option><option>短驳驾驶</option></select></label>
@@ -396,6 +398,7 @@
             <table>
               <thead>
                 <tr>
+                  <th>工厂代码</th>
                   <th>设备大类</th>
                   <th>设备类型</th>
                   <th>所需技能</th>
@@ -406,10 +409,10 @@
                 </tr>
               </thead>
               <tbody>
-                <tr><td>叉车</td><td><span class="badge cyan">平叉</span></td><td><span class="skill-pill blue">平叉</span></td><td>托盘、集装箱等常规搬运</td><td>2026.07.17</td><td>2026.07.17</td><td><button class="link-btn" data-open-device-skill>修改</button><button class="link-btn danger">删除</button></td></tr>
-                <tr><td>叉车</td><td><span class="badge blue">抱叉</span></td><td><span class="skill-pill yellow">抱叉</span></td><td>桶装、袋装、夹抱类物料</td><td>2026.07.17</td><td>2026.07.17</td><td><button class="link-btn" data-open-device-skill>修改</button><button class="link-btn danger">删除</button></td></tr>
-                <tr><td>叉车</td><td><span class="badge amber">铲车</span></td><td><span class="skill-pill green">铲车</span></td><td>散料或特殊装卸场景</td><td>2026.07.17</td><td>2026.07.17</td><td><button class="link-btn" data-open-device-skill>修改</button><button class="link-btn danger">删除</button></td></tr>
-                <tr><td>短驳车</td><td><span class="badge blue">平板车</span></td><td><span class="skill-pill green">短驳驾驶</span></td><td>厂内短驳配送</td><td>2026.07.17</td><td>2026.07.17</td><td><button class="link-btn" data-open-device-skill>修改</button><button class="link-btn danger">删除</button></td></tr>
+                <tr><td>2200</td><td>叉车</td><td><span class="badge cyan">平叉</span></td><td><span class="skill-pill blue">平叉</span></td><td>托盘、集装箱等常规搬运</td><td>2026.07.17</td><td>2026.07.17</td><td><button class="link-btn" data-open-device-skill>修改</button><button class="link-btn danger">删除</button></td></tr>
+                <tr><td>2200</td><td>叉车</td><td><span class="badge blue">抱叉</span></td><td><span class="skill-pill yellow">抱叉</span></td><td>桶装、袋装、夹抱类物料</td><td>2026.07.17</td><td>2026.07.17</td><td><button class="link-btn" data-open-device-skill>修改</button><button class="link-btn danger">删除</button></td></tr>
+                <tr><td>2200</td><td>叉车</td><td><span class="badge amber">铲车</span></td><td><span class="skill-pill green">铲车</span></td><td>散料或特殊装卸场景</td><td>2026.07.17</td><td>2026.07.17</td><td><button class="link-btn" data-open-device-skill>修改</button><button class="link-btn danger">删除</button></td></tr>
+                <tr><td>2200</td><td>短驳车</td><td><span class="badge blue">平板车</span></td><td><span class="skill-pill green">短驳驾驶</span></td><td>厂内短驳配送</td><td>2026.07.17</td><td>2026.07.17</td><td><button class="link-btn" data-open-device-skill>修改</button><button class="link-btn danger">删除</button></td></tr>
               </tbody>
             </table>
           </div>
@@ -1009,6 +1012,7 @@
         <div class="task-page-panel active" id="task-inplant">
         <section class="panel">
           <div class="query-grid task-management-query">
+            <label>工厂代码<input value="2200"></label>
             <label>区域<select><option>请选择</option><option>宁波亚浆PM1区域</option><option>宁波亚浆PM2区域</option></select></label>
             <label>任务单号<input></label>
             <label>任务状态<select><option>请选择</option><option>待派工</option><option>已派工</option><option>执行中</option><option>已完成</option><option>已取消</option></select></label>
@@ -1033,22 +1037,22 @@
           <div class="table-wrap">
             <table>
               <thead>
-                <tr><th>任务单号</th><th>区域</th><th>任务状态</th><th>过账状态</th><th>配送单数</th><th>物料项数</th><th>叉车类型</th><th>叉车载重限制</th><th>短驳车类型</th><th>短驳载重限制</th><th>叉车司机</th><th>当前设备号</th><th>当前设备类型</th><th>短驳司机</th><th>当前设备号（短驳）</th><th>当前设备类型（短驳）</th><th>最早最后配送日期</th><th>创建时间</th><th>派工时间</th><th>开始时间</th><th>结束时间</th><th>取消时间</th><th>取消原因</th><th>备注</th><th>操作</th></tr>
+                <tr><th>工厂代码</th><th>任务单号</th><th>区域</th><th>任务状态</th><th>过账状态</th><th>配送单数</th><th>物料项数</th><th>叉车类型</th><th>叉车载重限制</th><th>短驳车类型</th><th>短驳载重限制</th><th>叉车司机</th><th>当前设备号</th><th>当前设备类型</th><th>短驳司机</th><th>当前设备号（短驳）</th><th>当前设备类型（短驳）</th><th>最早最后配送日期</th><th>创建时间</th><th>派工时间</th><th>开始时间</th><th>结束时间</th><th>取消时间</th><th>取消原因</th><th>备注</th><th>操作</th></tr>
               </thead>
               <tbody>
                 <!-- ===== 场景一：只需叉车（无短驳）===== -->
-                <tr><td>RW-20260506-001</td><td>宁波亚浆PM1区域</td><td><span class="badge amber">待派工</span></td><td><span class="badge amber">待过账</span></td><td>2</td><td>2</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td></td><td></td><td></td><td>-</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="派工">派工</button><button class="link-btn" data-open-task-cancel>取消</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr><td>RW-20260506-001</td><td>宁波亚浆PM1区域</td><td><span class="badge blue">已派工</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>张三</td><td></td><td></td><td>-</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="改派" data-role="叉车">改派（叉车）</button><button class="link-btn" data-open-task-start>开始任务（叉车）</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr><td>RW-20260506-001</td><td>宁波亚浆PM1区域</td><td><span class="badge cyan">执行中</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>王五</td><td>5110100022018A9</td><td><span class="badge cyan">平叉</span></td><td>-</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-device>变更设备（叉车）</button><button class="link-btn" data-open-task-finish>结束任务（叉车）</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr><td>RW-20260506-001</td><td>宁波亚浆PM1区域</td><td><span class="badge green">已完成</span></td><td><span class="badge green">成功</span></td><td>1</td><td>1</td><td><span class="badge blue">抱叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>李四</td><td>5110100022018A0</td><td><span class="badge cyan">平叉</span></td><td>-</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.07</td><td>2026.05.07</td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr><td>RW-20260506-002</td><td>宁波亚浆PM1区域</td><td><span class="badge gray">已取消</span></td><td><span class="badge red">失败</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td></td><td></td><td></td><td>-</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td>2026.05.06</td><td>不需要该物料了</td><td></td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>2200</td><td>RW-20260506-001</td><td>宁波亚浆PM1区域</td><td><span class="badge amber">待派工</span></td><td><span class="badge amber">待过账</span></td><td>2</td><td>2</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td></td><td></td><td></td><td>-</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="派工">派工</button><button class="link-btn" data-open-task-cancel>取消</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>2200</td><td>RW-20260506-001</td><td>宁波亚浆PM1区域</td><td><span class="badge blue">已派工</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>张三</td><td></td><td></td><td>-</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="改派" data-role="叉车">改派（叉车）</button><button class="link-btn" data-open-task-start>开始任务（叉车）</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>2200</td><td>RW-20260506-001</td><td>宁波亚浆PM1区域</td><td><span class="badge cyan">执行中</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>王五</td><td>5110100022018A9</td><td><span class="badge cyan">平叉</span></td><td>-</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-device>变更设备（叉车）</button><button class="link-btn" data-open-task-finish>结束任务（叉车）</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>2200</td><td>RW-20260506-001</td><td>宁波亚浆PM1区域</td><td><span class="badge green">已完成</span></td><td><span class="badge green">成功</span></td><td>1</td><td>1</td><td><span class="badge blue">抱叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td>李四</td><td>5110100022018A0</td><td><span class="badge cyan">平叉</span></td><td>-</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.07</td><td>2026.05.07</td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr><td>2200</td><td>RW-20260506-002</td><td>宁波亚浆PM1区域</td><td><span class="badge gray">已取消</span></td><td><span class="badge red">失败</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge gray">-</span></td><td>-</td><td></td><td></td><td></td><td>-</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td>2026.05.06</td><td>不需要该物料了</td><td></td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
                 <!-- ===== 场景二：叉车 + 短驳（叉车先、短驳后）===== -->
-                <tr data-need-shuttle="1"><td>RW-20260506-103</td><td>宁波亚浆PM1区域</td><td><span class="badge amber">待派工</span></td><td><span class="badge amber">待过账</span></td><td>2</td><td>2</td><td><span class="badge cyan">平叉</span><span class="badge blue">抱叉</span></td><td>3T / 5T</td><td><span class="badge blue">平板车</span><span class="badge green">自卸车</span></td><td>10T / 15T</td><td></td><td></td><td></td><td></td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="派工">派工</button><button class="link-btn" data-open-task-cancel>取消</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr data-need-shuttle="1"><td>RW-20260506-103</td><td>宁波亚浆PM1区域</td><td><span class="badge blue">已派工</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge blue">平板车</span></td><td>10T</td><td>张三</td><td></td><td></td><td>赵六</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td>叉车、短驳均已派工，待叉车开始</td><td><button class="link-btn" data-open-task-assign data-task-action="改派" data-role="叉车">改派（叉车）</button><button class="link-btn" data-open-task-start>开始任务（叉车）</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr data-need-shuttle="1"><td>RW-20260506-103</td><td>宁波亚浆PM1区域</td><td><span class="badge cyan">执行中</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge blue">平板车</span></td><td>10T</td><td>王五</td><td>5110100022018A9</td><td><span class="badge cyan">平叉</span></td><td>赵六</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td>叉车装货中</td><td><button class="link-btn" data-open-task-device>变更设备（叉车）</button><button class="link-btn" data-open-task-finish>结束任务（叉车）</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr data-need-shuttle="1"><td>RW-20260506-103</td><td>宁波亚浆PM1区域</td><td><span class="badge cyan">执行中</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge blue">平板车</span></td><td>10T</td><td>王五</td><td></td><td></td><td>赵六</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td>叉车已结束，待短驳开始</td><td><button class="link-btn" data-open-task-assign data-task-action="改派" data-role="短驳">改派（短驳）</button><button class="link-btn" data-open-task-start data-role="短驳">开始任务（短驳）</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr data-need-shuttle="1"><td>RW-20260506-103</td><td>宁波亚浆PM1区域</td><td><span class="badge cyan">执行中</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge blue">平板车</span></td><td>10T</td><td>王五</td><td></td><td></td><td>赵六</td><td>短驳-A08</td><td><span class="badge blue">平板车</span></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td>叉车已结束，短驳运输中</td><td><button class="link-btn" data-open-task-device data-role="短驳">变更设备（短驳）</button><button class="link-btn" data-open-task-finish>结束任务（短驳）</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
-                <tr data-need-shuttle="1"><td>RW-20260506-103</td><td>宁波亚浆PM1区域</td><td><span class="badge green">已完成</span></td><td><span class="badge green">成功</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge blue">平板车</span></td><td>10T</td><td>王五</td><td></td><td></td><td>赵六</td><td>短驳-A08</td><td><span class="badge blue">平板车</span></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.07</td><td></td><td></td><td>叉车装货→短驳运输 全部完成</td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr data-need-shuttle="1"><td>2200</td><td>RW-20260506-103</td><td>宁波亚浆PM1区域</td><td><span class="badge amber">待派工</span></td><td><span class="badge amber">待过账</span></td><td>2</td><td>2</td><td><span class="badge cyan">平叉</span><span class="badge blue">抱叉</span></td><td>3T / 5T</td><td><span class="badge blue">平板车</span><span class="badge green">自卸车</span></td><td>10T / 15T</td><td></td><td></td><td></td><td></td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td></td><td></td><td><button class="link-btn" data-open-task-assign data-task-action="派工">派工</button><button class="link-btn" data-open-task-cancel>取消</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr data-need-shuttle="1"><td>2200</td><td>RW-20260506-103</td><td>宁波亚浆PM1区域</td><td><span class="badge blue">已派工</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge blue">平板车</span></td><td>10T</td><td>张三</td><td></td><td></td><td>赵六</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td></td><td>叉车、短驳均已派工，待叉车开始</td><td><button class="link-btn" data-open-task-assign data-task-action="改派" data-role="叉车">改派（叉车）</button><button class="link-btn" data-open-task-start>开始任务（叉车）</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr data-need-shuttle="1"><td>2200</td><td>RW-20260506-103</td><td>宁波亚浆PM1区域</td><td><span class="badge cyan">执行中</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge blue">平板车</span></td><td>10T</td><td>王五</td><td>5110100022018A9</td><td><span class="badge cyan">平叉</span></td><td>赵六</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td>叉车装货中</td><td><button class="link-btn" data-open-task-device>变更设备（叉车）</button><button class="link-btn" data-open-task-finish>结束任务（叉车）</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr data-need-shuttle="1"><td>2200</td><td>RW-20260506-103</td><td>宁波亚浆PM1区域</td><td><span class="badge cyan">执行中</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge blue">平板车</span></td><td>10T</td><td>王五</td><td></td><td></td><td>赵六</td><td>-</td><td>-</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td>叉车已结束，待短驳开始</td><td><button class="link-btn" data-open-task-assign data-task-action="改派" data-role="短驳">改派（短驳）</button><button class="link-btn" data-open-task-start data-role="短驳">开始任务（短驳）</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr data-need-shuttle="1"><td>2200</td><td>RW-20260506-103</td><td>宁波亚浆PM1区域</td><td><span class="badge cyan">执行中</span></td><td><span class="badge amber">待过账</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge blue">平板车</span></td><td>10T</td><td>王五</td><td></td><td></td><td>赵六</td><td>短驳-A08</td><td><span class="badge blue">平板车</span></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td></td><td></td><td></td><td>叉车已结束，短驳运输中</td><td><button class="link-btn" data-open-task-device data-role="短驳">变更设备（短驳）</button><button class="link-btn" data-open-task-finish>结束任务（短驳）</button><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
+                <tr data-need-shuttle="1"><td>2200</td><td>RW-20260506-103</td><td>宁波亚浆PM1区域</td><td><span class="badge green">已完成</span></td><td><span class="badge green">成功</span></td><td>1</td><td>1</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge blue">平板车</span></td><td>10T</td><td>王五</td><td></td><td></td><td>赵六</td><td>短驳-A08</td><td><span class="badge blue">平板车</span></td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.06</td><td>2026.05.07</td><td></td><td></td><td>叉车装货→短驳运输 全部完成</td><td><button class="link-btn" data-open-task-detail>任务详情</button></td></tr>
               </tbody>
             </table>
           </div>
@@ -1066,7 +1070,8 @@
         <div class="task-page-panel" id="task-receipt">
           <section class="panel">
             <div class="query-grid task-receipt-query">
-               <label>区域<select><option>请选择</option><option>宁波亚浆PM1区域</option><option>宁波亚浆PM2区域</option></select></label>
+              <label>工厂代码<input value="2200"></label>
+              <label>区域<select><option>请选择</option><option>宁波亚浆PM1区域</option><option>宁波亚浆PM2区域</option></select></label>
               <label>任务单号<input></label>
               <label>派工状态<select><option>请选择</option><option>待派工</option><option>已派工</option></select></label>
               <label>预约送货单号<input value="2411151642"></label>
@@ -1835,7 +1840,7 @@
           <label class="form-item required"><span>物料:</span><input data-cost-material value="1100000021"></label>
           <label class="form-item"><span>描述:</span><strong class="field-value" data-cost-description>LNG天然气 热值≥9200Kcal/NM3</strong></label>
           <label class="form-item"><span>基本单位:</span><strong class="field-value" data-cost-unit>TO</strong></label>
-          <label class="form-item"><span>工厂代码:</span><input data-cost-factory value="200A"></label>
+          <label class="form-item required"><span>工厂代码:</span><input data-cost-factory value="200A" required></label>
           <label class="form-item"><span>厂内资材库:</span><input type="number" min="0" step="1" value="10"></label>
           <label class="form-item"><span>码头仓库:</span><input type="number" min="0" step="1"></label>
           <label class="form-item"><span>供应商送货:</span><input type="number" min="0" step="1"></label>
@@ -1863,7 +1868,7 @@
           <label class="form-item required"><span>物料:</span><input data-limit-material value="1000000067"></label>
           <label class="form-item"><span>描述:</span><strong class="field-value" data-limit-description>阴离子聚丙烯酰胺（工业用）</strong></label>
           <label class="form-item"><span>基本单位:</span><strong class="field-value" data-limit-unit>KG</strong></label>
-          <label class="form-item"><span>工厂代码:</span><input value="200A"></label>
+          <label class="form-item required"><span>工厂代码:</span><input value="200A"></label>
           <label class="form-item"><span>库存地点:</span><input value="1001"></label>
           <label class="form-item"><span>仓储类型:</span><input></label>
           <label class="form-item"><span>包装方式:</span><select><option>散装</option><option>托盘</option><option>集装箱</option></select></label>
@@ -1900,7 +1905,7 @@
           <label class="form-item"><span>描述:</span><strong class="field-value" data-short-haul-description>LNG天然气 热值≥9200Kcal/NM3</strong></label>
           <label class="form-item"><span>基本单位:</span><strong class="field-value" data-short-haul-unit>TO</strong></label>
           <label class="form-item required"><span>ATMS包装方式:</span><select><option>A 散货类</option><option>B 包装袋类</option><option>C 桶装类</option><option>D 多包材类(标准件)</option><option>E 多包材类(非标准件)</option><option>F 其它</option></select></label>
-          <label class="form-item"><span>工厂代码:</span><input value="200A"></label>
+          <label class="form-item required"><span>工厂代码:</span><input value="200A"></label>
           <label class="form-item"><span>库存地点:</span><input value="3108"></label>
           <label class="form-item"><span>仓储类型:</span><input value="A01"></label>
 
@@ -1935,6 +1940,7 @@
 
       <div class="modal-body operation-cost-modal-body">
         <div class="operation-cost-form">
+          <label class="form-item required"><span>工厂代码:</span><input data-device-skill-factory value="2200" required></label>
           <label class="form-item required"><span>设备大类:</span><select data-device-skill-category><option value="">请选择</option><option selected>叉车</option><option>短驳车</option></select></label>
           <label class="form-item required"><span>设备类型:</span><select data-device-skill-type><option value="">请选择</option><option selected>平叉</option><option>抱叉</option><option>铲车</option><option>平板车</option><option>自卸车</option></select></label>
           <label class="form-item required"><span>所需技能:</span><select data-device-skill-required><option value="">请选择</option><option selected>平叉</option><option>抱叉</option><option>铲车</option><option>短驳驾驶</option></select></label>
@@ -2436,6 +2442,6 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=20260731-reassign-role"></script>
+  <script src="./app.js?v=20260810-task-factory-first"></script>
 </body>
 </html>

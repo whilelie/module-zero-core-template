@@ -54,7 +54,7 @@ const taskAssignConfirm = document.querySelector("[data-confirm-task-assign]");
 const taskStartConfirm = document.querySelector("[data-confirm-task-start]");
 const taskDeviceConfirm = document.querySelector("[data-confirm-task-device]");
 
-window.prototypeAppVersion = "20260727-area-task-type-2";
+window.prototypeAppVersion = "20260728-factory-columns";
 
 const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],
@@ -512,6 +512,7 @@ document.querySelectorAll("[data-open-device-skill]").forEach((button) => {
   button.addEventListener("click", () => {
     const row = button.closest("tr");
     const cells = row ? Array.from(row.children) : [];
+    const factoryField = deviceSkillModal?.querySelector("[data-device-skill-factory]");
     const categoryField = deviceSkillModal?.querySelector("[data-device-skill-category]");
     const typeField = deviceSkillModal?.querySelector("[data-device-skill-type]");
     const skillField = deviceSkillModal?.querySelector("[data-device-skill-required]");
@@ -519,10 +520,11 @@ document.querySelectorAll("[data-open-device-skill]").forEach((button) => {
     if (deviceSkillTitle) {
       deviceSkillTitle.textContent = cells.length ? "修改设备技能要求" : "新增设备技能要求";
     }
-    if (categoryField) categoryField.value = cells.length ? cells[0].textContent.trim() : "叉车";
-    if (typeField) typeField.value = cells.length ? cells[1].textContent.trim() : "平叉";
-    if (skillField) skillField.value = cells.length ? cells[2].textContent.trim() : "平叉";
-    if (remarkField) remarkField.value = cells.length ? cells[3].textContent.trim() : "";
+    if (factoryField) factoryField.value = cells.length ? cells[0].textContent.trim() : "2200";
+    if (categoryField) categoryField.value = cells.length ? cells[1].textContent.trim() : "叉车";
+    if (typeField) typeField.value = cells.length ? cells[2].textContent.trim() : "平叉";
+    if (skillField) skillField.value = cells.length ? cells[3].textContent.trim() : "平叉";
+    if (remarkField) remarkField.value = cells.length ? cells[4].textContent.trim() : "";
     openModal(deviceSkillModal);
   });
 });
@@ -625,6 +627,7 @@ document.querySelectorAll("[data-confirm-paper-machine-map]").forEach((button) =
 
 document.querySelectorAll("[data-confirm-device-skill]").forEach((button) => {
   button.addEventListener("click", () => {
+    if (!requireModalValue(deviceSkillModal, "[data-device-skill-factory]", "请输入工厂代码")) return;
     if (!requireModalValue(deviceSkillModal, "[data-device-skill-category]", "请选择设备大类")) return;
     if (!requireModalValue(deviceSkillModal, "[data-device-skill-type]", "请选择设备类型")) return;
     if (!requireModalValue(deviceSkillModal, "[data-device-skill-required]", "请选择所需技能")) return;

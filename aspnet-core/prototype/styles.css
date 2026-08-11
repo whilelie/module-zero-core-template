@@ -1095,6 +1095,10 @@ input, select {
   grid-template-columns: minmax(180px, 280px) minmax(180px, 280px) 1fr auto;
 }
 
+#device-skill-config .device-skill-query {
+  grid-template-columns: repeat(4, minmax(160px, 1fr)) auto;
+}
+
 .material-master-query {
   grid-template-columns: repeat(4, minmax(180px, 1fr)) auto;
 }
@@ -2285,10 +2289,20 @@ input, select {
   }
 }
 
+@media (max-width: 900px) {
+  #device-skill-config .device-skill-query {
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+  }
+}
+
 @media (max-width: 720px) {
   .query-grid,
   .modal-query,
   .split-common-fields {
+    grid-template-columns: 1fr;
+  }
+
+  #device-skill-config .device-skill-query {
     grid-template-columns: 1fr;
   }
 
