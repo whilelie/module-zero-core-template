@@ -1144,6 +1144,37 @@ updateTrialSelectionUi();
 updateTaskGenerationSelectionUi();
 updateSplitRowStatus();
 
+// nav-group-collapse:start
+const collapsibleNavTitleIds = ["workflow-nav-title", "master-data-nav-title", "employee-settings-nav-title", "query-tools-nav-title"];
+
+collapsibleNavTitleIds.forEach((titleId) => {
+  const title = document.getElementById(titleId);
+  const group = title?.closest(".nav-tree-group");
+  const items = group?.querySelector(".nav-tree-items");
+  if (!title || !group || !items) return;
+
+  const itemsId = `${titleId}-items`;
+  items.id = itemsId;
+  title.dataset.navCollapsible = "";
+  title.setAttribute("role", "button");
+  title.setAttribute("tabindex", "0");
+  title.setAttribute("aria-controls", itemsId);
+  title.setAttribute("aria-expanded", "true");
+
+  const toggleGroup = () => {
+    const collapsed = group.classList.toggle("collapsed");
+    title.setAttribute("aria-expanded", String(!collapsed));
+  };
+
+  title.addEventListener("click", toggleGroup);
+  title.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    toggleGroup();
+  });
+});
+// nav-group-collapse:end
+
 
 
 

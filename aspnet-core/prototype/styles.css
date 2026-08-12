@@ -188,6 +188,38 @@ button, input, select {
   padding: 5px 16px 7px;
 }
 
+.nav-tree-group-title[data-nav-collapsible] {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.nav-tree-group-title[data-nav-collapsible]::after {
+  border-bottom: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  content: "";
+  height: 7px;
+  margin-left: 10px;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform .18s ease;
+  width: 7px;
+}
+
+.nav-tree-group-title[data-nav-collapsible]:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.nav-tree-group.collapsed .nav-tree-group-title[data-nav-collapsible]::after {
+  transform: rotate(-45deg);
+}
+
+.nav-tree-group.collapsed .nav-tree-items {
+  display: none;
+}
+
 .nav-tree-items {
   border-left: 1px solid #d9e1ec;
   display: grid;
