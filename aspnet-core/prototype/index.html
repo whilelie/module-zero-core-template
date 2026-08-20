@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>领用配送页面原型</title>
   <link rel="icon" href="./app-icon.ico?v=20260717-app-icon" type="image/x-icon">
-  <link rel="stylesheet" href="./styles.css?v=20260812-nav-collapse">
+  <link rel="stylesheet" href="./styles.css?v=20260820-task-post-native-confirm">
 </head>
 <body>
   <header class="app-topbar">
@@ -34,6 +34,7 @@
             <button class="nav-item" data-page="demand-trial">配送货源试算</button>
             <button class="nav-item" data-page="delivery-binding">配送单与任务生成</button>
             <button class="nav-item" data-page="task-management">资材任务管理</button>
+            <button class="nav-item" data-page="task-post-management">配送任务过账管理</button>
           </div>
         </section>
 
@@ -1026,6 +1027,59 @@
           </div>
         </section>
 
+      </section>
+
+      <section class="page-panel" id="task-post-management">
+        <section class="panel">
+          <div class="query-grid task-post-query">
+            <label>工厂代码<input value="2200"></label>
+            <label>区域<select><option>请选择</option><option selected>宁波亚浆PM1区域</option><option>宁波亚浆PM2区域</option></select></label>
+            <label>任务单号<input placeholder="请输入任务单号"></label>
+            <label>过账状态<select><option selected>请选择</option><option>待过账</option><option>成功</option><option>失败</option></select></label>
+            <label class="task-post-document-query">单据号<input placeholder="配送单号/配送需求单号/领料单号"></label>
+            <div class="query-actions">
+              <button class="btn primary" data-post-query>查询</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head task-post-list-head">
+            <button class="btn primary" type="button" data-batch-post disabled>批量过账</button>
+          </div>
+          <div class="table-wrap task-post-table-wrap">
+            <table class="task-post-table">
+              <thead>
+                <tr>
+                  <th class="select-col"><input type="checkbox" data-post-select-all aria-label="全选可过账记录"></th>
+                  <th>工厂代码</th><th>任务单号</th><th>区域</th><th>任务状态</th><th>过账状态</th><th>配送单号</th><th>配送需求单号</th><th>领料申请单号</th><th>行项目</th><th>物料</th><th>描述</th><th>批次</th><th>认证种类</th><th>库存地点</th><th>仓库号</th><th>仓储类型</th><th>仓位</th><th>计划数量</th><th>实际完成数量</th><th>基本单位</th><th>差异原因</th><th>货源类型</th><th>货源标识</th><th>收货库存地点</th><th>配送日期</th><th>配送时段</th><th>最后配送日期</th><th>叉车类型</th><th>叉车载重限制</th><th>短驳车类型</th><th>短驳载重限制</th><th>外部单据类型</th><th>外部单据号</th><th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-post-state="pending">
+                  <td class="select-col"><input type="checkbox" data-post-select aria-label="选择 PSD-20260509-001" checked></td>
+                  <td>2200</td><td>RW-20260506-001</td><td>宁波亚浆PM1区域</td><td><span class="badge green">已完成</span></td><td><span class="badge amber" data-post-status>待过账</span></td><td>PSD-20260509-001</td><td>DELREQ-20260507-002</td><td>1000000137</td><td>1</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>-</td><td>-</td><td>1106</td><td>310</td><td>A01</td><td>A01-DS01</td><td>20.000</td><td><input class="post-actual-input" type="number" min="0" step="0.001" value="20.000" aria-label="实际完成数量"></td><td>TO</td><td>-</td><td><span class="badge blue">厂内资材库</span></td><td>SRC-20260508-001</td><td>3108</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td>-</td><td>-</td><td>领料申请单</td><td>1000000137</td><td><button class="link-btn" type="button" data-single-post>过账</button></td>
+                </tr>
+                <tr data-post-state="failed">
+                  <td class="select-col"><input type="checkbox" data-post-select aria-label="选择 PSD-20260509-002" checked></td>
+                  <td>2200</td><td>RW-20260506-002</td><td>宁波亚浆PM1区域</td><td><span class="badge green">已完成</span></td><td><span class="badge red" data-post-status>失败</span></td><td>PSD-20260509-002</td><td>DELREQ-20260507-002</td><td>1000000137</td><td>2</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>B20260508</td><td>FSC</td><td>1112</td><td>310</td><td>A01</td><td>A01-DS03</td><td>20.000</td><td><input class="post-actual-input" type="number" min="0" step="0.001" value="19.500" aria-label="实际完成数量"></td><td>TO</td><td>现场盘点差异</td><td><span class="badge green">码头仓库</span></td><td>SRC-20260508-002</td><td>3104</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td><td><span class="badge blue">抱叉</span></td><td>5T</td><td><span class="badge blue">平板车</span></td><td>10T</td><td>配送需求单</td><td>DELREQ-20260507-002</td><td><button class="link-btn" type="button" data-single-post>重试过账</button></td>
+                </tr>
+                <tr data-post-state="success">
+                  <td class="select-col"><input type="checkbox" data-post-select aria-label="选择 PSD-20260508-003" disabled></td>
+                  <td>2200</td><td>RW-20260506-003</td><td>宁波亚浆PM1区域</td><td><span class="badge green">已完成</span></td><td><span class="badge green" data-post-status>成功</span></td><td>PSD-20260508-003</td><td>DELREQ-20260506-001</td><td>1000000134</td><td>2</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>-</td><td>-</td><td>1106</td><td>310</td><td>A01</td><td>A01-DS05</td><td>20.000</td><td><input class="post-actual-input" type="number" value="20.000" aria-label="实际完成数量" disabled></td><td>NM3</td><td>-</td><td><span class="badge blue">厂内资材库</span></td><td>SRC-20260507-001</td><td>3108</td><td>2026.05.08</td><td>下午</td><td>2026.05.10</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td>-</td><td>-</td><td>物料凭证</td><td>4900001234</td><td>-</td>
+                </tr>
+                <tr data-post-state="pending">
+                  <td class="select-col"><input type="checkbox" data-post-select aria-label="选择 PSD-20260506-001" checked></td>
+                  <td>2200</td><td>RW-20260506-004</td><td>宁波亚浆PM2区域</td><td><span class="badge green">已完成</span></td><td><span class="badge amber" data-post-status>待过账</span></td><td>PSD-20260506-001</td><td>DELREQ-20260505-001</td><td>1000000133</td><td>1</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>B20260506</td><td>PEFC</td><td>1112</td><td>310</td><td>A02</td><td>A02-DS02</td><td>10.000</td><td><input class="post-actual-input" type="number" min="0" step="0.001" value="10.000" aria-label="实际完成数量"></td><td>TO</td><td>-</td><td><span class="badge amber">供应商送货</span></td><td>SRC-20260505-001</td><td>3104</td><td>2026.05.08</td><td>全天</td><td>2026.05.10</td><td><span class="badge cyan">平叉</span></td><td>3T</td><td><span class="badge blue">自卸车</span></td><td>15T</td><td>领料申请单</td><td>1000000133</td><td><button class="link-btn" type="button" data-single-post>过账</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination-bar">
+            <div class="pagination-summary" data-post-summary>共 4 条，可过账 3 条，已选择 3 条</div>
+            <div class="pagination-actions"><button class="page-btn" disabled>上一页</button><button class="page-btn active">1</button><button class="page-btn">下一页</button></div>
+          </div>
+        </section>
       </section>
 
       <section class="page-panel" id="task-management">
@@ -2467,6 +2521,6 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=20260812-nav-collapse"></script>
+  <script src="./app.js?v=20260820-task-post-native-confirm"></script>
 </body>
 </html>

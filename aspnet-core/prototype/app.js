@@ -1175,6 +1175,69 @@ collapsibleNavTitleIds.forEach((titleId) => {
 });
 // nav-group-collapse:end
 
+// task-post-management:start
+const taskPostPage = document.getElementById("task-post-management");
+
+if (taskPostPage) {
+  const batchPostButton = taskPostPage.querySelector("[data-batch-post]");
+  const postSelectAll = taskPostPage.querySelector("[data-post-select-all]");
+  const postSummary = taskPostPage.querySelector("[data-post-summary]");
+
+  const getEligiblePostCheckboxes = () => Array.from(taskPostPage.querySelectorAll("[data-post-select]:not(:disabled)"));
+
+  const updatePostSelectionUi = () => {
+    const total = taskPostPage.querySelectorAll(".task-post-table tbody tr").length;
+    const eligible = getEligiblePostCheckboxes();
+    const selected = eligible.filter((checkbox) => checkbox.checked);
+    batchPostButton.disabled = selected.length === 0;
+    batchPostButton.textContent = selected.length ? `批量过账+${selected.length}` : "批量过账";
+    postSummary.textContent = `共 ${total} 条，可过账 ${eligible.length} 条，已选择 ${selected.length} 条`;
+    postSelectAll.checked = eligible.length > 0 && selected.length === eligible.length;
+    postSelectAll.indeterminate = selected.length > 0 && selected.length < eligible.length;
+  };
+
+  taskPostPage.querySelectorAll("[data-post-select]").forEach((checkbox) => {
+    checkbox.addEventListener("change", updatePostSelectionUi);
+  });
+
+  postSelectAll.addEventListener("change", () => {
+    getEligiblePostCheckboxes().forEach((checkbox) => {
+      checkbox.checked = postSelectAll.checked;
+    });
+    updatePostSelectionUi();
+  });
+
+  taskPostPage.querySelectorAll("[data-single-post]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const row = button.closest("tr");
+      const quantity = row.querySelector(".post-actual-input");
+      if (Number(quantity.value) < 0 || quantity.value === "") {
+        showToast("请输入有效的实际完成数量");
+        quantity.focus();
+        return;
+      }
+      const type = button.textContent.trim();
+      if (window.confirm(`确定要${type}吗？`)) {
+        showToast(`已提交${type}`);
+      }
+    });
+  });
+
+  batchPostButton.addEventListener("click", () => {
+    const selected = getEligiblePostCheckboxes().filter((checkbox) => checkbox.checked);
+    if (window.confirm("确定要批量过账吗？")) {
+      showToast(`已提交 ${selected.length} 条明细批量过账`);
+    }
+  });
+
+  taskPostPage.querySelector("[data-post-query]")?.addEventListener("click", () => {
+    const total = taskPostPage.querySelectorAll(".task-post-table tbody tr").length;
+    showToast(`查询完成，共 ${total} 条记录`);
+  });
+  updatePostSelectionUi();
+}
+// task-post-management:end
+
 
 
 

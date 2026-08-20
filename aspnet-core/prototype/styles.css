@@ -1155,6 +1155,83 @@ input, select {
   grid-template-columns: repeat(4, minmax(160px, 1fr));
 }
 
+.task-post-query {
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+}
+
+.task-post-document-query {
+  grid-column: auto;
+}
+
+.task-post-list-head {
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.panel-subtitle {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 4px 0 0;
+}
+
+.task-post-table {
+  min-width: 4300px;
+}
+
+.task-post-table th:first-child,
+.task-post-table td:first-child {
+  background: #fff;
+  left: 0;
+  position: sticky;
+  z-index: 2;
+}
+
+.task-post-table th:first-child {
+  background: var(--surface-soft);
+  z-index: 4;
+}
+
+.task-post-table th:last-child,
+.task-post-table td:last-child {
+  background: #fff;
+  box-shadow: -8px 0 12px rgba(15, 23, 42, .08);
+  min-width: 100px;
+  position: sticky;
+  right: 0;
+  z-index: 2;
+}
+
+.task-post-table th:last-child {
+  background: var(--surface-soft);
+  z-index: 4;
+}
+
+.post-actual-input {
+  min-height: 30px;
+  padding: 0 8px;
+  width: 108px;
+}
+
+.post-actual-input:disabled {
+  background: transparent;
+  border-color: transparent;
+  color: inherit;
+  opacity: 1;
+}
+
+.task-post-table tr[data-post-state="failed"] td {
+  background-color: #fffafa;
+}
+
+.task-post-table tr[data-post-state="success"] td {
+  color: #64748b;
+}
+
+[data-batch-post]:disabled {
+  cursor: not-allowed;
+  opacity: .5;
+}
+
 .task-ranking-query {
   grid-template-columns: minmax(180px, 240px) 1fr;
 }
