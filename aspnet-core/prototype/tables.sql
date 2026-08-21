@@ -1,4 +1,5 @@
 
+/*
 ALTER TABLE aimp_wct.skill MODIFY COLUMN SkillCode varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '技能编码';
 
 ALTER TABLE aimp_wct.allocationjobitem ADD Vltyp varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '源仓储类型';
@@ -6,6 +7,8 @@ ALTER TABLE aimp_wct.allocationjobitem CHANGE Vltyp Vltyp varchar(4) CHARACTER S
 
 ALTER TABLE aimp_wct.storageclass ADD RegionId INT NULL COMMENT '所属区域Id';
 ALTER TABLE aimp_wct.storageclass CHANGE RegionId RegionId INT NULL COMMENT '所属区域Id' FIRST;
+
+*/
 
 CREATE TABLE `material_requisition` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
@@ -42,7 +45,7 @@ CREATE TABLE `material_requisition` (
   UNIQUE KEY `UK_C_REQUISITION_NO` (`C_REQUISITION_NO`,`C_LINE_NO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='领料单';
 
-
+/*
 CREATE TABLE `material_requisition_detail` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
   `C_MAIN_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '领料单主键',
@@ -61,7 +64,7 @@ CREATE TABLE `material_requisition_detail` (
   PRIMARY KEY (`C_ID`),
   UNIQUE KEY `UK_REQ_LINE_NO` (`C_REQUISITION_NO`,`C_LINE_NO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='领料单行项目';
-
+*/
 
 CREATE TABLE `delivery_demand` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
@@ -82,7 +85,7 @@ CREATE TABLE `delivery_demand` (
   UNIQUE KEY `UK_C_DEMAND_NO` (`C_DEMAND_NO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='配送需求表';
 
-
+/*
 CREATE TABLE `delivery_demand_detail` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
   `C_MAIN_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '配送需求ID',
@@ -97,7 +100,7 @@ CREATE TABLE `delivery_demand_detail` (
   PRIMARY KEY (`C_ID`),
   UNIQUE KEY `UK_DEL_LINE_NO` (`C_MAIN_ID`,`C_LINE_NO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='配送需求行表';
-
+*/
 
 CREATE TABLE `source_trial_batch` (
   `C_ID` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '主键',
@@ -167,6 +170,7 @@ CREATE TABLE `source_trial_inventory_source` (
   `C_SONUM` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '特殊库存编号',
   `C_ZNOCHK` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '是否免检',
   `N_JYSJ` decimal(13,0) DEFAULT NULL COMMENT '检验时间',
+  `C_ZCCBZ` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '存储包装方式',
   `D_CREATE_TIME` datetime NOT NULL COMMENT '创建时间',
   `N_CREATOR` bigint DEFAULT NULL COMMENT '创建人',
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
