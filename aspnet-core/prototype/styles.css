@@ -1227,6 +1227,11 @@ input, select {
   color: #64748b;
 }
 
+.task-post-table .sap-message-col {
+  min-width: 240px;
+  white-space: normal;
+}
+
 [data-batch-post]:disabled {
   cursor: not-allowed;
   opacity: .5;
