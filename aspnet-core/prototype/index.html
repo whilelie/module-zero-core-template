@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>领用配送页面原型</title>
   <link rel="icon" href="./app-icon.ico?v=20260717-app-icon" type="image/x-icon">
-  <link rel="stylesheet" href="./styles.css?v=20260824-stock-storage-package">
+  <link rel="stylesheet" href="./styles.css?v=20260826-storage-package-values-all">
 </head>
 <body>
   <header class="app-topbar">
@@ -371,6 +371,7 @@
                   <th>描述</th>
                   <th>基本单位</th>
                   <th>ATMS包装方式</th>
+                  <th>存储包装方式</th>
                   <th>工厂代码</th>
                   <th>库存地点</th>
                   <th>仓储类型</th>
@@ -383,9 +384,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr><td>金桂厂区</td><td>资材</td><td>厂内领用发货</td><td>MRO</td><td>13120801</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>TO</td><td>A 散货类</td><td>200A</td><td>3108</td><td>A01</td><td><span class="badge blue">抱叉</span></td><td>35</td><td><span class="badge green">是</span></td><td><span class="badge blue">平板车</span></td><td></td><td><button class="link-btn" data-open-short-haul data-short-haul-row-material="1100000021">修改</button><button class="link-btn danger">删除</button></td></tr>
-                <tr><td>金桂厂区</td><td>资材</td><td>采购收货</td><td>MRO</td><td>13121401</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>TO</td><td>B 包装袋类</td><td>200A</td><td>3108</td><td></td><td><span class="badge cyan">平叉</span></td><td>25</td><td><span class="badge gray">否</span></td><td><span class="badge gray">-</span></td><td></td><td><button class="link-btn" data-open-short-haul data-short-haul-row-material="20000002">修改</button><button class="link-btn danger">删除</button></td></tr>
-                <tr><td>金桂厂区</td><td>资材</td><td>采购收货</td><td>CHM</td><td>27060202</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>TO</td><td>C 桶装类</td><td>200A</td><td>3108</td><td>Z01</td><td><span class="badge amber">铲车</span></td><td>20</td><td><span class="badge green">是</span></td><td><span class="badge amber">自卸车</span></td><td></td><td><button class="link-btn" data-open-short-haul data-short-haul-row-material="20000003">修改</button><button class="link-btn danger">删除</button></td></tr>
+                <tr><td>金桂厂区</td><td>资材</td><td>厂内领用发货</td><td>MRO</td><td>13120801</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>TO</td><td></td><td>01 栈板</td><td>200A</td><td>3108</td><td>A01</td><td><span class="badge blue">抱叉</span></td><td>35</td><td><span class="badge green">是</span></td><td><span class="badge blue">平板车</span></td><td></td><td><button class="link-btn" data-open-short-haul data-short-haul-row-material="1100000021">修改</button><button class="link-btn danger">删除</button></td></tr>
+                <tr><td>金桂厂区</td><td>资材</td><td>采购收货</td><td>MRO</td><td>13121401</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>TO</td><td>B</td><td>02 箱</td><td>200A</td><td>3108</td><td></td><td><span class="badge cyan">平叉</span></td><td>25</td><td><span class="badge gray">否</span></td><td><span class="badge gray">-</span></td><td></td><td><button class="link-btn" data-open-short-haul data-short-haul-row-material="20000002">修改</button><button class="link-btn danger">删除</button></td></tr>
+                <tr><td>金桂厂区</td><td>资材</td><td>采购收货</td><td>CHM</td><td>27060202</td><td>20000003</td><td>木片 桉木 中国 海南</td><td>TO</td><td></td><td>02 箱</td><td>200A</td><td>3108</td><td>Z01</td><td><span class="badge amber">铲车</span></td><td>20</td><td><span class="badge green">是</span></td><td><span class="badge amber">自卸车</span></td><td></td><td><button class="link-btn" data-open-short-haul data-short-haul-row-material="20000003">修改</button><button class="link-btn danger">删除</button></td></tr>
               </tbody>
             </table>
           </div>
@@ -833,12 +834,12 @@
               <div class="table-wrap">
                 <table>
                   <thead>
-                    <tr><th>物料</th><th>描述</th><th>批次</th><th>认证种类</th><th>货源类型</th><th>货源标识</th><th>可供量</th><th>基本单位</th><th>仓库号</th><th>仓储类型</th><th>仓位</th><th>发料工厂</th><th>库存地点</th><th>库存类型</th><th>预约送货单号</th><th>收货日期</th><th>内向交货单</th><th>交货单行项目</th><th>装运编号</th><th>装运项目</th><th>公司代码</th><th>船名</th><th>航次</th><th>码头免堆日期</th><th>逾期延滞费</th><th>转栈日期</th><th>特殊库存标识</th><th>特殊库存编号</th><th>是否免检</th><th>检验日期</th><th>作业成本</th></tr>
+                    <tr><th>物料</th><th>描述</th><th>批次</th><th>认证种类</th><th>货源类型</th><th>货源标识</th><th>可供量</th><th>基本单位</th><th>仓库号</th><th>仓储类型</th><th>仓位</th><th>发料工厂</th><th>库存地点</th><th>库存类型</th><th>预约送货单号</th><th>收货日期</th><th>内向交货单</th><th>交货单行项目</th><th>装运编号</th><th>装运项目</th><th>公司代码</th><th>船名</th><th>航次</th><th>码头免堆日期</th><th>逾期延滞费</th><th>转栈日期</th><th>特殊库存标识</th><th>特殊库存编号</th><th>是否免检</th><th>检验日期</th><th>ATMS包装方式</th><th>存储包装方式</th><th>作业成本</th></tr>
                   </thead>
                   <tbody>
-                    <tr><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td></td><td></td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td><td>30</td><td>TO</td><td>107</td><td>A01</td><td>1210</td><td>2601</td><td>1106</td><td>Q</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>否</td><td>2026.5.10</td><td>10</td></tr>
-                    <tr><td>20000002</td><td>木片 桉木 中国 广西</td><td></td><td></td><td><span class="badge green">供应商送货</span></td><td>SUP-20260508-002</td><td>40</td><td>TO</td><td></td><td></td><td></td><td>2601</td><td></td><td></td><td>800000349B</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>是</td><td></td><td>8</td></tr>
-                    <tr><td>20000003</td><td>木片 桉木 中国 海南</td><td></td><td></td><td><span class="badge amber">码头仓库</span></td><td>SUP-20260508-003</td><td>50</td><td>TO</td><td></td><td>Z01</td><td></td><td>2601</td><td>1112</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>2026.5.1</td><td>4</td><td>2026.5.18</td><td></td><td></td><td>是</td><td></td><td>5</td></tr>
+                    <tr><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td></td><td></td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td><td>30</td><td>TO</td><td>107</td><td>A01</td><td>1210</td><td>2601</td><td>1106</td><td>Q</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>否</td><td>2026.5.10</td><td>A</td><td>01 栈板</td><td>10</td></tr>
+                    <tr><td>20000002</td><td>木片 桉木 中国 广西</td><td></td><td></td><td><span class="badge green">供应商送货</span></td><td>SUP-20260508-002</td><td>40</td><td>TO</td><td></td><td></td><td></td><td>2601</td><td></td><td></td><td>800000349B</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>是</td><td></td><td>B</td><td>02 箱</td><td>8</td></tr>
+                    <tr><td>20000003</td><td>木片 桉木 中国 海南</td><td></td><td></td><td><span class="badge amber">码头仓库</span></td><td>SUP-20260508-003</td><td>50</td><td>TO</td><td></td><td>Z01</td><td></td><td>2601</td><td>1112</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>2026.5.1</td><td>4</td><td>2026.5.18</td><td></td><td></td><td>是</td><td></td><td>C</td><td>02 箱</td><td>5</td></tr>
                   </tbody>
                 </table>
               </div>
@@ -942,6 +943,8 @@
                   <th>行项目</th>
                   <th>物料</th>
                   <th>描述</th>
+                  <th>ATMS包装方式</th>
+                  <th>存储包装方式</th>
                   <th>叉车类型</th>
                   <th>叉车载重限制</th>
                   <th>短驳车类型</th>
@@ -968,49 +971,49 @@
                 <tr>
                   <td class="select-col"><input type="checkbox" checked aria-label="选择分配结果 PSD-20260509-001"></td>
                   <td>2000</td><td>2601</td><td>PSD-20260509-001</td><td>DELREQ-20260507-002</td><td>宁波亚浆PM1区域</td><td>PM1</td><td>1000000137</td><td>1</td>
-                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge cyan">平叉</span></td><td>3</td><td><span>-</span></td><td>-</td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
+                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>A 散货类</td><td>01 栈板</td><td><span class="badge cyan">平叉</span></td><td>3</td><td><span>-</span></td><td>-</td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
                   <td>6</td><td>TO</td><td>1106</td><td>3108</td><td>NB0004</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td>
                   <td><span class="badge amber">未生成任务</span></td><td><span class="badge green">下发成功</span></td><td>-</td><td>1002898403</td><td>-</td>
                 </tr>
                  <tr>
                   <td class="select-col"><input type="checkbox" checked aria-label="选择分配结果 PSD-20260509-002"></td>
                   <td>2000</td><td>2601</td><td>PSD-20260509-002</td><td>DELREQ-20260507-002</td><td>宁波亚浆PM1区域</td><td>PM1</td><td>1000000137</td><td>1</td>
-                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge cyan">平叉</span></td><td>3</td><td><span>-</span></td><td>-</td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
+                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>A 散货类</td><td>01 栈板</td><td><span class="badge cyan">平叉</span></td><td>3</td><td><span>-</span></td><td>-</td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
                   <td>6</td><td>TO</td><td>1106</td><td>3108</td><td>NB0004</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td>
                   <td><span class="badge amber">未生成任务</span></td><td><span class="badge green">下发成功</span></td><td>-</td><td>1002898404</td><td>-</td>
                 </tr>
                  <tr>
                   <td class="select-col"><input type="checkbox" checked aria-label="选择分配结果 PSD-20260509-003"></td>
                   <td>2000</td><td>2601</td><td>PSD-20260509-003</td><td>DELREQ-20260507-002</td><td>宁波亚浆PM1区域</td><td>PM1</td><td>1000000137</td><td>1</td>
-                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge cyan">平叉</span></td><td>3</td><td><span>-</span></td><td>-</td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
+                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>A 散货类</td><td>01 栈板</td><td><span class="badge cyan">平叉</span></td><td>3</td><td><span>-</span></td><td>-</td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
                   <td>6</td><td>TO</td><td>1106</td><td>3108</td><td>NB0004</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td>
                   <td><span class="badge amber">未生成任务</span></td><td><span class="badge green">下发成功</span></td><td>-</td><td>1002898405</td><td>-</td>
                 </tr>
                  <tr>
                   <td class="select-col"><input type="checkbox" checked aria-label="选择分配结果 PSD-20260509-004"></td>
                   <td>2000</td><td>2601</td><td>PSD-20260509-004</td><td>DELREQ-20260507-002</td><td>宁波亚浆PM1区域</td><td>PM1</td><td>1000000137</td><td>1</td>
-                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td><span class="badge cyan">平叉</span></td><td>3</td><td><span>-</span><td>-</td></td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
+                  <td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>A 散货类</td><td>01 栈板</td><td><span class="badge cyan">平叉</span></td><td>3</td><td><span>-</span><td>-</td></td><td><span class="badge blue">厂内资材库</span></td><td>SUP-20260508-001</td>
                   <td>2</td><td>TO</td><td>1106</td><td>3108</td><td>NB0004</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td>
                   <td><span class="badge amber">未生成任务</span></td><td><span class="badge green">下发成功</span></td><td>-</td><td>1002898406</td><td>-</td>
                 </tr>
                 <tr>
                   <td class="select-col"></td>
                   <td>2000</td><td>2601</td><td>PSD-20260508-002</td><td>DELREQ-20260507-003</td><td>宁波亚浆PM1区域</td><td>PM1</td><td>1000000137</td><td>2</td>
-                  <td>20000002</td><td>木片 桉木 中国 广西</td><td><span>-</span></td><td>-</td><td><span class="badge blue">平板车</span></td><td>2</td><td><span class="badge green">供应商送货</span></td><td>SUP-20260508-002</td>
+                  <td>20000002</td><td>木片 桉木 中国 广西</td><td>B 包装袋类</td><td>02 箱</td><td><span>-</span></td><td>-</td><td><span class="badge blue">平板车</span></td><td>2</td><td><span class="badge green">供应商送货</span></td><td>SUP-20260508-002</td>
                   <td>20</td><td>TO</td><td>1106</td><td>3108</td><td>NB0005</td><td>2026.05.08</td><td>上午</td><td>2026.05.09</td>
                   <td>-</td><td><span class="badge green">下发成功</span></td><td>-</td><td>800000349B</td><td>-</td>
                 </tr>
                    <tr>
                   <td class="select-col"></td>
                   <td>2000</td><td>2601</td><td>PSD-20260508-003</td><td>DELREQ-20260506-001</td><td>宁波亚浆PM2区域</td><td>PM1</td><td>1000000134</td><td>2</td>
-                  <td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td><span class="badge blue">抱叉</span></td><td>3</td><td><span>-</span></td><td>-</td><td><span class="badge green">供应商送货</span></td><td>SUP-20260507-001</td>
+                  <td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>A 散货类</td><td>01 栈板</td><td><span class="badge blue">抱叉</span></td><td>3</td><td><span>-</span></td><td>-</td><td><span class="badge green">供应商送货</span></td><td>SUP-20260507-001</td>
                   <td>20</td><td>TO</td><td>1112</td><td>3108</td><td>NB0006</td><td>2026.05.08</td><td>上午</td><td>2026.05.10</td>
                   <td>-</td><td><span class="badge green">下发成功</span></td><td>-</td><td>800000149B</td><td>-</td>
                 </tr>
                  <tr>
                   <td class="select-col"></td>
                   <td>2000</td><td>2601</td><td>PSD-20260506-001</td><td>DELREQ-20260505-001</td><td>宁波亚浆PM2区域</td><td>PM1</td><td>1000000133</td><td>1</td>
-                  <td>20000002</td><td>木片 桉木 中国 广西</td><td><span>-</span></td><td>-</td><td><span class="badge blue">平板车</span></td><td>2</td><td><span class="badge amber">码头仓库</span></td><td>SUP-20260505-001</td>
+                  <td>20000002</td><td>木片 桉木 中国 广西</td><td>B 包装袋类</td><td>02 箱</td><td><span>-</span></td><td>-</td><td><span class="badge blue">平板车</span></td><td>2</td><td><span class="badge amber">码头仓库</span></td><td>SUP-20260505-001</td>
                   <td>20</td><td>TO</td><td>1112</td><td>3108</td><td>NB0007</td><td>2026.05.08</td><td>上午</td><td>2026.05.10</td>
                   <td>-</td><td><span class="badge red">下发失败</span></td><td>绑定短驳计划失败</td><td>-</td><td><button class="link-btn" data-toast="已重新下发">重新下发</button></td>
                 </tr>
@@ -1171,7 +1174,7 @@
                 <tbody>
                   <tr><td>1000000098</td><td>宁波亚浆PM1区域</td><td><span class="badge amber">待派工</span></td><td><span class="badge cyan">平叉</span></td><td>3T</td><td>-</td><td>-</td><td>-</td><td><button class="link-btn" data-open-receipt-appointment>2411151642</button></td><td>0180013000</td><td>000010</td><td>7003</td><td>104</td><td>1101</td><td>A01</td><td>A01-DSL03</td><td>-</td><td>-</td><td>30000103</td><td>长纤化学浆(NBKP) 白云</td><td>ADT</td><td>-</td><td>3</td><td><button class="link-btn" data-open-receipt-assign data-task-action="派工">派工</button><button class="link-btn" data-open-receipt-detail>任务详情</button></td></tr>
                   <tr><td>1000000099</td><td>宁波亚浆PM1区域</td><td><span class="badge blue">已派工</span></td><td><span class="badge cyan">平叉</span></td><td>3T</td><td>张三</td><td>-</td><td>-</td><td><button class="link-btn" data-open-receipt-appointment>2411151642</button></td><td>0180013000</td><td>000020</td><td>7003</td><td>104</td><td>1101</td><td>A01</td><td>A01-DSL01</td><td>-</td><td>-</td><td>30000102</td><td>短纤化学浆(LBKP) LPPI 正品</td><td>ADT</td><td>-</td><td>3</td><td><button class="link-btn" data-open-receipt-assign data-task-action="改派" data-role="叉车">改派（叉车）</button><button class="link-btn" data-open-receipt-device data-device-action="绑定设备">绑定设备</button><button class="link-btn" data-open-receipt-detail>任务详情</button></td></tr>
-                  <tr><td>1000000100</td><td>宁波亚浆PM1区域</td><td><span class="badge blue">已派工</span></td><td><span class="badge cyan">平叉</span></td><td>3T</td><td>李四</td><td>5110100022018A0</td><td><span class="badge cyan">平叉</span></td><td><button class="link-btn" data-open-receipt-appointment>2411151642</button></td><td>0180013000</td><td>000030</td><td>7003</td><td>104</td><td>1101</td><td>A01</td><td>A01-DSL05</td><td>-</td><td>-</td><td>1000000701</td><td>阳离子淀粉（ASA乳化用）</td><td>KG</td><td>A 散货类</td><td>2</td><td><button class="link-btn" data-open-receipt-assign data-task-action="改派" data-role="叉车">改派（叉车）</button><button class="link-btn" data-open-receipt-device data-device-action="变更设备">变更设备</button><button class="link-btn" data-open-receipt-detail>任务详情</button></td></tr>
+                  <tr><td>1000000100</td><td>宁波亚浆PM1区域</td><td><span class="badge blue">已派工</span></td><td><span class="badge cyan">平叉</span></td><td>3T</td><td>李四</td><td>5110100022018A0</td><td><span class="badge cyan">平叉</span></td><td><button class="link-btn" data-open-receipt-appointment>2411151642</button></td><td>0180013000</td><td>000030</td><td>7003</td><td>104</td><td>1101</td><td>A01</td><td>A01-DSL05</td><td>-</td><td>-</td><td>1000000701</td><td>阳离子淀粉（ASA乳化用）</td><td>KG</td><td>A</td><td>2</td><td><button class="link-btn" data-open-receipt-assign data-task-action="改派" data-role="叉车">改派（叉车）</button><button class="link-btn" data-open-receipt-device data-device-action="变更设备">变更设备</button><button class="link-btn" data-open-receipt-detail>任务详情</button></td></tr>
                 </tbody>
               </table>
             </div>
@@ -1319,10 +1322,10 @@
                 <tr><th>工厂</th><th>物料</th><th>描述</th><th>批次</th><th>库存地点</th><th>库存类型</th><th>仓库号</th><th>仓储类型</th><th>仓位</th><th>基本单位</th><th>SAP库存量</th><th>占用量</th><th>可用库存</th><th>特殊库存标识</th><th>特殊库存编号</th><th>认证种类</th><th>收货日期</th><th>内向交货单</th><th>交货单行项目</th><th>装运编号</th><th>装运项目</th><th>公司代码</th><th>船名</th><th>航次</th><th>码头免堆日期</th><th>逾期延滞费</th><th>转栈日期</th><th>是否免检</th><th>检验时间</th><th>存储包装方式</th></tr>
               </thead>
               <tbody>
-                <tr><td>2000</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>B20260501</td><td>3108</td><td>E</td><td>107</td><td>A01</td><td>1210</td><td>NM3</td><td>120</td><td><button class="link-btn" data-open-occupation-detail>30</button></td><td>90</td><td></td><td></td><td>FSC</td><td>2026.05.01</td><td></td><td></td><td></td><td></td><td>1000</td><td></td><td></td><td></td><td>0</td><td></td><td>Y</td><td>0</td><td>散货类</td></tr>
-                <tr><td>2000</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>B20260503</td><td>3108</td><td>E</td><td>107</td><td>A01</td><td>1211</td><td>NM3</td><td>80</td><td><span class="muted">0</span></td><td>80</td><td></td><td></td><td>FSC</td><td>2026.05.03</td><td></td><td></td><td></td><td></td><td>1000</td><td></td><td></td><td></td><td>0</td><td></td><td>Y</td><td>0</td><td>散货类</td></tr>
-                <tr><td>2000</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>B20260428</td><td>3108</td><td>E</td><td>107</td><td>A02</td><td>1305</td><td>NM3</td><td>50</td><td><button class="link-btn" data-open-occupation-detail>50</button></td><td><span class="badge red">0</span></td><td></td><td></td><td></td><td>2026.04.28</td><td></td><td></td><td></td><td></td><td>1000</td><td></td><td></td><td></td><td>0</td><td></td><td>Y</td><td>0</td><td>散货类</td></tr>
-                <tr><td>3000</td><td>1000000014</td><td>盐酸 浓度31%</td><td></td><td>3208</td><td>Q</td><td>108</td><td>B01</td><td>2101</td><td>TO</td><td>26</td><td><button class="link-btn" data-open-occupation-detail>8</button></td><td>18</td><td>Q</td><td>P2026001</td><td></td><td>2026.04.20</td><td></td><td></td><td></td><td></td><td>1000</td><td></td><td></td><td></td><td>0</td><td></td><td>N</td><td>24</td><td>包装袋类</td></tr>
+                <tr><td>2000</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>B20260501</td><td>3108</td><td>E</td><td>107</td><td>A01</td><td>1210</td><td>NM3</td><td>120</td><td><button class="link-btn" data-open-occupation-detail>30</button></td><td>90</td><td></td><td></td><td>FSC</td><td>2026.05.01</td><td></td><td></td><td></td><td></td><td>1000</td><td></td><td></td><td></td><td>0</td><td></td><td>Y</td><td>0</td><td>01 栈板</td></tr>
+                <tr><td>2000</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td>B20260503</td><td>3108</td><td>E</td><td>107</td><td>A01</td><td>1211</td><td>NM3</td><td>80</td><td><span class="muted">0</span></td><td>80</td><td></td><td></td><td>FSC</td><td>2026.05.03</td><td></td><td></td><td></td><td></td><td>1000</td><td></td><td></td><td></td><td>0</td><td></td><td>Y</td><td>0</td><td>01 栈板</td></tr>
+                <tr><td>2000</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>B20260428</td><td>3108</td><td>E</td><td>107</td><td>A02</td><td>1305</td><td>NM3</td><td>50</td><td><button class="link-btn" data-open-occupation-detail>50</button></td><td><span class="badge red">0</span></td><td></td><td></td><td></td><td>2026.04.28</td><td></td><td></td><td></td><td></td><td>1000</td><td></td><td></td><td></td><td>0</td><td></td><td>Y</td><td>0</td><td>01 栈板</td></tr>
+                <tr><td>3000</td><td>1000000014</td><td>盐酸 浓度31%</td><td></td><td>3208</td><td>Q</td><td>108</td><td>B01</td><td>2101</td><td>TO</td><td>26</td><td><button class="link-btn" data-open-occupation-detail>8</button></td><td>18</td><td>Q</td><td>P2026001</td><td></td><td>2026.04.20</td><td></td><td></td><td></td><td></td><td>1000</td><td></td><td></td><td></td><td>0</td><td></td><td>N</td><td>24</td><td>01 栈板</td></tr>
               </tbody>
             </table>
           </div>
@@ -1983,7 +1986,8 @@
           <label class="form-item"><span>物料:</span><input data-short-haul-material value="1100000021"></label>
           <label class="form-item"><span>描述:</span><strong class="field-value" data-short-haul-description>LNG天然气 热值≥9200Kcal/NM3</strong></label>
           <label class="form-item"><span>基本单位:</span><strong class="field-value" data-short-haul-unit>TO</strong></label>
-          <label class="form-item required"><span>ATMS包装方式:</span><select><option>A 散货类</option><option>B 包装袋类</option><option>C 桶装类</option><option>D 多包材类(标准件)</option><option>E 多包材类(非标准件)</option><option>F 其它</option></select></label>
+          <label class="form-item"><span>ATMS包装方式:</span><select><option>A 散货类</option><option>B 包装袋类</option><option>C 桶装类</option><option>D 多包材类(标准件)</option><option>E 多包材类(非标准件)</option><option>F 其它</option></select></label>
+          <label class="form-item"><span>存储包装方式:</span><select><option selected>请选择</option><option>01 栈板</option><option>02 箱</option></select></label>
           <label class="form-item required"><span>工厂代码:</span><input value="200A"></label>
           <label class="form-item"><span>库存地点:</span><input value="3108"></label>
           <label class="form-item"><span>仓储类型:</span><input value="A01"></label>
@@ -2169,11 +2173,11 @@
         <div class="table-wrap">
           <table>
             <thead>
-              <tr><th>校验结果</th><th>厂区</th><th>业务</th><th>场景</th><th>物料类型</th><th>物料组</th><th>物料</th><th>描述</th><th>基本单位</th><th>ATMS包装方式</th><th>工厂代码</th><th>库存地点</th><th>仓储类型</th><th>叉车类型</th><th>叉车载重限制</th><th>叉车备注</th><th>需要短驳</th><th>短驳车类型</th><th>短驳载重限制</th><th>短驳备注</th></tr>
+              <tr><th>校验结果</th><th>厂区</th><th>业务</th><th>场景</th><th>物料类型</th><th>物料组</th><th>物料</th><th>描述</th><th>基本单位</th><th>ATMS包装方式</th><th>存储包装方式</th><th>工厂代码</th><th>库存地点</th><th>仓储类型</th><th>叉车类型</th><th>叉车载重限制</th><th>叉车备注</th><th>需要短驳</th><th>短驳车类型</th><th>短驳载重限制</th><th>短驳备注</th></tr>
             </thead>
             <tbody>
-              <tr><td><span class="badge green">校验成功</span></td><td>金桂厂区</td><td>资材</td><td>厂内领用发货</td><td>MRO</td><td>13120801</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>TO</td><td>A 散货类</td><td>200A</td><td>3108</td><td>A01</td><td>抱叉</td><td>35</td><td>-</td><td>是</td><td>平板车</td><td></td><td></td></tr>
-              <tr class="import-error-row"><td><span class="badge red">校验失败：叉车类型必填</span></td><td>金桂厂区</td><td>资材</td><td>采购收货</td><td>MRO</td><td>13121401</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>TO</td><td>B 包装袋类</td><td>200A</td><td>3108</td><td></td><td></td><td>25</td><td>-</td><td>否</td><td></td><td></td><td></td></tr>
+              <tr><td><span class="badge green">校验成功</span></td><td>金桂厂区</td><td>资材</td><td>厂内领用发货</td><td>MRO</td><td>13120801</td><td>1100000021</td><td>LNG天然气 热值≥9200Kcal/NM3</td><td>TO</td><td>A 散货类</td><td>01 栈板</td><td>200A</td><td>3108</td><td>A01</td><td>抱叉</td><td>35</td><td>-</td><td>是</td><td>平板车</td><td></td><td></td></tr>
+              <tr class="import-error-row"><td><span class="badge red">校验失败：叉车类型必填</span></td><td>金桂厂区</td><td>资材</td><td>采购收货</td><td>MRO</td><td>13121401</td><td>20000002</td><td>木片 桉木 中国 广西</td><td>TO</td><td>B 包装袋类</td><td>02 箱</td><td>200A</td><td>3108</td><td></td><td></td><td>25</td><td>-</td><td>否</td><td></td><td></td><td></td></tr>
             </tbody>
           </table>
         </div>
@@ -2521,6 +2525,6 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=20260824-stock-storage-package"></script>
+  <script src="./app.js?v=20260826-storage-package-values-all"></script>
 </body>
 </html>

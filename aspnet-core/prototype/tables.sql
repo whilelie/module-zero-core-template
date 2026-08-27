@@ -617,7 +617,8 @@ CREATE TABLE `material_operation_vehicle_config` (
   `C_MTART` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '物料类型',
   `C_MATKL` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '物料组',
   `C_MATNR` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '物料',
-  `N_ATMS_PACK_TYPE` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'ATMS包装方式 A-散货类 B-包装袋类 C-桶装类 D-多包材类(标准件) E-多包材类(非标准件) F-其它',
+  `N_ATMS_PACK_TYPE` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT 'ATMS包装方式 A-散货类 B-包装袋类 C-桶装类 D-多包材类(标准件) E-多包材类(非标准件) F-其它',
+  `C_ZCCBZ` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '存储包装方式',
   `C_WERKS` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '工厂代码',
   `C_LGORT` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '库存地点',
   `C_LGTYP` varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '仓储类型',
@@ -633,7 +634,7 @@ CREATE TABLE `material_operation_vehicle_config` (
   `D_LAST_MODIFY_TIME` datetime DEFAULT NULL COMMENT '更新时间',
   `N_LAST_MODIFIER` bigint DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`C_ID`),
-  UNIQUE KEY `UK_MOV_CONFIG` (`N_FACTORY_AREA_ID`, `C_WERKS`,`N_BUSINESS_TYPE`,`C_MTART`,`C_MATKL`,`C_MATNR`)
+  UNIQUE KEY `UK_MOV_CONFIG` (`N_FACTORY_AREA_ID`,`C_WERKS`,`N_BUSINESS_TYPE`,`C_MTART`,`C_MATKL`,`C_MATNR`,`N_ATMS_PACK_TYPE`,`C_ZCCBZ`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='厂内作业车辆配置表';
 
 
