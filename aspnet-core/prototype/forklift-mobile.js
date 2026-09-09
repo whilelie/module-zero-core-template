@@ -90,7 +90,7 @@ const deliveryTasks = [
     cancelAt: "",
     cancelReason: "",
     points: [
-      { deliveryNo: "PSD-20260506-006", material: "20000003", description: "木片 桉木 中国 海南", storage: "3108", date: "2026.05.06", period: "下午", latestDate: "2026.05.07", quantity: 14, unit: "TO" },
+      { deliveryNo: "PSD-20260506-006", material: "20000003", description: "木片 桉木 中国 海南", storage: "3108", date: "2026.05.06", period: "下午", latestDate: "2026.05.07", quantity: 14, unit: "TO", pieceWeight: 2.05 },
       { deliveryNo: "PSD-20260506-007", material: "1100000022", description: "BOG蒸发气 热值≥8800Kcal/NM3", storage: "3104", date: "2026.05.07", period: "上午", latestDate: "2026.05.08", quantity: 9, unit: "NM3" }
     ]
   },
@@ -642,6 +642,35 @@ function readonlyLine(label, value) {
   return `<div class="readonly-line"><span>${label}</span><strong>${value || "-"}</strong></div>`;
 }
 
+function finishPackageCount(point) {
+  const savedCount = Number(point.actualPackages);
+  if (point.actualPackages !== undefined && point.actualPackages !== "" && Number.isFinite(savedCount) && savedCount >= 0) return savedCount;
+  const pieceWeight = Number(point.pieceWeight);
+  return Number.isFinite(pieceWeight) && pieceWeight > 0 ? Math.ceil(Number(point.quantity) / pieceWeight) : "";
+}
+
+function finishActualQuantity(point) {
+  const pieceWeight = Number(point.pieceWeight);
+  const packageCount = finishPackageCount(point);
+  return Number.isFinite(pieceWeight) && pieceWeight > 0 && packageCount !== ""
+    ? (packageCount * pieceWeight).toFixed(3)
+    : (point.actualQuantity ?? point.quantity);
+}
+
+function bindFinishPackageInputs() {
+  actionForm.querySelectorAll(".finish-package-input").forEach((input) => {
+    const updateActualQuantity = () => {
+      const actualInput = actionForm.querySelector(`.finish-actual-input[data-point-index="${input.dataset.pointIndex}"]`);
+      const pieceWeight = Number(input.dataset.pieceWeight);
+      const packageCount = Number.parseInt(input.value, 10);
+      if (!actualInput || !Number.isFinite(pieceWeight) || pieceWeight <= 0) return;
+      actualInput.value = Number.isFinite(packageCount) && packageCount >= 0 ? (packageCount * pieceWeight).toFixed(3) : "";
+    };
+    input.addEventListener("input", updateActualQuantity);
+    updateActualQuantity();
+  });
+}
+
 function actionTemplate(action, task) {
   if (action === "start" || action === "bind") {
     return `
@@ -665,11 +694,16 @@ function actionTemplate(action, task) {
                 <span>配送需求单号</span><b>${demandNoForPoint(point)}</b>
                 <span>物料</span><b>${point.material}</b>
                 <span>描述</span><b>${point.description}</b>
+                <span>标准件重</span><b>${point.pieceWeight ? `${point.pieceWeight} ${point.unit}/包` : "-"}</b>
                 <span>计划数量</span><b>${point.quantity} ${point.unit}</b>
               </div>
               <label class="required">
                 <span>实际完成数量</span>
-                <input class="finish-actual-input" data-point-index="${index}" value="${point.actualQuantity ?? point.quantity}" inputmode="decimal" required>
+                <input class="finish-actual-input" data-point-index="${index}" value="${finishActualQuantity(point)}" inputmode="decimal" ${point.pieceWeight ? "readonly" : ""} required>
+              </label>
+              <label class="${point.pieceWeight ? "required" : ""}">
+                <span>实际完成包数</span>
+                ${point.pieceWeight ? `<input class="finish-package-input" data-point-index="${index}" data-piece-weight="${point.pieceWeight}" value="${finishPackageCount(point)}" inputmode="numeric" min="0" step="1" required>` : `<input value="-" disabled>`}
               </label>
               <label>
                 <span>差异原因</span>
@@ -697,6 +731,7 @@ function openAction(action, task = getSelectedTask()) {
   const titles = { start: "任务开始", bind: "绑定设备", finish: "任务结束", device: "变更设备" };
   actionTitle.textContent = titles[action] || "任务操作";
   actionForm.innerHTML = actionTemplate(action, task);
+  bindFinishPackageInputs();
   actionMask.classList.remove("hidden");
   actionModal.classList.remove("hidden");
   actionModal.setAttribute("aria-hidden", "false");
@@ -735,6 +770,12 @@ function confirmAction() {
     task.deviceType = document.querySelector("#action-device-type")?.value || task.deviceType;
     showToast(currentAction === "bind" ? "设备绑定已提交" : "任务已开始");
   } else if (currentAction === "finish") {
+    const emptyPackageCount = Array.from(document.querySelectorAll(".finish-package-input")).find((input) => !input.value);
+    if (emptyPackageCount) {
+      showToast("请输入实际完成包数");
+      emptyPackageCount.focus();
+      return;
+    }
     const emptyQuantity = Array.from(document.querySelectorAll(".finish-actual-input")).find((input) => !input.value);
     if (emptyQuantity) {
       showToast("请输入实际完成数量");
@@ -745,6 +786,11 @@ function confirmAction() {
       const point = task.points[Number(input.dataset.pointIndex)];
       if (!point) return;
       point.actualQuantity = input.value;
+    });
+    document.querySelectorAll(".finish-package-input").forEach((input) => {
+      const point = task.points[Number(input.dataset.pointIndex)];
+      if (!point) return;
+      point.actualPackages = input.value;
     });
     document.querySelectorAll(".finish-reason-input").forEach((input) => {
       const point = task.points[Number(input.dataset.pointIndex)];

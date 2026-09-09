@@ -780,6 +780,21 @@ bindTaskNoModal("[data-open-task-start]", taskStartModal, "[data-task-start-no]"
 bindTaskNoModal("[data-open-task-finish]", taskFinishModal, "[data-task-finish-no]");
 bindTaskNoModal("[data-open-task-device]", taskDeviceModal, "[data-task-device-no]");
 
+taskFinishModal?.querySelectorAll("[data-finish-packages]").forEach((input) => {
+  const updateActualQuantity = () => {
+    const row = input.closest("tr");
+    const actualInput = row?.querySelector("[data-finish-actual]");
+    const pieceWeight = Number(row?.dataset.pieceWeight);
+    const packageCount = Number.parseInt(input.value, 10);
+    if (!actualInput || !Number.isFinite(pieceWeight) || pieceWeight <= 0) return;
+    actualInput.value = Number.isFinite(packageCount) && packageCount >= 0
+      ? (packageCount * pieceWeight).toFixed(3)
+      : "";
+  };
+  input.addEventListener("input", updateActualQuantity);
+  updateActualQuantity();
+});
+
 taskStartConfirm?.addEventListener("click", () => {
   if (!requireModalValue(taskStartModal, "[data-task-start-device]", "请输入设备号")) return;
   if (!requireModalValue(taskStartModal, "[data-task-start-device-type]", "请选择设备类型")) return;

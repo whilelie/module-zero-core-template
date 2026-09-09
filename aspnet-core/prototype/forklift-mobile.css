@@ -1032,6 +1032,11 @@ button {
   min-height: 70px;
 }
 
+.finish-actual-input[readonly] {
+  background: #f2f6fa;
+  color: #334155;
+}
+
 .action-modal footer {
   border-top: 1px solid var(--line);
   display: flex;
