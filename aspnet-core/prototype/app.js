@@ -981,6 +981,17 @@ document.querySelectorAll("[data-return-receipt-task]").forEach((button) => {
   });
 });
 
+document.querySelectorAll("[data-open-approval-record-window]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const approvalUrl = "./approval-record.html?requestid=1AF222719B10255DF33C033357ACFC8D7279&lan=7";
+    window.open(
+      approvalUrl,
+      "approvalRecordWindow",
+      "popup=yes,width=1200,height=520,left=120,top=80,resizable=yes,scrollbars=yes,location=yes"
+    );
+  });
+});
+
 const occupationDetailModal = document.getElementById("occupation-detail-modal");
 document.querySelectorAll("[data-open-occupation-detail]").forEach((button) => {
   button.addEventListener("click", () => {

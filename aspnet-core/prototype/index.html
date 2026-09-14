@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>领用配送页面原型</title>
   <link rel="icon" href="./app-icon.ico?v=20260717-app-icon" type="image/x-icon">
-  <link rel="stylesheet" href="./styles.css?v=20260914-pick-list-code-gap">
+  <link rel="stylesheet" href="./styles.css?v=20260914-approval-window">
 </head>
 <body>
   <header class="app-topbar">
@@ -1228,6 +1228,7 @@
             <button class="receipt-action-btn">携带物放行</button>
             <button class="receipt-action-btn">上传附件</button>
             <button class="receipt-action-btn">一车多单处理</button>
+            <button class="receipt-action-btn" type="button" data-open-approval-record-window>审批记录查询</button>
             <button class="receipt-action-btn icon-only" title="视图切换">▦</button>
           </div>
           <h2 class="visually-hidden" data-receipt-page-title>预约送货单明细</h2>
@@ -2579,6 +2580,6 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=20260914-pick-list-code-gap"></script>
+  <script src="./app.js?v=20260914-approval-window"></script>
 </body>
 </html>
