@@ -25,6 +25,7 @@ const taskFinishModal = document.querySelector("#task-finish-modal");
 const taskDeviceModal = document.querySelector("#task-device-modal");
 const taskDetailModal = document.querySelector("#task-detail-modal");
 const receiptDetailModal = document.querySelector("#receipt-detail-modal");
+const pickListPrintModal = document.querySelector("#pick-list-print-modal");
 const operationCostTitle = document.querySelector("#operation-cost-title");
 const loadingLimitTitle = document.querySelector("#loading-limit-title");
 const shortHaulTitle = document.querySelector("#short-haul-title");
@@ -36,6 +37,7 @@ const currentTabTitle = document.querySelector("#current-tab-title");
 const toast = document.querySelector("#toast");
 const shiftSelect = document.querySelector("[data-shift-select]");
 const businessSlots = document.querySelectorAll("[data-business-slot]");
+const businessGrid = document.querySelector(".business-grid");
 const costMaterialInput = document.querySelector("[data-cost-material]");
 const costDescriptionInput = document.querySelector("[data-cost-description]");
 const costUnitInput = document.querySelector("[data-cost-unit]");
@@ -59,7 +61,8 @@ window.prototypeAppVersion = "20260728-factory-columns";
 const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],
   "中班": ["16:00~20:00", "20:00~24:00"],
-  "早班": ["8:00~12:00", "12:00~16:00"]
+  "早班": ["8:00~12:00", "12:00~16:00"],
+  "常白班": ["08:00~17:00"]
 };
 
 const materialInfo = {
@@ -149,8 +152,12 @@ function requireModalValue(modal, selector, message) {
 function updateBusinessSlots() {
   if (!shiftSelect || businessSlots.length < 2) return;
   const slots = shiftBusinessSlots[shiftSelect.value] || shiftBusinessSlots["夜班"];
+  const isDayShift = shiftSelect.value === "常白班";
   businessSlots[0].textContent = slots[0];
-  businessSlots[1].textContent = slots[1];
+  businessSlots[1].textContent = slots[1] || "";
+  businessGrid?.classList.toggle("single-slot", isDayShift);
+  const secondBusinessSelect = businessGrid?.querySelector("select:nth-of-type(2)");
+  if (secondBusinessSelect) secondBusinessSelect.disabled = isDayShift;
 }
 
 function updateMaterialInfo() {
@@ -223,7 +230,8 @@ const buttonIcons = {
   check: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 6-11 11-5-5"></path></svg>',
   close: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>',
   save: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"></path><path d="M17 21v-8H7v8"></path><path d="M7 3v5h8"></path></svg>',
-  play: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7Z"></path></svg>'
+  play: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7Z"></path></svg>',
+  print: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>'
 };
 
 function getButtonIconName(text) {
@@ -231,10 +239,11 @@ function getButtonIconName(text) {
   if (text.includes("新增")) return "plus";
   if (text.includes("下载")) return "download";
   if (text.includes("导入")) return "upload";
+  if (text.includes("打印")) return "print";
   if (text.includes("重置") || text.includes("重新")) return "reset";
   if (text.includes("保存")) return "save";
   if (text.includes("取消") || text.includes("关闭")) return "close";
-  if (text.includes("执行") || text.includes("拆分") || text.includes("绑定")) return "play";
+  if (text.includes("执行") || text.includes("生成") || text.includes("拆分") || text.includes("绑定")) return "play";
   if (text.includes("确认") || text.includes("确定")) return "check";
   return "";
 }
@@ -318,7 +327,7 @@ function updateSplitRowStatus() {
 }
 
 function getTrialRowCheckboxes() {
-  return Array.from(document.querySelectorAll("#demand-trial tbody .select-col input[type='checkbox']"));
+  return Array.from(document.querySelectorAll("#demand-trial tbody .select-col input[type='checkbox']:not([data-pick-list-print-select])"));
 }
 
 function updateTrialBatchActionLabel() {
@@ -508,13 +517,33 @@ document.querySelectorAll("[data-open-short-haul]").forEach((button) => {
   });
 });
 
+const deviceSkillTypeOptions = {
+  "叉车": ["抱叉", "平叉", "铲车"],
+  "短驳车": ["平板车", "自卸车", "三轮车"]
+};
+
+function updateDeviceSkillTypeOptions(selectedType = "") {
+  const categoryField = deviceSkillModal?.querySelector("[data-device-skill-category]");
+  const typeField = deviceSkillModal?.querySelector("[data-device-skill-type]");
+  if (!categoryField || !typeField) return;
+
+  const options = deviceSkillTypeOptions[categoryField.value] || [];
+  typeField.innerHTML = '<option value="">请选择</option>' + options
+    .map((option) => `<option>${option}</option>`)
+    .join("");
+  typeField.value = options.includes(selectedType) ? selectedType : (options[0] || "");
+}
+
+deviceSkillModal?.querySelector("[data-device-skill-category]")?.addEventListener("change", () => {
+  updateDeviceSkillTypeOptions();
+});
+
 document.querySelectorAll("[data-open-device-skill]").forEach((button) => {
   button.addEventListener("click", () => {
     const row = button.closest("tr");
     const cells = row ? Array.from(row.children) : [];
     const factoryField = deviceSkillModal?.querySelector("[data-device-skill-factory]");
     const categoryField = deviceSkillModal?.querySelector("[data-device-skill-category]");
-    const typeField = deviceSkillModal?.querySelector("[data-device-skill-type]");
     const skillField = deviceSkillModal?.querySelector("[data-device-skill-required]");
     const remarkField = deviceSkillModal?.querySelector("textarea");
     if (deviceSkillTitle) {
@@ -522,7 +551,7 @@ document.querySelectorAll("[data-open-device-skill]").forEach((button) => {
     }
     if (factoryField) factoryField.value = cells.length ? cells[0].textContent.trim() : "2200";
     if (categoryField) categoryField.value = cells.length ? cells[1].textContent.trim() : "叉车";
-    if (typeField) typeField.value = cells.length ? cells[2].textContent.trim() : "平叉";
+    updateDeviceSkillTypeOptions(cells.length ? cells[2].textContent.trim() : "平叉");
     if (skillField) skillField.value = cells.length ? cells[3].textContent.trim() : "平叉";
     if (remarkField) remarkField.value = cells.length ? cells[4].textContent.trim() : "";
     openModal(deviceSkillModal);
@@ -649,7 +678,7 @@ document.querySelectorAll("[data-open-task-assign]").forEach((button) => {
         action === "改派" && role ? `任务改派（${role}）` : `任务${action}`;
     }
     const row = button.closest("tr");
-    const taskNo = row?.children[0]?.textContent.trim() || "";
+    const taskNo = row?.children[1]?.textContent.trim() || "";
     const taskNoField = taskAssignModal?.querySelector("[data-task-no]");
     if (taskNoField) {
       taskNoField.textContent = taskNo;
@@ -714,7 +743,7 @@ taskAssignConfirm?.addEventListener("click", () => {
 document.querySelectorAll("[data-open-task-cancel]").forEach((button) => {
   button.addEventListener("click", () => {
     const row = button.closest("tr");
-    const taskNo = row?.children[0]?.textContent.trim() || "";
+    const taskNo = row?.children[1]?.textContent.trim() || "";
     setFieldText(taskCancelModal?.querySelector("[data-task-cancel-no]"), taskNo);
     openModal(taskCancelModal);
   });
@@ -733,7 +762,7 @@ const bindTaskNoModal = (selector, modal, inputSelector) => {
   document.querySelectorAll(selector).forEach((button) => {
     button.addEventListener("click", () => {
       const row = button.closest("tr");
-      const taskNo = row?.children[0]?.textContent.trim() || "";
+      const taskNo = row?.children[1]?.textContent.trim() || "";
       const role = button.dataset.role === "短驳" ? "短驳" : "叉车";
       const taskInput = modal?.querySelector(inputSelector);
       setFieldText(taskInput, taskNo);
@@ -1052,7 +1081,7 @@ document.querySelectorAll("[data-scroll-trial]").forEach((button) => {
   });
 });
 
-document.querySelectorAll("#demand-trial tbody .select-col input[type='checkbox']").forEach((checkbox) => {
+document.querySelectorAll("#demand-trial tbody .select-col input[type='checkbox']:not([data-pick-list-print-select])").forEach((checkbox) => {
   checkbox.addEventListener("change", updateTrialSelectionUi);
 });
 
@@ -1187,6 +1216,86 @@ collapsibleNavTitleIds.forEach((titleId) => {
     event.preventDefault();
     toggleGroup();
   });
+});
+
+const demandTrialPage = document.querySelector("#demand-trial");
+const pickListPrintButton = demandTrialPage?.querySelector("[data-open-pick-list-print]");
+const pickListPrintLabel = pickListPrintButton?.querySelector("[data-pick-list-print-label]");
+const pickListPrintCheckboxes = Array.from(demandTrialPage?.querySelectorAll("[data-pick-list-print-select]") || []);
+
+const selectedPickListPrintCheckboxes = () => pickListPrintCheckboxes.filter((checkbox) => checkbox.checked);
+
+function updatePickListPrintSelection() {
+  const selectedCount = selectedPickListPrintCheckboxes().length;
+  if (pickListPrintButton) pickListPrintButton.disabled = selectedCount === 0;
+  if (pickListPrintLabel) pickListPrintLabel.textContent = selectedCount ? `打印领料单+${selectedCount}` : "打印领料单";
+}
+
+function renderPickListCodes() {
+  const barcode = pickListPrintModal?.querySelector("[data-pick-list-barcode]");
+  const qr = pickListPrintModal?.querySelector("[data-pick-list-qr]");
+  const value = barcode?.dataset.codeValue || "";
+  if (!barcode || !qr || !value) return;
+
+  const digitPatterns = ["0001101", "0011001", "0010011", "0111101", "0100011", "0110001", "0101111", "0111011", "0110111", "0001011"];
+  const barcodeBits = `101${Array.from(value, (digit) => digitPatterns[Number(digit)]).join("")}101`;
+  barcode.replaceChildren(...Array.from(barcodeBits, (bit) => {
+    const bar = document.createElement("span");
+    if (bit === "0") bar.className = "is-space";
+    bar.style.width = "1px";
+    return bar;
+  }));
+
+  const size = 21;
+  const matrix = Array.from({ length: size }, () => Array(size).fill(null));
+  const setModule = (x, y, dark) => {
+    if (x >= 0 && x < size && y >= 0 && y < size) matrix[y][x] = dark;
+  };
+  const drawFinder = (startX, startY) => {
+    for (let y = -1; y <= 7; y += 1) {
+      for (let x = -1; x <= 7; x += 1) setModule(startX + x, startY + y, false);
+    }
+    for (let y = 0; y < 7; y += 1) {
+      for (let x = 0; x < 7; x += 1) {
+        setModule(startX + x, startY + y, x === 0 || x === 6 || y === 0 || y === 6 || (x >= 2 && x <= 4 && y >= 2 && y <= 4));
+      }
+    }
+  };
+
+  drawFinder(0, 0);
+  drawFinder(size - 7, 0);
+  drawFinder(0, size - 7);
+  for (let index = 8; index < size - 8; index += 1) {
+    setModule(index, 6, index % 2 === 0);
+    setModule(6, index, index % 2 === 0);
+  }
+
+  let seed = Array.from(value).reduce((total, char) => ((total * 31) + char.charCodeAt(0)) >>> 0, 0);
+  matrix.forEach((row, y) => row.forEach((cell, x) => {
+    if (cell !== null) return;
+    seed = ((seed * 1664525) + 1013904223 + x + (y * size)) >>> 0;
+    matrix[y][x] = (seed & 3) !== 0;
+  }));
+
+  qr.replaceChildren(...matrix.flat().map((dark) => {
+    const module = document.createElement("span");
+    if (dark) module.className = "is-dark";
+    return module;
+  }));
+}
+
+pickListPrintCheckboxes.forEach((checkbox) => checkbox.addEventListener("change", updatePickListPrintSelection));
+updatePickListPrintSelection();
+
+pickListPrintButton?.addEventListener("click", () => {
+  if (!selectedPickListPrintCheckboxes().length) return;
+  openModal(pickListPrintModal);
+});
+
+renderPickListCodes();
+
+pickListPrintModal?.querySelector("[data-print-pick-list]")?.addEventListener("click", () => {
+  window.print();
 });
 // nav-group-collapse:end
 

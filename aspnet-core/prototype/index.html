@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>领用配送页面原型</title>
   <link rel="icon" href="./app-icon.ico?v=20260717-app-icon" type="image/x-icon">
-  <link rel="stylesheet" href="./styles.css?v=20260902-task-finish-packages">
+  <link rel="stylesheet" href="./styles.css?v=20260914-pick-list-code-gap">
 </head>
 <body>
   <header class="app-topbar">
@@ -720,7 +720,10 @@
           <div class="panel-head">
             <div>
             </div>
-            <button class="btn primary" data-scroll-trial data-trial-batch-action>执行试算</button>
+            <div class="top-actions">
+              <button class="btn ghost" type="button" data-open-pick-list-print disabled><span data-pick-list-print-label>打印领料单</span></button>
+              <button class="btn primary" data-scroll-trial data-trial-batch-action>执行试算</button>
+            </div>
           </div>
           <div class="table-wrap">
             <table class="sticky-action-table">
@@ -779,7 +782,7 @@
                   <td><button class="link-btn">执行试算</button></td>
                 </tr>
                 <tr>
-                  <td class="select-col"></td>
+                  <td class="select-col"><input type="checkbox" checked data-pick-list-print-select aria-label="选择已确认领料单 1000000134"></td>
                   <td>2000</td><td>2601</td><td>1000000134</td><td>2026.05.06</td>
                   <td>1</td><td>1100000022</td><td>BOG蒸发气 热值≥8800Kcal/NM3</td><td><span class="badge cost-missing">无</span></td><td>20</td><td>NM3</td><td>-</td><td>-</td><td>-</td>
                   <td>DELREQ-20260507-006</td><td>3108</td><td>2026.05.07</td><td>上午</td><td>2026.05.08</td><td>已确认</td>
@@ -907,6 +910,7 @@
             <label>区域<select><option>请选择</option><option selected>宁波亚浆PM1区域</option><option>宁波亚浆PM2区域</option></select></label>
             <label>申请部门<input value="PM1"></label>
             <label>MES仓位<input value="NB0004"></label>
+            <label>物料类型<select><option>请选择</option><option>MRO</option><option>CHM</option><option>PACK</option><option>PLP</option></select></label>
             <label>配送日期<input value="2026.05.08"></label>
             <label>配送时段<select><option>请选择</option><option selected>上午</option><option>下午</option><option>全天</option></select></label>
             <label>收货库存地点<input value="3108"></label>
@@ -1776,7 +1780,7 @@
           <label class="form-item"><span>客户:</span><select class="placeholder-select"><option>请选择客户</option></select></label>
           <label class="form-item required"><span>平台集:</span><div class="multi-select"><em>纸成品A仓平台集 ×</em><strong>+2</strong></div></label>
           <label class="form-item"><span>员工类型:</span><select><option>叉车司机</option><option>备货司机</option><option>短驳司机</option></select></label>
-          <label class="form-item"><span>班组:</span><select data-shift-select><option>夜班</option><option>早班</option><option>中班</option></select></label>
+          <label class="form-item"><span>班组:</span><select data-shift-select><option>夜班</option><option>早班</option><option>中班</option><option>常白班</option></select></label>
           <label class="form-item"><span>员工饱和度:</span><input value="2"></label>
 
           <div class="form-item business-item">
@@ -1999,7 +2003,7 @@
 
           <h3 class="form-section-title">短驳配置</h3>
           <label class="form-item required"><span>需要短驳:</span><select><option>是</option><option>否</option></select></label><br/>
-          <label class="form-item"><span>短驳车类型:</span><select><option>平板车</option><option>自卸车</option></select></label>
+          <label class="form-item"><span>短驳车类型:</span><select><option>平板车</option><option>自卸车</option><option>三轮车</option></select></label>
             <label class="form-item"><span>短驳载重限制:</span><input value="35"></label>
           <label class="form-item"><span>短驳备注:</span><input placeholder="请输入"></label>
         </div>
@@ -2025,7 +2029,7 @@
         <div class="operation-cost-form">
           <label class="form-item required"><span>工厂代码:</span><input data-device-skill-factory value="2200" required></label>
           <label class="form-item required"><span>设备大类:</span><select data-device-skill-category><option value="">请选择</option><option selected>叉车</option><option>短驳车</option></select></label>
-          <label class="form-item required"><span>设备类型:</span><select data-device-skill-type><option value="">请选择</option><option selected>平叉</option><option>抱叉</option><option>铲车</option><option>平板车</option><option>自卸车</option></select></label>
+          <label class="form-item required"><span>设备类型:</span><select data-device-skill-type><option value="">请选择</option><option>抱叉</option><option selected>平叉</option><option>铲车</option></select></label>
           <label class="form-item required"><span>所需技能:</span><select data-device-skill-required><option value="">请选择</option><option selected>平叉</option><option>抱叉</option><option>铲车</option><option>短驳驾驶</option></select></label>
           <label class="form-item"><span>备注:</span><textarea rows="3" placeholder="请输入"></textarea></label>
         </div>
@@ -2214,6 +2218,56 @@
 
       <footer class="modal-foot">
         <button class="btn primary" data-close-modal>关闭</button>
+      </footer>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="pick-list-print-modal" aria-hidden="true">
+    <section class="modal-card pick-list-print-modal-card" role="dialog" aria-modal="true" aria-labelledby="pick-list-print-title">
+      <header class="modal-head">
+        <h2 id="pick-list-print-title">领料单</h2>
+        <button class="icon-btn" title="关闭" data-close-modal>×</button>
+      </header>
+
+      <div class="modal-body pick-list-preview-body">
+        <article class="pick-list-paper" data-pick-list-paper>
+          <header class="pick-list-document-head">
+            <h3>领料单</h3>
+            <div class="pick-list-code pick-list-barcode" data-pick-list-barcode data-code-value="1000028473" aria-label="领料申请单号 1000028473 条形码"></div>
+            <div class="pick-list-code pick-list-qr" data-pick-list-qr data-code-value="1000028473" aria-label="领料申请单号 1000028473 二维码"></div>
+          </header>
+
+          <div class="pick-list-meta">
+            <span>领料申请单号：<b>1000028473</b></span><span>成本中心：<b>2208131105</b></span><span>领料申请日期：<b>2026.09.09</b></span><span>申请人：<b>51000009</b></span>
+            <span>领料方式：<b>C 成本中心领料（资材）</b></span><span>业态：<b></b></span><span>移动类型：<b>913</b></span><span>申请人电话：<b>13777138687</b></span>
+            <span>生产/维修订单：<b></b></span><span>工厂：<b>2200</b></span><span>SAP预留：<b>0000826332</b></span><span>申请部门：<b>50003008</b></span>
+            <span>计划订单：<b></b></span><span>WBS元素：<b></b></span>
+          </div>
+
+          <table class="pick-list-table">
+            <thead><tr><th>行项目</th><th>物料号</th><th>物料描述</th><th>领料数量</th><th>实发数量</th><th>单位</th><th>批次</th><th>仓储类型</th><th>仓位</th><th>配送日期</th><th>现场库</th><th>MES仓位</th><th>备注</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>1800000072</td><td>深沟球轴承 6002-2Z</td><td>2.000</td><td></td><td>PC</td><td>0000003358</td><td>F01</td><td>23C00000</td><td>2026.09.09</td><td></td><td></td><td></td></tr>
+              <tr><td>1</td><td>1800000072</td><td>深沟球轴承 6002-2Z</td><td>2.000</td><td></td><td>PC</td><td>0000003358</td><td>F01</td><td>23C00000</td><td>2026.09.09</td><td></td><td></td><td></td></tr>
+              <tr><td>1</td><td>1800000072</td><td>深沟球轴承 6002-2Z</td><td>2.000</td><td></td><td>PC</td><td>0000003358</td><td>F01</td><td>23C00000</td><td>2026.09.09</td><td></td><td></td><td></td></tr>
+              <tr><td>1</td><td>1800000072</td><td>深沟球轴承 6002-2Z</td><td>3.000</td><td></td><td>PC</td><td>0000003358</td><td>F01</td><td>23C00000</td><td>2026.09.09</td><td></td><td></td><td></td></tr>
+              <tr><td>1</td><td>1800000072</td><td>深沟球轴承 6002-2Z</td><td>1.000</td><td></td><td>PC</td><td>0000003358</td><td>F01</td><td>23C00000</td><td>2026.09.09</td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+
+          <table class="pick-list-signatures">
+            <tbody>
+              <tr><th colspan="2">发料部门</th><th colspan="2">领料部门</th></tr>
+              <tr><td>仓储主管</td><td>经办</td><td>审批主管</td><td>经办</td></tr>
+              <tr><td>&nbsp;</td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+
+      <footer class="modal-foot">
+        <button class="btn ghost" data-close-modal>取消</button>
+        <button class="btn primary" type="button" data-print-pick-list>打印</button>
       </footer>
     </section>
   </div>
@@ -2525,6 +2579,6 @@
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="./app.js?v=20260902-task-finish-packages"></script>
+  <script src="./app.js?v=20260914-pick-list-code-gap"></script>
 </body>
 </html>
