@@ -62,7 +62,7 @@ const shiftBusinessSlots = {
   "夜班": ["0:00~4:00", "4:00~8:00"],
   "中班": ["16:00~20:00", "20:00~24:00"],
   "早班": ["8:00~12:00", "12:00~16:00"],
-  "常白班": ["08:00~17:00"]
+  "长白班": ["08:00~17:00"]
 };
 
 const materialInfo = {
@@ -152,7 +152,7 @@ function requireModalValue(modal, selector, message) {
 function updateBusinessSlots() {
   if (!shiftSelect || businessSlots.length < 2) return;
   const slots = shiftBusinessSlots[shiftSelect.value] || shiftBusinessSlots["夜班"];
-  const isDayShift = shiftSelect.value === "常白班";
+  const isDayShift = shiftSelect.value === "长白班";
   businessSlots[0].textContent = slots[0];
   businessSlots[1].textContent = slots[1] || "";
   businessGrid?.classList.toggle("single-slot", isDayShift);
